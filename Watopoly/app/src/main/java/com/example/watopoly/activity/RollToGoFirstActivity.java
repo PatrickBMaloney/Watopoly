@@ -29,7 +29,6 @@ public class RollToGoFirstActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                TextView diceRollTextView = (TextView) findViewById(R.id.diceRollTextView);
 
                 //TODO move this to a global function to be accessed for any dice-rolling purpose
                 int num1 = (int)(Math.random()*6+1);
@@ -79,13 +78,9 @@ public class RollToGoFirstActivity extends AppCompatActivity {
                         dice2File = ResourcesCompat.getDrawable(getResources(),R.drawable.dice6, null);
                         break;
                 }
-
-//                int imageResource1 = getResources().getIdentifier(dice1File, null, );
                 dice1.setImageDrawable(dice1File);
                 dice2.setImageDrawable(dice2File);
-//                int imageResource2 = getResources().getIdentifier(dice2File, null, this.getPackageName());
-//                dice2.setImageResource(imageResource2);
-                diceRollTextView.setText(roll + " ");
+
 
             }
         });
