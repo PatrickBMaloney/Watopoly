@@ -16,8 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.EnterPlayerInfoActivity" />
-        <activity android:name=".activity.NumberOfPlayersActivity" />
+        <activity android:name=".activity.EnterPlayerInfoActivity"
+                  android:screenOrientation="landscape"/>
+        <activity android:name=".activity.NumberOfPlayersActivity"/>
         <activity android:name=".activity.RollDiceActivity" />
         <activity android:name=".activity.StartGameActivity" />
     </application>
