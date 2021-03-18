@@ -27,7 +27,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         //REMOVE
         Intent intent = new Intent(this, EnterPlayerInfoActivity.class);
-        intent.putExtra("numberOfPlayers", 1);
+        intent.putExtra("numberOfPlayers", 4);
         startActivity(intent);
     }
 }
