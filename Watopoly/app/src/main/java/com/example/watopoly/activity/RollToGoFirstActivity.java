@@ -3,7 +3,6 @@ package com.example.watopoly.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.widget.ImageViewCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -12,7 +11,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -35,6 +33,7 @@ public class RollToGoFirstActivity extends AppCompatActivity {
 
     private ImageView playerIconImageView;
     private TextView diceRollResultTextView;
+    private TextView playerRollingTextView;
     private Button nextPlayerDiceRollButton;
     private Button rollToGoFirstBtn;
     private ImageView dice1;
@@ -43,6 +42,7 @@ public class RollToGoFirstActivity extends AppCompatActivity {
     private int numberOfPlayers;
     private int currentTurn = 0;
     private Integer roll;
+    private ArrayList<Integer> rollValues = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +55,11 @@ public class RollToGoFirstActivity extends AppCompatActivity {
         names = getIntent().getStringArrayListExtra("names");
         numberOfPlayers = names.size();
 
-//        linkView();
-
         playerIconImageView = (ImageView) findViewById(R.id.playerIconImageView);
         diceRollResultTextView = (TextView) findViewById(R.id.diceRollResultTextView);
         rollToGoFirstBtn = (Button) findViewById(R.id.rollToGoFirstBtn);
-        nextPlayerDiceRollButton = (Button) findViewById(R.id.nextPlayerDiceRollButton);
+        nextPlayerDiceRollButton = (Button) findViewById(R.id.passToFirstPlayerBtn);
+        playerRollingTextView = (TextView) findViewById(R.id.playerRollingTextView);
         dice1 = (ImageView) findViewById(R.id.dice1ImageView);
         dice2 = (ImageView) findViewById(R.id.dice2ImageView);
 
@@ -74,6 +73,7 @@ public class RollToGoFirstActivity extends AppCompatActivity {
                 int num1 = (int)(Math.random()*6+1);
                 int num2 = (int)(Math.random()*6+1);
                 roll = num1+num2;
+                rollValues.add(roll);
                 String rollValue = roll.toString();
                 diceRollResultTextView.setText(rollValue);
 //                shapeAdapter = new RollToGoFirstAdaptor(icons, colours, roll);
@@ -148,10 +148,16 @@ public class RollToGoFirstActivity extends AppCompatActivity {
 //    }
 
     private void playerDiceRoll(){
-        String passButtonText = "Pass to "+names.get(currentTurn);
+        String passButtonText;
+        if (currentTurn >= names.size()-1){
+            passButtonText = "Continue";
+        } else {
+            passButtonText = "Pass to " + names.get(currentTurn+1);
+        }
         nextPlayerDiceRollButton.setText(passButtonText);
         nextPlayerDiceRollButton.setClickable(false);
         diceRollResultTextView.setText("?");
+        playerRollingTextView.setText(names.get(currentTurn)+ " is rolling");
         playerIconImageView.setImageResource(icons.get(currentTurn));
         ImageViewCompat.setImageTintMode(playerIconImageView, PorterDuff.Mode.SRC_ATOP);
         ImageViewCompat.setImageTintList(playerIconImageView, ColorStateList.valueOf(Color.parseColor(colours.get(currentTurn))));
@@ -167,15 +173,15 @@ public class RollToGoFirstActivity extends AppCompatActivity {
 //        shapeAdapter.getColours().remove(shapeAdapter.getSelected());
 //        colourAdapter.getPaths().remove(colourAdapter.getSelected());
 //        colourAdapter.getColours().remove(colourAdapter.getSelected());
-        if (currentTurn == numberOfPlayers) {
-            //TODO GO TO NEXT INTENT
-//            Intent diceRollIntent = new Intent(getApplicationContext(), RollToGoFirstActivity.class);
-//            diceRollIntent.putExtra("pathSelected", icons);
-//            diceRollIntent.putExtra("colourSelected", colours);
-//            diceRollIntent.putExtra("names", names);
-//            startActivity(diceRollIntent);
+        if (currentTurn == numberOfPlayers-1) {
+            Intent playerOrderIntent = new Intent(getApplicationContext(), DisplayPlayerOrderActivity.class);
+            playerOrderIntent.putExtra("rolls", rollValues);
+            playerOrderIntent.putExtra("names", names);
+            playerOrderIntent.putExtra("icons", icons);
+            playerOrderIntent.putExtra("colours", colours);
+            startActivity(playerOrderIntent);
         } else {
-            currentTurn ++;
+            currentTurn++;
             playerDiceRoll();
         }
     }

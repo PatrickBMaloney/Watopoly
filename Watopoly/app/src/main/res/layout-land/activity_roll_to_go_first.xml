@@ -63,7 +63,7 @@
         app:layout_constraintStart_toEndOf="@+id/shapeLinearLayout"/>
 
     <Button
-        android:id="@+id/nextPlayerDiceRollButton"
+        android:id="@+id/passToFirstPlayerBtn"
         android:layout_width="134dp"
         android:layout_height="38dp"
         android:text="Next Player"
@@ -97,6 +97,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/android" />
+
+    <TextView
+        android:id="@+id/playerRollingTextView"
+        android:layout_width="184dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.003"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

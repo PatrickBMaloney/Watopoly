@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class RollToGoFirstAdaptor extends RecyclerView.Adapter<RollToGoFirstAdaptor.PlayerDiceRollHolder> {
     private ArrayList<Integer> paths;
     private ArrayList<String> colours;
-    private String diceRoll;
+    private ArrayList<Integer> diceRoll;
 
 
     public class PlayerDiceRollHolder extends RecyclerView.ViewHolder {
@@ -38,10 +38,10 @@ public class RollToGoFirstAdaptor extends RecyclerView.Adapter<RollToGoFirstAdap
         this.colours = colours;
     }
 
-    public RollToGoFirstAdaptor(ArrayList<Integer> paths, ArrayList<String> colours, Integer diceRoll) {
+    public RollToGoFirstAdaptor(ArrayList<Integer> paths, ArrayList<String> colours, ArrayList<Integer> diceRoll) {
         this.paths = paths;
         this.colours = colours;
-        this.diceRoll = diceRoll.toString();
+        this.diceRoll = diceRoll;
     }
 
     @NonNull
@@ -56,7 +56,8 @@ public class RollToGoFirstAdaptor extends RecyclerView.Adapter<RollToGoFirstAdap
         holder.imageView.setImageResource(paths.get(position));
         ImageViewCompat.setImageTintMode(holder.imageView, PorterDuff.Mode.SRC_ATOP);
         ImageViewCompat.setImageTintList(holder.imageView, ColorStateList.valueOf(Color.parseColor(colours.get(position))));
-        holder.diceRollValueTextView.setText(diceRoll);
+        String text = diceRoll.get(position).toString();
+        holder.diceRollValueTextView.setText(text);
     }
 
     @Override
