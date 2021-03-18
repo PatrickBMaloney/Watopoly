@@ -24,5 +24,10 @@ public class MainMenuActivity extends AppCompatActivity {
                 startActivity(diceRollIntent);
             }
         });
+
+        //REMOVE
+        Intent intent = new Intent(this, EnterPlayerInfoActivity.class);
+        intent.putExtra("numberOfPlayers", 4);
+        startActivity(intent);
     }
 }
