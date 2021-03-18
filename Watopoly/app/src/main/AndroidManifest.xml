@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainMenuActivity">
+        <activity android:name=".activity.MainMenuActivity"
+                  android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,7 +19,8 @@
         </activity>
         <activity android:name=".activity.EnterPlayerInfoActivity"
                   android:screenOrientation="landscape"/>
-        <activity android:name=".activity.NumberOfPlayersActivity"/>
+        <activity android:name=".activity.NumberOfPlayersActivity"
+                  android:screenOrientation="landscape"/>
         <activity android:name=".activity.RollDiceActivity" />
         <activity android:name=".activity.StartGameActivity" />
     </application>
