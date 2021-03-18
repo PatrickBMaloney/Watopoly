@@ -76,8 +76,7 @@ public class RollToGoFirstActivity extends AppCompatActivity {
                 rollValues.add(roll);
                 String rollValue = roll.toString();
                 diceRollResultTextView.setText(rollValue);
-//                shapeAdapter = new RollToGoFirstAdaptor(icons, colours, roll);
-//                shapeRecyclerView.setAdapter(shapeAdapter);
+
                 Drawable dice1File = ResourcesCompat.getDrawable(getResources(),R.drawable.dice4, null);
                 Drawable dice2File = ResourcesCompat.getDrawable(getResources(),R.drawable.dice4, null);
 
@@ -139,13 +138,6 @@ public class RollToGoFirstActivity extends AppCompatActivity {
 
     }
 
-//    private void linkView(){
-//        LinearLayoutManager layoutManager1 = new LinearLayoutManager(this);
-//        shapeRecyclerView = findViewById(R.id.shapeOptionRecyclerView);
-//        shapeRecyclerView.setLayoutManager(layoutManager1);
-//        shapeAdapter = new RollToGoFirstAdaptor(icons, colours);
-//        shapeRecyclerView.setAdapter(shapeAdapter);
-//    }
 
     private void playerDiceRoll(){
         String passButtonText;
@@ -164,15 +156,7 @@ public class RollToGoFirstActivity extends AppCompatActivity {
     }
 
     private void finishRolling(){
-//        //save data
-//        pathSelected.add(shapeAdapter.getPaths().get(shapeAdapter.getSelected()));
-//        colourSelected.add(colourAdapter.getColours().get(colourAdapter.getSelected()));
-//        names.add(nameEditText.getText().toString());
-//
-//        shapeAdapter.getPaths().remove(shapeAdapter.getSelected());
-//        shapeAdapter.getColours().remove(shapeAdapter.getSelected());
-//        colourAdapter.getPaths().remove(colourAdapter.getSelected());
-//        colourAdapter.getColours().remove(colourAdapter.getSelected());
+
         if (currentTurn == numberOfPlayers-1) {
             Intent playerOrderIntent = new Intent(getApplicationContext(), DisplayPlayerOrderActivity.class);
             playerOrderIntent.putExtra("rolls", rollValues);
