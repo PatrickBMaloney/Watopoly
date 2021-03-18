@@ -38,12 +38,16 @@ public class NumberOfPlayersActivity extends AppCompatActivity implements View.O
         switch(view.getId()) {
             case R.id.numPlayersButton1:
                 intent.putExtra("numberOfPlayers", 1);
+                break;
             case R.id.numPlayersButton2:
                 intent.putExtra("numberOfPlayers", 2);
+                break;
             case R.id.numPlayersButton3:
                 intent.putExtra("numberOfPlayers", 3);
+                break;
             case R.id.numPlayersButton4:
                 intent.putExtra("numberOfPlayers", 4);
+                break;
             default:
         }
         startActivity(intent);
