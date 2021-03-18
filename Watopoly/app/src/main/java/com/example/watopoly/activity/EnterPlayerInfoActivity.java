@@ -143,6 +143,11 @@ public class EnterPlayerInfoActivity extends AppCompatActivity {
             Log.d("Test ", pathSelected.toString());
             Log.d("Test ", colourSelected.toString());
             Log.d("Test ", names.toString());
+            Intent diceRollIntent = new Intent(getApplicationContext(), RollToGoFirstActivity.class);
+            diceRollIntent.putExtra("pathSelected", pathSelected);
+            diceRollIntent.putExtra("colourSelected", colourSelected);
+            diceRollIntent.putExtra("names", names);
+            startActivity(diceRollIntent);
         } else {
             currentTurn ++;
             enterPlayerInfo();
