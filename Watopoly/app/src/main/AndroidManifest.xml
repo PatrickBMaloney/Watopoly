@@ -10,19 +10,20 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.DisplayPlayerOrderActivity"></activity>
+        <activity android:name=".activity.DisplayPlayerOrderActivity"/>
         <activity android:name=".activity.RollToGoFirstActivity" />
-        <activity android:name=".activity.MainMenuActivity">
+        <activity android:name=".activity.MainMenuActivity"
+                  android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.EnterPlayerInfoActivity"
-            android:screenOrientation="landscape" />
-        <activity android:name=".activity.NumberOfPlayersActivity" />
+        <activity android:name=".activity.EnterPlayerInfoActivity"
+                  android:screenOrientation="landscape"/>
+        <activity android:name=".activity.NumberOfPlayersActivity"
+                  android:screenOrientation="landscape"/>
         <activity android:name=".activity.RollDiceActivity" />
         <activity android:name=".activity.StartGameActivity" />
     </application>
