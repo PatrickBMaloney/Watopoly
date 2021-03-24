@@ -55,15 +55,11 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
     }
 
     private void startTurn() {
+        new SaveData(this).execute();
         Game gameState = Game.getInstance();
         playerInfoHeaderFragment.setPlayer(gameState.nextTurn());
         diceRollFragment.getView().setVisibility(View.VISIBLE);
         actionLinearLayout.setVisibility(View.GONE);
-    }
-
-    private void endTurn() {
-        new SaveData(this).execute();
-        startTurn();
     }
 
     private void linkView() {
@@ -85,7 +81,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         endTurnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                endTurn();
+                startTurn();
             }
         });
 
