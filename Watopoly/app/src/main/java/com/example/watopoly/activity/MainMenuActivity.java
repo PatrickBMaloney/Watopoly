@@ -28,8 +28,14 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        // TODO: figure out what happens when they press continue
-        Intent intent = new Intent(this, NumberOfPlayersActivity.class);
+        Intent intent;
+        if (view.getId() == R.id.continueGameButton) {
+            intent = new Intent(this, MainGameViewActivity.class);
+            intent.putExtra("continue","");
+        } else {
+            intent = new Intent(this, NumberOfPlayersActivity.class);
+        }
+
         startActivity(intent);
     }
 }
