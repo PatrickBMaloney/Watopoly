@@ -40,7 +40,6 @@ public class EnterPlayerInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_player_info);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Intent intent = getIntent();
         numberOfPlayers = intent.getIntExtra("numberOfPlayers", 1);
@@ -53,6 +52,7 @@ public class EnterPlayerInfoActivity extends AppCompatActivity {
     private void linkView() {
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(this);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(this);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         shapeRecyclerView = findViewById(R.id.shapeOptionRecyclerView);
         shapeRecyclerView.setLayoutManager(layoutManager1);
@@ -139,10 +139,6 @@ public class EnterPlayerInfoActivity extends AppCompatActivity {
         colourAdapter.getPaths().remove(colourAdapter.getSelected());
         colourAdapter.getColours().remove(colourAdapter.getSelected());
         if (currentTurn == numberOfPlayers) {
-            //Pass to next activity
-            Log.d("Test ", pathSelected.toString());
-            Log.d("Test ", colourSelected.toString());
-            Log.d("Test ", names.toString());
             Intent diceRollIntent = new Intent(getApplicationContext(), RollToGoFirstActivity.class);
             diceRollIntent.putExtra("pathSelected", pathSelected);
             diceRollIntent.putExtra("colourSelected", colourSelected);
