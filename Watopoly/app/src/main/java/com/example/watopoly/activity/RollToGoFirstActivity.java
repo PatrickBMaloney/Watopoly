@@ -3,6 +3,7 @@ package com.example.watopoly.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.widget.ImageViewCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -11,131 +12,69 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.watopoly.R;
 import com.example.watopoly.adapter.RollToGoFirstAdaptor;
+import com.example.watopoly.fragment.DiceRollFragment;
+import com.example.watopoly.fragment.FragmentCallbackListener;
+import com.example.watopoly.fragment.PlayerInfoHeaderFragment;
 
 import java.util.ArrayList;
 
-public class RollToGoFirstActivity extends AppCompatActivity {
-
-//    Get info from "Enter Player Info"
+public class RollToGoFirstActivity extends AppCompatActivity implements FragmentCallbackListener {
     private ArrayList<Integer> icons;
     private ArrayList<String> colours;
     private ArrayList<String> names;
-
-    private RollToGoFirstAdaptor shapeAdapter;
-    private RecyclerView shapeRecyclerView;
 
     private ImageView playerIconImageView;
     private TextView diceRollResultTextView;
     private TextView playerRollingTextView;
     private Button nextPlayerDiceRollButton;
-    private Button rollToGoFirstBtn;
-    private ImageView dice1;
-    private ImageView dice2;
+    private DiceRollFragment diceRollFragment;
 
     private int numberOfPlayers;
     private int currentTurn = 0;
-    private Integer roll;
     private ArrayList<Integer> rollValues = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_roll_to_go_first);
-        getSupportActionBar().hide();
 
         icons = getIntent().getIntegerArrayListExtra("pathSelected");
         colours = getIntent().getStringArrayListExtra("colourSelected");
         names = getIntent().getStringArrayListExtra("names");
         numberOfPlayers = names.size();
 
-        playerIconImageView = (ImageView) findViewById(R.id.playerIconImageView);
-        diceRollResultTextView = (TextView) findViewById(R.id.diceRollResultTextView);
-        rollToGoFirstBtn = (Button) findViewById(R.id.rollToGoFirstBtn);
-        nextPlayerDiceRollButton = (Button) findViewById(R.id.passToFirstPlayerBtn);
-        playerRollingTextView = (TextView) findViewById(R.id.playerRollingTextView);
-        dice1 = (ImageView) findViewById(R.id.dice1ImageView);
-        dice2 = (ImageView) findViewById(R.id.dice2ImageView);
-
+        linkView();
         playerDiceRoll();
+    }
 
-        rollToGoFirstBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    private void linkView() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide();
+        playerIconImageView = findViewById(R.id.playerIconImageView);
+        diceRollResultTextView = findViewById(R.id.diceRollResultTextView);
+        nextPlayerDiceRollButton = findViewById(R.id.passToFirstPlayerBtn);
+        playerRollingTextView = findViewById(R.id.playerRollingTextView);
 
-                //TODO move this to a global function to be accessed for any dice-rolling purpose
-                int num1 = (int)(Math.random()*6+1);
-                int num2 = (int)(Math.random()*6+1);
-                roll = num1+num2;
-                rollValues.add(roll);
-                String rollValue = roll.toString();
-                diceRollResultTextView.setText(rollValue);
+        FragmentManager fm = getSupportFragmentManager();
+        diceRollFragment= (DiceRollFragment) fm.findFragmentById(R.id.diceRollOrderFragment);
+        diceRollFragment.setCallbackListener(this);
 
-                Drawable dice1File = ResourcesCompat.getDrawable(getResources(),R.drawable.dice4, null);
-                Drawable dice2File = ResourcesCompat.getDrawable(getResources(),R.drawable.dice4, null);
-
-                switch (num1) {
-                    case 1:
-                        dice1File = ResourcesCompat.getDrawable(getResources(),R.drawable.dice1, null);
-                        break;
-                    case 2:
-                        dice1File = ResourcesCompat.getDrawable(getResources(),R.drawable.dice2, null);
-                        break;
-                    case 3:
-                        dice1File = ResourcesCompat.getDrawable(getResources(),R.drawable.dice3, null);
-                        break;
-                    case 4:
-                        dice1File = ResourcesCompat.getDrawable(getResources(),R.drawable.dice4, null);
-                        break;
-                    case 5:
-                        dice1File = ResourcesCompat.getDrawable(getResources(),R.drawable.dice5, null);
-                        break;
-                    case 6:
-                        dice1File = ResourcesCompat.getDrawable(getResources(),R.drawable.dice6, null);
-                        break;
-                }
-
-                switch (num2) {
-                    case 1:
-                        dice2File = ResourcesCompat.getDrawable(getResources(),R.drawable.dice1, null);
-                        break;
-                    case 2:
-                        dice2File = ResourcesCompat.getDrawable(getResources(),R.drawable.dice2, null);
-                        break;
-                    case 3:
-                        dice2File = ResourcesCompat.getDrawable(getResources(),R.drawable.dice3, null);
-                        break;
-                    case 4:
-                        dice2File = ResourcesCompat.getDrawable(getResources(),R.drawable.dice3, null);
-                        break;
-                    case 5:
-                        dice2File = ResourcesCompat.getDrawable(getResources(),R.drawable.dice5, null);
-                        break;
-                    case 6:
-                        dice2File = ResourcesCompat.getDrawable(getResources(),R.drawable.dice6, null);
-                        break;
-                }
-                dice1.setImageDrawable(dice1File);
-                dice2.setImageDrawable(dice2File);
-                nextPlayerDiceRollButton.setClickable(true);
-                rollToGoFirstBtn.setVisibility(View.GONE);
-
-            }
-        });
         nextPlayerDiceRollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finishRolling();
-                rollToGoFirstBtn.setVisibility(View.VISIBLE);
+                diceRollFragment.setRollButtonHidden(false);
             }
         });
-
     }
 
 
@@ -146,8 +85,8 @@ public class RollToGoFirstActivity extends AppCompatActivity {
         } else {
             passButtonText = "Pass to " + names.get(currentTurn+1);
         }
+        nextPlayerDiceRollButton.setVisibility(View.GONE);
         nextPlayerDiceRollButton.setText(passButtonText);
-        nextPlayerDiceRollButton.setClickable(false);
         diceRollResultTextView.setText("?");
         playerRollingTextView.setText(names.get(currentTurn)+ " is rolling");
         playerIconImageView.setImageResource(icons.get(currentTurn));
@@ -156,8 +95,8 @@ public class RollToGoFirstActivity extends AppCompatActivity {
     }
 
     private void finishRolling(){
-
         if (currentTurn == numberOfPlayers-1) {
+            Log.d("Rolls",rollValues.toString());
             Intent playerOrderIntent = new Intent(getApplicationContext(), DisplayPlayerOrderActivity.class);
             playerOrderIntent.putExtra("rolls", rollValues);
             playerOrderIntent.putExtra("names", names);
@@ -168,6 +107,16 @@ public class RollToGoFirstActivity extends AppCompatActivity {
             currentTurn++;
             playerDiceRoll();
         }
+    }
+
+    @Override
+    public void onCallback() {
+        int diceRollResult = diceRollFragment.getDiceRollResult();
+        rollValues.add(diceRollResult);
+        diceRollResultTextView.setText(""+diceRollResult);
+
+        diceRollFragment.setRollButtonHidden(true);
+        nextPlayerDiceRollButton.setVisibility(View.VISIBLE);
     }
 }
 

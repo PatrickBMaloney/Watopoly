@@ -26,8 +26,6 @@
                   android:screenOrientation="landscape"/>
         <activity android:name=".activity.NumberOfPlayersActivity"
                   android:screenOrientation="landscape"/>
-        <activity android:name=".activity.RollDiceActivity" />
-        <activity android:name=".activity.StartGameActivity" />
         <activity android:name=".activity.MainGameViewActivity"
             android:screenOrientation="landscape"/>
     </application>

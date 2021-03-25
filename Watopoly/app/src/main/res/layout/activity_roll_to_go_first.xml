@@ -8,41 +8,7 @@
     android:screenOrientation="landscape"
     tools:context=".activity.RollToGoFirstActivity">
 
-    <Button
-        android:id="@+id/rollToGoFirstBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:rotation="0"
-        android:text="Roll Dice"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.725"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.669" />
 
-    <ImageView
-        android:id="@+id/dice1ImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="388dp"
-        app:layout_constraintBottom_toTopOf="@+id/rollToGoFirstBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.678"
-        app:srcCompat="@drawable/dice2" />
-
-    <ImageView
-        android:id="@+id/dice2ImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:layout_constraintBottom_toTopOf="@+id/rollToGoFirstBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.272"
-        app:layout_constraintStart_toEndOf="@+id/dice1ImageView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.678"
-        app:srcCompat="@drawable/dice5" />
 
     <LinearLayout
         android:id="@+id/shapeLinearLayout"
@@ -109,6 +75,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.003"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <fragment
+        android:id="@+id/diceRollOrderFragment"
+        android:name="com.example.watopoly.fragment.DiceRollFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="164dp"
+        android:layout_marginEnd="176dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
