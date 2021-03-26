@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,10 +19,11 @@ import com.example.watopoly.fragment.FragmentCallbackListener;
 import com.example.watopoly.fragment.PlayerInfoHeaderFragment;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Player;
+import com.example.watopoly.model.Tile;
+import com.example.watopoly.view.BoardView;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -70,6 +69,11 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
         diceRollFragment = (DiceRollFragment) fm.findFragmentById(R.id.rollToMoveFragment);
         diceRollFragment.setCallbackListener(this);
+
+        Game gameState = Game.getInstance();
+        BoardView boardView = findViewById(R.id.board);
+        ArrayList<Tile> tiles = boardView.getTiles();
+        gameState.setTiles(tiles);
 
         //TODO: bind button to the activity
         Button buyButton = findViewById(R.id.buyPropertyButton);

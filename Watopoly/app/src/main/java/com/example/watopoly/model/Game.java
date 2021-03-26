@@ -9,7 +9,7 @@ public class Game implements Serializable {
     private static Game gameState = new Game();
 
     private ArrayList<Player> players = new ArrayList<>();
-    private Board board;
+    private Board board = new Board();
     private int turnNumber = -1;
 
     //Singleton
@@ -19,12 +19,11 @@ public class Game implements Serializable {
         return gameState;
     }
 
-    //private methods
-    private void setupBoard() {
-        //TODO: populate tiles
+    //public methods
+    public void setTiles(ArrayList<Tile> tiles) {
+        board.setTiles(tiles);
     }
 
-    //public methods
     public void addPlayer(Player player) {
         players.add(player);
     }
