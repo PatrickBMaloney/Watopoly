@@ -59,6 +59,7 @@ public class ChanceCardActivity extends AppCompatActivity {
                 if(continueToBoard){
                     // Todo: execute card action
                     Intent intent = new Intent(getApplicationContext(), MainGameViewActivity.class);
+                    intent.putExtra("continue", true);
                     startActivity(intent);
                 }
                 else {
