@@ -1,6 +1,7 @@
 package com.example.watopoly.model;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Player implements Serializable {
@@ -8,6 +9,8 @@ public class Player implements Serializable {
     private Double money;
     private String colour;
     private int icon;
+    private ArrayList<Property> properties;
+
 
     private ArrayList<Property> properties = new ArrayList<>();
     private int jailFreeCards = 0;
@@ -37,4 +40,6 @@ public class Player implements Serializable {
     public int getIcon() {
         return icon;
     }
+
+    public ArrayList<Property> getProperties() { return properties; }
 }
