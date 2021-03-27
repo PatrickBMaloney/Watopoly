@@ -82,15 +82,6 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         Button tradeButton = findViewById(R.id.tradeButton);
         Button mortgageButton = findViewById(R.id.mortgageButton);
         Button endTurnButton = findViewById(R.id.endTurnButton);
-
-        mortgageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ChanceCardActivity.class);
-                startActivity(intent);
-            }
-        });
-
         endTurnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
