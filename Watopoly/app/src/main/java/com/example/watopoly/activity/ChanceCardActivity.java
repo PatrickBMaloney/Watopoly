@@ -20,8 +20,9 @@ import com.example.watopoly.model.Player;
 public class ChanceCardActivity extends AppCompatActivity {
 
     private ImageView chanceCardImg;
-    private TextView chanceTitle;
+    private TextView chanceDescription;
     private TextView buttonTextView;
+    private TextView chanceCardTitle;
     private Game gameState = Game.getInstance();
     private PlayerInfoHeaderFragment playerInfoHeaderFragment;
     private boolean continueToBoard = false;
@@ -48,8 +49,9 @@ public class ChanceCardActivity extends AppCompatActivity {
         playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragmentChance);
         Button drawCard = findViewById(R.id.drawCard);
         chanceCardImg = findViewById(R.id.imageChanceCard);
-        chanceTitle = findViewById(R.id.chanceTitle);
+        chanceDescription = findViewById(R.id.chanceTitle);
         buttonTextView = findViewById(R.id.drawCard);
+        chanceCardTitle = findViewById(R.id.chanceCardAction);
         drawCard.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -63,9 +65,11 @@ public class ChanceCardActivity extends AppCompatActivity {
                     ChanceCard drawnCard = drawRandomChanceCard();
                     chanceCardImg.setImageResource(R.drawable.chance_front);
                     String chanceDescription = drawnCard.getDescription();
+                    String chanceTitle = drawnCard.getTitle();
                     String buttonText = "CONTINUE";
-                    chanceTitle.setText(chanceDescription);
+                    ChanceCardActivity.this.chanceDescription.setText(chanceDescription);
                     buttonTextView.setText(buttonText);
+                    chanceCardTitle.setText(chanceTitle);
                     continueToBoard = true;
                 }
             }

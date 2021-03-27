@@ -9,7 +9,7 @@
         android:id="@+id/drawCard"
         android:layout_width="230dp"
         android:layout_height="50dp"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="70dp"
         android:text="COLLECT CHANCE CARD"
         android:textAlignment="center"
         android:textColor="#6200EE"
@@ -35,7 +35,7 @@
         android:id="@+id/chanceTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="168dp"
+        android:layout_marginTop="140dp"
         android:text="You have landed on a Chance!"
         android:textAlignment="center"
         android:textSize="20dp"
@@ -58,5 +58,17 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/chanceCardAction"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="57dp"
+        android:text=""
+        android:textSize="18dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/imageChanceCard"
+        app:layout_constraintStart_toStartOf="@+id/imageChanceCard"
+        app:layout_constraintTop_toTopOf="@+id/imageChanceCard" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
