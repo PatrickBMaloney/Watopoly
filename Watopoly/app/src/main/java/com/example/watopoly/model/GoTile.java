@@ -7,7 +7,9 @@ import com.example.watopoly.enums.TileDirection;
 
 public class GoTile extends Tile {
     @Override
-    void landOn(Canvas canvas, Player player, Paint paint) { }
+    void landOn(Player player) {
+
+    }
 
     @Override
     public void drawOn(Canvas canvas) {

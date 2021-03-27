@@ -14,7 +14,7 @@ public abstract class Tile implements Serializable {
     protected int currNumberOfPlayers = 0;
     protected TileDirection tileDirection;
 
-    abstract void landOn(Canvas canvas, Player player, Paint paint);
+    abstract void landOn(Player player);
 
     public Coordinates getCoordinates() {
         return coordinates;

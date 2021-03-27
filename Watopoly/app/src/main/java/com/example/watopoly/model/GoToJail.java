@@ -9,7 +9,7 @@ public class GoToJail extends Tile {
     int jailLocation = 0;
 
     @Override
-    void landOn(Canvas canvas, Player player, Paint mPaint) {
+    void landOn(Player player) {
 
     }
 

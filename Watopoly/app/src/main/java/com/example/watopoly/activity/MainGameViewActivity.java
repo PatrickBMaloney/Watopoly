@@ -2,9 +2,11 @@ package com.example.watopoly.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -72,8 +74,8 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
         Game gameState = Game.getInstance();
         BoardView boardView = findViewById(R.id.board);
-        ArrayList<Tile> tiles = boardView.getTiles();
-        gameState.setTiles(tiles);
+        Pair<ArrayList<Tile>, Canvas> boardInfo = boardView.getBoardInfo();
+        gameState.setBoardInfo(boardInfo);
 
         //TODO: bind button to the activity
         Button buyButton = findViewById(R.id.buyPropertyButton);

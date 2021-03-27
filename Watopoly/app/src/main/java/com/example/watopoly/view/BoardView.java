@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Pair;
 import android.view.View;
 
 import com.example.watopoly.model.Coordinates;
@@ -28,6 +29,8 @@ public class BoardView extends View {
     private static final int totalNumTiles = (numTilesInColumn * 2) + (numTilesInRow * 2) + 4;
     private ArrayList<Tile> tiles = BoardTiles.getTiles();
 
+    private Canvas canvas;
+
     public BoardView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -36,6 +39,7 @@ public class BoardView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        this.canvas = canvas;
 
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
@@ -171,5 +175,7 @@ public class BoardView extends View {
                 paint);
     }
 
-    public ArrayList<Tile> getTiles() {return tiles;}
+    public Pair<ArrayList<Tile>, Canvas> getBoardInfo() {
+        return new Pair<>(tiles, canvas);
+    }
 }

@@ -9,7 +9,7 @@ public class CardTile extends Tile{
 
     //TODO: draw and apply cards
     @Override
-    void landOn(Canvas canvas, Player player, Paint paint) {
+    void landOn(Player player) {
 
     }
 

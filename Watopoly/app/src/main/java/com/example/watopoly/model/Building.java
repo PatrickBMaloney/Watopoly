@@ -22,7 +22,7 @@ public class Building extends Property {
     }
 
     @Override
-    void landOn(Canvas canvas, Player player, Paint paint) {
+    void landOn(Player player) {
 
     }
 

@@ -1,5 +1,8 @@
 package com.example.watopoly.model;
 
+import android.graphics.Canvas;
+import android.util.Pair;
+
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
@@ -20,8 +23,8 @@ public class Game implements Serializable {
     }
 
     //public methods
-    public void setTiles(ArrayList<Tile> tiles) {
-        board.setTiles(tiles);
+    public void setBoardInfo(Pair<ArrayList<Tile>, Canvas> boardInfo) {
+        board.setBoardInfo(boardInfo);
     }
 
     public void addPlayer(Player player) {
