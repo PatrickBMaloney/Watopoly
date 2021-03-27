@@ -2,10 +2,11 @@ package com.example.watopoly.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -18,9 +19,12 @@ import com.example.watopoly.model.Player;
 
 public class ChanceCardActivity extends AppCompatActivity {
 
+    private ImageView chanceCardImg;
+    private TextView chanceTitle;
+    private TextView buttonTextView;
     private Game gameState = Game.getInstance();
     private PlayerInfoHeaderFragment playerInfoHeaderFragment;
-    private ChanceCard drawnCard = new ChanceCard("random card", "description");
+    private boolean continueToBoard = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +47,33 @@ public class ChanceCardActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragmentChance);
         Button drawCard = findViewById(R.id.drawCard);
-        drawCard.setOnClickListener(new View.OnClickListener() {
+        chanceCardImg = findViewById(R.id.imageChanceCard);
+        chanceTitle = findViewById(R.id.chanceTitle);
+        buttonTextView = findViewById(R.id.drawCard);
+        drawCard.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
-                drawnCard = drawRandomChanceCard();
+                if(continueToBoard){
+                    // Todo: execute card action
+                    Intent intent = new Intent(getApplicationContext(), MainGameViewActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    ChanceCard drawnCard = drawRandomChanceCard();
+                    chanceCardImg.setImageResource(R.drawable.chance_front);
+                    String chanceDescription = drawnCard.getDescription();
+                    String buttonText = "CONTINUE";
+                    chanceTitle.setText(chanceDescription);
+                    buttonTextView.setText(buttonText);
+                    continueToBoard = true;
+                }
             }
         });
     }
 
     private ChanceCard drawRandomChanceCard(){
+        // Todo: Write the different chance cards
         return new ChanceCard("Card title", "Description");
     }
 }
