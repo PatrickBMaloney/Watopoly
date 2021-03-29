@@ -14,7 +14,8 @@ public abstract class Tile implements Serializable {
     protected int currNumberOfPlayers = 0;
     protected TileDirection tileDirection;
 
-    abstract void landOn(Player player);
+    //Does nothing on default
+    public void landOn(Player player) {}
 
     public Coordinates getCoordinates() {
         return coordinates;
@@ -26,4 +27,7 @@ public abstract class Tile implements Serializable {
 
     abstract public void drawOn(Canvas canvas);
 
+    public String getName() {
+        return name;
+    }
 }

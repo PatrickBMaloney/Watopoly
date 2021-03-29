@@ -1,33 +1,40 @@
 package com.example.watopoly.activity;
 
-import android.content.Context;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Canvas;
-import android.os.AsyncTask;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.watopoly.R;
 import com.example.watopoly.fragment.DiceRollFragment;
 import com.example.watopoly.fragment.FragmentCallbackListener;
 import com.example.watopoly.fragment.PlayerInfoHeaderFragment;
+import com.example.watopoly.model.CardTile;
+import com.example.watopoly.model.ChanceCard;
 import com.example.watopoly.model.Game;
+import com.example.watopoly.model.Jail;
 import com.example.watopoly.model.Player;
+import com.example.watopoly.model.Property;
+import com.example.watopoly.model.TaxTile;
 import com.example.watopoly.model.Tile;
+import com.example.watopoly.util.GameSaveManager;
 import com.example.watopoly.view.BoardView;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 public class MainGameViewActivity extends AppCompatActivity implements FragmentCallbackListener {
@@ -45,18 +52,21 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
         Intent intent = getIntent();
         if (intent.hasExtra("continue")) {
-            new LoadData(this).execute();
+            new GameSaveManager.LoadData(this).execute();
             return;
         }
 
-        //Maybe move this into one func?
+        initGame();
+    }
+
+    public void initGame() {
         linkView();
         setup();
         startTurn();
     }
 
     private void startTurn() {
-        new SaveData(this).execute();
+        new GameSaveManager.SaveData(this).execute();
         Game gameState = Game.getInstance();
         playerInfoHeaderFragment.setPlayer(gameState.nextTurn());
         diceRollFragment.getView().setVisibility(View.VISIBLE);
@@ -78,8 +88,6 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         gameState.setBoardInfo(boardInfo);
 
         //TODO: bind button to the activity
-        Button buyButton = findViewById(R.id.buyPropertyButton);
-        buyButton.setVisibility(View.GONE);
         Button viewAssetButton = findViewById(R.id.viewAssetButton);
         Button tradeButton = findViewById(R.id.tradeButton);
         Button mortgageButton = findViewById(R.id.mortgageButton);
@@ -114,69 +122,107 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
     //FragmentCallbackListener diceRolled
     @Override
     public void onCallback() {
-        //TODO: move the player
         int diceRollResult = diceRollFragment.getDiceRollResult();
+        final Game game = Game.getInstance();
+        Tile tile = game.moveCurrentPlayer(diceRollResult);
+
+        //move this after animating
+        final Dialog dialog = new Dialog(MainGameViewActivity.this, R.style.Theme_Dialog);
+        if (tile instanceof CardTile) {
+            Intent intent = new Intent(this, ChanceCardActivity.class);
+            intent.putExtra("drawnCard", (ChanceCard)((CardTile) tile).getLastDrawn());
+            startActivityForResult(intent, 1);
+        } else if (tile instanceof Property) {
+            final Property property = (Property) tile;
+            if (property.getOwner() == null) {
+                dialog.setContentView(R.layout.dialog_buy_house);
+                Button buyButton = dialog.findViewById(R.id.buyHouseButton);
+                Button cancelButton = dialog.findViewById(R.id.skipHouseButton);
+                TextView desTextView = dialog.findViewById(R.id.buyHouseDescriptionTextView);
+                String description = String.format("You landed on %s. Would you like to purchase for $%.2f?", property.getName(), property.getPurchasePrice());
+                if (property.getPurchasePrice() > game.getCurrentPlayer().getMoney()) {
+                    description = String.format("You landed on %s. Insufficient funds.", property.getName());
+                    cancelButton.setText("Continue");
+                    buyButton.setVisibility(View.GONE);
+                }
+
+
+                desTextView.setText(description);
+
+                buyButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        property.purchase(game.getCurrentPlayer());
+                        dialog.dismiss();
+                        playerInfoHeaderFragment.refresh();
+                    }
+                });
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            } else if (property.getOwner() != game.getCurrentPlayer()) {
+                dialog.setContentView(R.layout.dialog_pay_rent);
+                Button continueButton = dialog.findViewById(R.id.payRentContinue);
+                TextView desTextView = dialog.findViewById(R.id.payRentDescriptionTextView);
+                TextView renterTextView = dialog.findViewById(R.id.renterTextView);
+                ImageView renterImageView = dialog.findViewById(R.id.renterImageView);
+                TextView ownerTextView = dialog.findViewById(R.id.ownerTextView);
+                ImageView ownerImageView = dialog.findViewById(R.id.ownerImageView);
+
+                String description = String.format("You landed on %s owned by %s", property.getName(), property.getOwner().getName());
+                renterTextView.setText(String.format("- $%.2f", property.getRentPrice()));
+                ownerTextView.setText(String.format("+ $%.2f", property.getRentPrice()));
+                desTextView.setText(description);
+
+                renterImageView.setImageResource(game.getCurrentPlayer().getIcon());
+                ImageViewCompat.setImageTintMode(renterImageView, PorterDuff.Mode.SRC_ATOP);
+                ImageViewCompat.setImageTintList(renterImageView, ColorStateList.valueOf(Color.parseColor(game.getCurrentPlayer().getColour())));
+
+                ownerImageView.setImageResource(property.getOwner().getIcon());
+                ImageViewCompat.setImageTintMode(ownerImageView, PorterDuff.Mode.SRC_ATOP);
+                ImageViewCompat.setImageTintList(ownerImageView, ColorStateList.valueOf(Color.parseColor(property.getOwner().getColour())));
+
+                continueButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        playerInfoHeaderFragment.refresh();
+                    }
+                });
+                dialog.show();
+            }
+        } else if (tile instanceof TaxTile) {
+            dialog.setContentView(R.layout.dialog_tax);
+            Button continueButton = dialog.findViewById(R.id.taxContinueButton);
+            continueButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    playerInfoHeaderFragment.refresh();
+                }
+            });
+            dialog.show();
+
+        } else if (tile instanceof Jail && game.getCurrentPlayer().getJailed()) {
+            dialog.setContentView(R.layout.dialog_jailed);
+            Button continueButton = dialog.findViewById(R.id.jailContinueButton);
+            continueButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
+
+        Log.d("Landed", tile.toString());
+        Log.d("Landed", ""+game.getCurrentPlayer().getPosition());
 
         diceRollFragment.getView().setVisibility(View.GONE);
         actionLinearLayout.setVisibility(View.VISIBLE);
-    }
-
-
-    //Background tasks
-    public static class SaveData extends AsyncTask<Void, Void, Void> {
-        private WeakReference<MainGameViewActivity> activityWeakReference;
-        SaveData(MainGameViewActivity mainGameViewActivity) {
-            activityWeakReference = new WeakReference<>(mainGameViewActivity);
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            MainGameViewActivity mainGameViewActivity = activityWeakReference.get();
-            if (mainGameViewActivity == null || mainGameViewActivity.isFinishing()) return null;
-
-            try {
-                FileOutputStream outputStream = mainGameViewActivity.openFileOutput("savedGameState", Context.MODE_PRIVATE);
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-                objectOutputStream.writeObject(Game.getInstance()); //May need thread safety
-                objectOutputStream.close();
-                Log.d("Save", "Game saved");
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-            return null;
-        }
-    }
-
-    public static class LoadData extends AsyncTask<Void, Void, Void> {
-        private WeakReference<MainGameViewActivity> activityWeakReference;
-
-        LoadData(MainGameViewActivity mainGameViewActivity){
-            activityWeakReference = new WeakReference<>(mainGameViewActivity);
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                MainGameViewActivity mainGameViewActivity = activityWeakReference.get();
-                if (mainGameViewActivity == null || mainGameViewActivity.isFinishing()) return null;
-
-                FileInputStream inputStream = mainGameViewActivity.openFileInput("savedGameState");
-                Game.loadGame(inputStream);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            MainGameViewActivity mainActivity = activityWeakReference.get();
-            if (mainActivity == null || mainActivity.isFinishing()) return;
-
-            mainActivity.linkView();
-            mainActivity.setup();
-            mainActivity.startTurn();
-        }
     }
 }

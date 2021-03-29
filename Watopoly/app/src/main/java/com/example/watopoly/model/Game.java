@@ -12,6 +12,7 @@ public class Game implements Serializable {
     private static Game gameState = new Game();
 
     private ArrayList<Player> players = new ArrayList<>();
+    private ArrayList<ChanceCard> cards = new ArrayList<>();
     private Board board = new Board();
     private int turnNumber = -1;
 
@@ -22,9 +23,22 @@ public class Game implements Serializable {
         return gameState;
     }
 
+    public static void loadGame(FileInputStream inputStream) {
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+            gameState = (Game) objectInputStream.readObject();
+            objectInputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     //public methods
     public void setBoardInfo(Pair<ArrayList<Tile>, Canvas> boardInfo) {
-        board.setBoardInfo(boardInfo);
+        //TODO: add new cards and flesh out cards
+        cards.add(new ChanceCard("Tax", "tax"));
+
+        board.setBoardInfo(boardInfo, cards);
     }
 
     public void addPlayer(Player player) {
@@ -36,6 +50,10 @@ public class Game implements Serializable {
         return players.get(turnNumber % players.size());
     }
 
+    public Tile moveCurrentPlayer(int steps) {
+        return board.move(getCurrentPlayer(), steps);
+    }
+
     public Player getCurrentPlayer() {
         return players.get(turnNumber % players.size());
     }
@@ -43,15 +61,5 @@ public class Game implements Serializable {
     public void resetGame() {
         players.clear();
         //TODO: clear other object as we add them
-    }
-
-    public static void loadGame(FileInputStream inputStream) {
-        try {
-            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-            gameState = (Game) objectInputStream.readObject();
-            objectInputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

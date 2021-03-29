@@ -8,10 +8,14 @@ public abstract class Property extends Tile {
     protected double purchasePrice;
     protected boolean isMortgaged = false;
 
-    abstract double getRentPrice();
+    public abstract double getRentPrice();
     public double getPurchasePrice(){ return purchasePrice; }
 
-    abstract boolean purchase(Player buyer);
+    public void purchase(Player buyer) {
+        buyer.payAmount(purchasePrice);
+        owner = buyer;
+        buyer.addProperty(this);
+    }
 
     protected Property(String name, TileDirection direction, double baseRentPrice, double purchasePrice) {
         this.tileDirection = direction;
@@ -19,6 +23,18 @@ public abstract class Property extends Tile {
         this.name = name;
         this.purchasePrice = purchasePrice;
         maxNumberOfPlayers = 2;
+    }
+
+    @Override
+    public void landOn(Player player) {
+        if (owner != null && owner != player && !isMortgaged) {
+            player.payAmount(getRentPrice());
+            owner.receiveAmount(getRentPrice());
+        }
+    }
+
+    public Player getOwner() {
+        return owner;
     }
 }
 

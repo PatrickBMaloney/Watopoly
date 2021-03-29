@@ -6,9 +6,11 @@ import android.graphics.Paint;
 import com.example.watopoly.enums.TileDirection;
 
 public class TaxTile extends Tile {
-    @Override
-    void landOn(Player player) {
+    private static final double taxAmount = 150;
 
+    @Override
+    public void landOn(Player player) {
+        player.payAmount(taxAmount);
     }
 
     @Override

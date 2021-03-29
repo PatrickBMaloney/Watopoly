@@ -9,8 +9,9 @@ public class GoToJail extends Tile {
     int jailLocation = 0;
 
     @Override
-    void landOn(Player player) {
-
+    public void landOn(Player player) {
+        player.setPosition(jailLocation);
+        player.setJailed(true);
     }
 
     @Override
@@ -23,4 +24,7 @@ public class GoToJail extends Tile {
         tileDirection = TileDirection.CORNER;
     }
 
+    public void setJailLocation(int jailLocation) {
+        this.jailLocation = jailLocation;
+    }
 }

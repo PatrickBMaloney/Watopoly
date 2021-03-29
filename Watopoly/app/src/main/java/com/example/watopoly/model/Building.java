@@ -12,18 +12,8 @@ public class Building extends Property {
     private String hexCode;
 
     @Override
-    double getRentPrice() {
+    public double getRentPrice() {
         return 0;
-    }
-
-    @Override
-    boolean purchase(Player buyer) {
-        return false;
-    }
-
-    @Override
-    void landOn(Player player) {
-
     }
 
     @Override
