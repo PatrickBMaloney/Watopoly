@@ -5,12 +5,24 @@ import android.graphics.Paint;
 
 import com.example.watopoly.enums.TileDirection;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class CardTile extends Tile{
+    private ArrayList<ChanceCard> cards;
+    private ChanceCard lastDrawn;
 
-    //TODO: draw and apply cards
+    public CardTile (String n, TileDirection d) {
+        this.name = n;
+        this.tileDirection = d;
+        maxNumberOfPlayers = 2;
+    }
+
     @Override
-    void landOn(Player player) {
-
+    public void landOn(Player player) {
+        Random rand = new Random();
+        lastDrawn = cards.get(rand.nextInt(cards.size()));
+        //TODO: draw and apply cards
     }
 
     @Override
@@ -18,9 +30,11 @@ public class CardTile extends Tile{
 
     }
 
-    public CardTile (String n, TileDirection d) {
-        this.name = n;
-        this.tileDirection = d;
-        maxNumberOfPlayers = 2;
+    public void setCards(ArrayList<ChanceCard> cards) {
+        this.cards = cards;
+    }
+
+    public ChanceCard getLastDrawn() {
+        return lastDrawn;
     }
 }

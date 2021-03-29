@@ -7,11 +7,6 @@ import com.example.watopoly.enums.TileDirection;
 
 public class Parking extends Tile {
     @Override
-    void landOn(Player player) {
-
-    }
-
-    @Override
     public void drawOn(Canvas canvas) {
 
     }

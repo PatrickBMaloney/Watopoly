@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Player implements Serializable {
+    private static final int goAmount = 200;
     private String name;
     private Double money;
     private String colour;
@@ -11,8 +12,8 @@ public class Player implements Serializable {
 
     private ArrayList<Property> properties = new ArrayList<>();
     private int jailFreeCards = 0;
-    private int coordinates = 0;
-    private int currPosition = 0;
+    private int position = 0;
+    private Boolean isJailed = false;
     private int numRailways = 0;
 
     public Player(String name, Double money, String colour, int icon) {
@@ -36,5 +37,33 @@ public class Player implements Serializable {
 
     public int getIcon() {
         return icon;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+    
+    public void passedGo() {
+        money += goAmount;
+    }
+
+    public void payAmount(double amount) { money -= amount; }
+
+    public void receiveAmount(double amount) { money += amount;}
+
+    public Boolean getJailed() {
+        return isJailed;
+    }
+
+    public void setJailed(Boolean jailed) {
+        isJailed = jailed;
+    }
+
+    public void addProperty(Property property) {
+        properties.add(property);
     }
 }

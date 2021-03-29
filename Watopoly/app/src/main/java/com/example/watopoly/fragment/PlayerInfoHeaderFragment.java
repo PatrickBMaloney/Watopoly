@@ -19,6 +19,8 @@ import com.example.watopoly.R;
 import com.example.watopoly.model.Player;
 
 public class PlayerInfoHeaderFragment extends Fragment {
+    private Player player = null;
+
     View current;
     @Nullable
     @Override
@@ -29,6 +31,11 @@ public class PlayerInfoHeaderFragment extends Fragment {
     }
 
     public void setPlayer(Player player) {
+        this.player = player;
+        refresh();
+    }
+
+    public void refresh() {
         TextView nameTextView = current.findViewById(R.id.playerNameTextView);
         TextView moneyTextView = current.findViewById(R.id.playerMoneyTextView);
         ImageView avatarImageView = current.findViewById(R.id.playerIconImageView);

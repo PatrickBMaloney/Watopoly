@@ -11,7 +11,8 @@
         android:name="com.example.watopoly.fragment.PlayerInfoHeaderFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="455dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.example.watopoly.view.BoardView
@@ -38,12 +39,6 @@
             android:text="Actions"
             android:textSize="20dp"
             android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/buyPropertyButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Buy" />
 
         <Button
             android:id="@+id/viewAssetButton"

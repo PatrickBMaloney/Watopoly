@@ -32,13 +32,8 @@ public class ChanceCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.land_on_chance_card);
         linkView();
-        setup();
         Player myPlayer = gameState.getCurrentPlayer();
         playerInfoHeaderFragment.setPlayer(myPlayer);
-    }
-
-    private void setup() {
-        Intent intent = getIntent();
     }
 
     private void linkView() {
@@ -57,13 +52,10 @@ public class ChanceCardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(continueToBoard){
-                    // Todo: execute card action
-                    Intent intent = new Intent(getApplicationContext(), MainGameViewActivity.class);
-                    intent.putExtra("continue", true);
-                    startActivity(intent);
+                    finish();
                 }
                 else {
-                    ChanceCard drawnCard = drawRandomChanceCard();
+                    ChanceCard drawnCard = (ChanceCard) getIntent().getSerializableExtra("drawnCard");
                     chanceCardImg.setImageResource(R.drawable.chance_front);
                     String chanceDescription = drawnCard.getDescription();
                     String chanceTitle = drawnCard.getTitle();
@@ -75,10 +67,5 @@ public class ChanceCardActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private ChanceCard drawRandomChanceCard(){
-        // Todo: Write the different chance cards
-        return new ChanceCard("Card title", "Description");
     }
 }

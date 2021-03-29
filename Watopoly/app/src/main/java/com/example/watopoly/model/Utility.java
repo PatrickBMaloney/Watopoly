@@ -8,19 +8,8 @@ import com.example.watopoly.enums.TileDirection;
 public class Utility extends Property {
 
     @Override
-    double getRentPrice() {
+    public double getRentPrice() {
         return 0;
-    }
-
-    //TODO:
-    @Override
-    boolean purchase(Player buyer) {
-        return false;
-    }
-
-    @Override
-    void landOn(Player player) {
-
     }
 
     @Override
