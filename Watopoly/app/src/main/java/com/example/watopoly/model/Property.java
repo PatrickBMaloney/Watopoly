@@ -10,6 +10,7 @@ public abstract class Property extends Tile {
 
     public abstract double getRentPrice();
     public double getPurchasePrice(){ return purchasePrice; }
+    public String getName(){ return name; }
 
     public void purchase(Player buyer) {
         buyer.payAmount(purchasePrice);
