@@ -28,6 +28,8 @@
                   android:screenOrientation="landscape"/>
         <activity android:name=".activity.MainGameViewActivity"
             android:screenOrientation="landscape"/>
+        <activity android:name=".activity.ChanceCardActivity"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>
