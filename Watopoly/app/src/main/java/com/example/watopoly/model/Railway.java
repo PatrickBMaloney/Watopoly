@@ -17,7 +17,7 @@ public class Railway extends Property {
 
     }
 
-    public Railway(String name, TileDirection direction, double baseRentPrice, double purchasePrice) {
+    public Railway(String name, TileDirection direction, int baseRentPrice, int purchasePrice) {
         super(name, direction, baseRentPrice, purchasePrice);
     }
 
