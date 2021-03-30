@@ -10,12 +10,15 @@ public class Building extends Property {
     private int numberOfHouses = 0;
     private boolean hasHotel = false;
     private String hexCode;
+    private double housePrice;
     private boolean fullSetOwned = false;
 
     @Override
     public double getRentPrice() {
         return hasHotel ? getRentPriceWithHotel() : getRentPrice(numberOfHouses, fullSetOwned);
     }
+
+    public double getHousePrice(){ return housePrice; }
 
     public double getRentPrice(int numOfHouses, boolean isFullSet) {
         if (isFullSet) {
@@ -87,8 +90,9 @@ public class Building extends Property {
 
     }
 
-    public Building(String name, TileDirection direction, int baseRentPrice, int purchasePrice, String hexCode) {
+    public Building(String name, TileDirection direction, double baseRentPrice, double purchasePrice, double housePrice, String hexCode) {
         super(name, direction, baseRentPrice, purchasePrice);
         this.hexCode = hexCode;
+        this.housePrice = housePrice;
     }
 }
