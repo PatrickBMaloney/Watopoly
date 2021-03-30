@@ -50,11 +50,11 @@ public class PropertyFragment extends Fragment {
             propertyNameTextView.setText(property.getName());
             propertyNameTextView.setBackgroundColor(256);
             propertyNameTextView.setBackgroundColor(Color.parseColor(property.getPropertyHex()));
-            baseRentTextView.setText(String.format("$%.0f", property.getRentPrice(0)));
-            oneHouseValueTextView.setText(String.format("$   %.0f", property.getRentPrice(1)));
-            twoHouseValueTextView.setText(String.format("%.0f", property.getRentPrice(2)));
-            threeHouseValueTextView.setText(String.format("%.0f", property.getRentPrice(3)));
-            fourHouseValueTextView.setText(String.format("%.0f", property.getRentPrice(4)));
+            baseRentTextView.setText(String.format("$%.0f", property.getRentPrice(0, true)));
+            oneHouseValueTextView.setText(String.format("$   %.0f", property.getRentPrice(1, true)));
+            twoHouseValueTextView.setText(String.format("%.0f", property.getRentPrice(2, true)));
+            threeHouseValueTextView.setText(String.format("%.0f", property.getRentPrice(3, true)));
+            fourHouseValueTextView.setText(String.format("%.0f", property.getRentPrice(4, true)));
             oneHotelTextView.setText(String.format("$%.0f", property.getRentPriceWithHotel()));
         }
     }
