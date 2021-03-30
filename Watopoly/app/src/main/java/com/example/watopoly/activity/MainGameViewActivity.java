@@ -18,12 +18,16 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.ImageViewCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.watopoly.R;
 import com.example.watopoly.fragment.DiceRollFragment;
 import com.example.watopoly.fragment.FragmentCallbackListener;
 import com.example.watopoly.fragment.PlayerInfoHeaderFragment;
+import com.example.watopoly.fragment.PropertyFragment;
+import com.example.watopoly.model.Building;
 import com.example.watopoly.model.CardTile;
 import com.example.watopoly.model.ChanceCard;
 import com.example.watopoly.model.Game;
@@ -149,11 +153,18 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
                 desTextView.setText(description);
 
+                if (tile instanceof Building) { // TODO: setProperty should accept all property types
+                    final FragmentManager fm = getSupportFragmentManager();
+                    PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardBuyFragment);
+                    propertyFragment.setProperty((Building)tile);
+                }
+
                 buyButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         property.purchase(game.getCurrentPlayer());
                         dialog.dismiss();
+                        destroyPropertyFragment(R.id.propertyCardBuyFragment);
                         playerInfoHeaderFragment.refresh();
                     }
                 });
@@ -161,6 +172,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
+                        destroyPropertyFragment(R.id.propertyCardBuyFragment);
                     }
                 });
                 dialog.show();
@@ -172,6 +184,13 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                 ImageView renterImageView = dialog.findViewById(R.id.renterImageView);
                 TextView ownerTextView = dialog.findViewById(R.id.ownerTextView);
                 ImageView ownerImageView = dialog.findViewById(R.id.ownerImageView);
+
+                if (tile instanceof Building) { // TODO: setProperty should accept all property types
+                    final FragmentManager fm = getSupportFragmentManager();
+                    PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardFragment);
+                    propertyFragment.setProperty((Building)tile);
+                }
+
 
                 String description = String.format("You landed on %s owned by %s", property.getName(), property.getOwner().getName());
                 renterTextView.setText(String.format("- $%.2f", property.getRentPrice()));
@@ -190,6 +209,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
+                        destroyPropertyFragment(R.id.propertyCardFragment);
                         playerInfoHeaderFragment.refresh();
                     }
                 });
@@ -224,5 +244,14 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
         diceRollFragment.getView().setVisibility(View.GONE);
         actionLinearLayout.setVisibility(View.VISIBLE);
+
+
+    }
+    public void destroyPropertyFragment(int id) {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentById(id);
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.remove(fragment);
+        fragmentTransaction.commit();
     }
 }

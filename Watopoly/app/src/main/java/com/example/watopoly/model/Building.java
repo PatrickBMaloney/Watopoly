@@ -8,12 +8,42 @@ import com.example.watopoly.enums.TileDirection;
 
 public class Building extends Property {
     private int numberOfHouses = 0;
-    private int numberOfHotels = 0;
+    private boolean hasHotel = false;
     private String hexCode;
+    private boolean fullSetOwned = false;
 
     @Override
     public double getRentPrice() {
-        return 0;
+        return hasHotel ? getRentPriceWithHotel() : getRentPrice(numberOfHouses, fullSetOwned);
+    }
+
+    public double getRentPrice(int numOfHouses, boolean isFullSet) {
+        if (isFullSet) {
+            switch (numOfHouses) {
+                case 0:
+                    return Math.ceil((2 * baseRentPrice) / 10) * 10;
+                case 1:
+                    return Math.ceil((4.94 * baseRentPrice) / 10) * 10;
+                case 2:
+                    return Math.ceil((14.3 * baseRentPrice) / 10) * 10;
+                case 3:
+                    return Math.ceil((37.8 * baseRentPrice) / 10) * 10;
+                case 4:
+                    return Math.ceil((54.1 * baseRentPrice) / 10) * 10;
+                default:
+                    return 0;
+            }
+        } else {
+            return baseRentPrice;
+        }
+    }
+
+    public double getRentPriceWithHotel() {
+        return Math.ceil((69.8 * baseRentPrice) / 10) * 10;
+    }
+
+    public String getPropertyHex() {
+        return hexCode;
     }
 
     @Override
@@ -57,7 +87,7 @@ public class Building extends Property {
 
     }
 
-    public Building(String name, TileDirection direction, double baseRentPrice, double purchasePrice, String hexCode) {
+    public Building(String name, TileDirection direction, int baseRentPrice, int purchasePrice, String hexCode) {
         super(name, direction, baseRentPrice, purchasePrice);
         this.hexCode = hexCode;
     }
