@@ -64,7 +64,7 @@ public final class BoardTiles {
 
     public static Tile getBuildingTileByName(String tileName){
         for(Tile currentTile:boardTiles){
-            if(currentTile instanceof Building && currentTile.getName().equals(tileName)){
+            if((currentTile instanceof Building || currentTile instanceof Utility ) && currentTile.getName().equals(tileName)){
                 return currentTile;
             }
         }

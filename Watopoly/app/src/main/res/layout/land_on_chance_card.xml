@@ -26,7 +26,7 @@
         android:layout_marginTop="24dp"
         android:text="Draw Chance Card"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintHorizontal_bias="0.471"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toBottomOf="@+id/chanceTitle" />
 

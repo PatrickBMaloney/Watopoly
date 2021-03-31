@@ -136,6 +136,10 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             Intent intent = new Intent(this, ChanceCardActivity.class);
             intent.putExtra("drawnCard", (ChanceCard)((CardTile) tile).getLastDrawn());
             startActivityForResult(intent, 1);
+
+            FragmentManager fm = getSupportFragmentManager();
+            playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
+            playerInfoHeaderFragment.refresh();
         } else if (tile instanceof Property) {
             final Property property = (Property) tile;
             if (property.getOwner() == null) {

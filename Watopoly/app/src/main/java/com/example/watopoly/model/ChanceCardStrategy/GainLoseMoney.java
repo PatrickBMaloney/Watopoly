@@ -8,8 +8,12 @@ public class GainLoseMoney extends ChanceCard {
 
     public void executeAction(){
         Game gameState = Game.getInstance();
-        System.out.println("you gained some money");
-        gameState.getCurrentPlayer().payAmount(amount * -1);
+        if(amount > 0){
+            gameState.getCurrentPlayer().receiveAmount(amount);
+        }
+        else {
+            gameState.getCurrentPlayer().payAmount(amount * -1);
+        }
     }
 
     public GainLoseMoney(String title, String description, double amount){

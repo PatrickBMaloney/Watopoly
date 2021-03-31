@@ -53,10 +53,10 @@ public class ChanceCardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(continueToBoard){
+                    playerInfoHeaderFragment.refresh();
                     finish();
                 }
                 else {
-//                    ChanceCard drawnCard = (ChanceCard) getIntent().getSerializableExtra("drawnCard");
                     ChanceCard drawnCard = ChanceCards.drawRandomChanceCard();
                     chanceCardImg.setImageResource(R.drawable.chance_front);
                     String chanceDescription = drawnCard.getDescription();

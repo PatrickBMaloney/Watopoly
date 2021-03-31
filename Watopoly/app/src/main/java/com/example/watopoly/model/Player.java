@@ -66,4 +66,15 @@ public class Player implements Serializable {
     public void addProperty(Property property) {
         properties.add(property);
     }
+
+    public void addJailFreeCard(){ jailFreeCards += 1; }
+
+    public boolean useJailFreecard(){
+        if (jailFreeCards == 0){
+            return false;
+        }
+        jailFreeCards -= 1;
+        isJailed = false;
+        return true;
+    }
 }
