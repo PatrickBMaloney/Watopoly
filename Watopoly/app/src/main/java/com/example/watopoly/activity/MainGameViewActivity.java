@@ -36,6 +36,7 @@ import com.example.watopoly.model.Player;
 import com.example.watopoly.model.Property;
 import com.example.watopoly.model.TaxTile;
 import com.example.watopoly.model.Tile;
+import com.example.watopoly.model.Utility;
 import com.example.watopoly.util.GameSaveManager;
 import com.example.watopoly.view.BoardView;
 
@@ -128,6 +129,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
     public void onCallback() {
         int diceRollResult = diceRollFragment.getDiceRollResult();
         final Game game = Game.getInstance();
+        game.setLastRoll(diceRollResult);
         Tile tile = game.moveCurrentPlayer(diceRollResult);
 
         //move this after animating
@@ -183,14 +185,12 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                 TextView ownerTextView = dialog.findViewById(R.id.ownerTextView);
                 ImageView ownerImageView = dialog.findViewById(R.id.ownerImageView);
 
-                if (tile instanceof Building) { // TODO: setProperty should accept all property types
-                    final FragmentManager fm = getSupportFragmentManager();
-                    PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardFragment);
-                    propertyFragment.setProperty((Building)tile);
-                }
-
+                final FragmentManager fm = getSupportFragmentManager();
+                PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardFragment);
+                propertyFragment.setProperty(property);
 
                 String description = String.format("You landed on %s owned by %s", property.getName(), property.getOwner().getName());
+
                 renterTextView.setText(String.format("- $%.2f", property.getRentPrice()));
                 ownerTextView.setText(String.format("+ $%.2f", property.getRentPrice()));
                 desTextView.setText(description);

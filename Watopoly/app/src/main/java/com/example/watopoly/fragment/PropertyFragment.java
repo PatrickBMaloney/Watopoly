@@ -18,6 +18,7 @@ import com.example.watopoly.R;
 import com.example.watopoly.model.Building;
 import com.example.watopoly.model.Property;
 import com.example.watopoly.model.Railway;
+import com.example.watopoly.model.Utility;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +28,7 @@ public class PropertyFragment extends Fragment {
     private View current;
     private View buildingCardGroup;
     private View transportationCardGroup;
+    private View utilityCardGroup;
 
     @Nullable
     @Override
@@ -40,6 +42,7 @@ public class PropertyFragment extends Fragment {
         // TODO: Change fragment for railways and utilities
         buildingCardGroup = current.findViewById(R.id.buildingCardGroup);
         transportationCardGroup = current.findViewById(R.id.transportCardGroup);
+        utilityCardGroup = current.findViewById(R.id.utilityCardGroup);
         if (property instanceof Building) {
             Building building = (Building) property;
             TextView propertyNameTextView = current.findViewById(R.id.propertyNameTextView);
@@ -54,6 +57,8 @@ public class PropertyFragment extends Fragment {
 
             buildingCardGroup.setVisibility(View.VISIBLE);
             transportationCardGroup.setVisibility(View.GONE);
+            utilityCardGroup.setVisibility(View.GONE);
+
             propertyNameTextView.setText(building.getName());
             propertyNameTextView.setBackgroundColor(256);
             propertyNameTextView.setBackgroundColor(Color.parseColor(building.getPropertyHex()));
@@ -77,6 +82,8 @@ public class PropertyFragment extends Fragment {
 
             buildingCardGroup.setVisibility(View.GONE);
             transportationCardGroup.setVisibility(View.VISIBLE);
+            utilityCardGroup.setVisibility(View.GONE);
+
             transportNameTextView.setText(railway.getName());
             transportImageView.setImageResource(railway.getIcon());
             transportRentValueTextView.setText(String.format("$%.0f", railway.getRentPrice(1)));
@@ -85,8 +92,16 @@ public class PropertyFragment extends Fragment {
             fourTransportRentValueTextView.setText(String.format("%.0f", railway.getRentPrice(4)));
             transportMortgageValueTestView.setText(String.format("$%.0f", (railway.getPurchasePrice()/2)));
         } else {
+            Utility utility = (Utility) property;
+            TextView utilityNameTextView = current.findViewById(R.id.utilityNameTextView);
+            TextView utilityMortgageValueTestView = current.findViewById(R.id.utilityMortgageValueTestView);
+
             buildingCardGroup.setVisibility(View.GONE);
             transportationCardGroup.setVisibility(View.GONE);
+            utilityCardGroup.setVisibility(View.VISIBLE);
+
+            utilityNameTextView.setText(utility.getName());
+            utilityMortgageValueTestView.setText(String.format("$%.0f", (utility.getPurchasePrice()/2)));
         }
     }
 }

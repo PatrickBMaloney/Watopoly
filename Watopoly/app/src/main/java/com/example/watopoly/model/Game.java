@@ -15,6 +15,7 @@ public class Game implements Serializable {
     private ArrayList<ChanceCard> cards = new ArrayList<>();
     private Board board = new Board();
     private int turnNumber = -1;
+    private int lastRoll = -1;
 
     //Singleton
     private Game(){}
@@ -52,6 +53,14 @@ public class Game implements Serializable {
 
     public Tile moveCurrentPlayer(int steps) {
         return board.move(getCurrentPlayer(), steps);
+    }
+
+    public void setLastRoll(int roll) {
+        lastRoll = roll;
+    }
+
+    public int getLastRoll() {
+        return lastRoll;
     }
 
     public Player getCurrentPlayer() {
