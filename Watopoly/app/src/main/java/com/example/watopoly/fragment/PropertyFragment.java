@@ -46,6 +46,8 @@ public class PropertyFragment extends Fragment {
             TextView threeHouseValueTextView = current.findViewById(R.id.threeHouseValueTextView);
             TextView fourHouseValueTextView = current.findViewById(R.id.fourHouseValueTextView);
             TextView oneHotelTextView = current.findViewById(R.id.oneHotelTextView);
+            TextView houseCostTextView = current.findViewById(R.id.houseCostTextView);
+            TextView hotelCostTextView = current.findViewById(R.id.houseCostTextView2);
 
             propertyNameTextView.setText(property.getName());
             propertyNameTextView.setBackgroundColor(256);
@@ -56,6 +58,8 @@ public class PropertyFragment extends Fragment {
             threeHouseValueTextView.setText(String.format("%.0f", property.getRentPrice(3, true)));
             fourHouseValueTextView.setText(String.format("%.0f", property.getRentPrice(4, true)));
             oneHotelTextView.setText(String.format("$%.0f", property.getRentPriceWithHotel()));
+            houseCostTextView.setText(String.format("Houses cost $%.0f each", property.getHousePrice()));
+            hotelCostTextView.setText(String.format("Hotels, $%.0f plus 4 houses", property.getHousePrice()));
         }
     }
 }
