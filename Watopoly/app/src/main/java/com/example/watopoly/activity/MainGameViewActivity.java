@@ -153,11 +153,9 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
                 desTextView.setText(description);
 
-                if (tile instanceof Building) { // TODO: setProperty should accept all property types
-                    final FragmentManager fm = getSupportFragmentManager();
-                    PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardBuyFragment);
-                    propertyFragment.setProperty((Building)tile);
-                }
+                final FragmentManager fm = getSupportFragmentManager();
+                PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardBuyFragment);
+                propertyFragment.setProperty(property);
 
                 buyButton.setOnClickListener(new View.OnClickListener() {
                     @Override

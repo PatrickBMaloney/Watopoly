@@ -6,8 +6,105 @@
     android:layout_height="match_parent"
     tools:context=".fragment.PropertyFragment">
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/transportCardGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="transportRentValueTextView,threeTransportRentTextView,threeTransportRentValueTextView,
+                                       twoTransportRentTextView,twoTransportRentValueTextView,fourTransportRentTextView,
+                                       fourTransportRentValueTextView,transportImageView,transportNameTextView,
+                                       transportRentTextView,transportMortgageTestView,transportMortgageValueTestView"
+        tools:visibility="visible" />
+
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/transportRentValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="$25"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/transportRentTextView"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/threeTransportRentTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text='If 3         "           "        "'
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/twoTransportRentTextView"
+        app:layout_constraintTop_toBottomOf="@+id/twoTransportRentTextView" />
+
+    <TextView
+        android:id="@+id/threeTransportRentValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/threeTransportRentTextView"
+        app:layout_constraintEnd_toEndOf="@+id/twoTransportRentValueTextView" />
+
+    <TextView
+        android:id="@+id/twoTransportRentTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="If 2 transports are owned"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/transportRentTextView"
+        app:layout_constraintTop_toBottomOf="@+id/transportRentTextView" />
+
+    <TextView
+        android:id="@+id/twoTransportRentValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/twoTransportRentTextView"
+        app:layout_constraintEnd_toEndOf="@+id/transportRentValueTextView" />
+
+    <TextView
+        android:id="@+id/fourTransportRentTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text='If 4         "           "        "'
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/threeTransportRentTextView"
+        app:layout_constraintTop_toBottomOf="@+id/threeTransportRentTextView" />
+
+    <TextView
+        android:id="@+id/fourTransportRentValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="200"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/fourTransportRentTextView"
+        app:layout_constraintEnd_toEndOf="@+id/threeTransportRentValueTextView" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/buildingCardGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="houseCostTextView2,houseCostTextView,MortgageValueTextView,
+                                       fourHouseValueTextView,twoHouseValueTextView,threeHouseValueTextView,
+                                       oneHouseValueTextView,propertyNameTextView,propertyNameBorderTextView,
+                                       baseRentTextView,oneHouseTextView,twoHouseTextView,threeHouseTextView,
+                                       fourHouseTextView,oneHotelTextView,textView16"
+        tools:visibility="gone" />
+
+    <TextView
+        android:id="@+id/cardBorderTextView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/rectangle_black_border"
@@ -222,5 +319,65 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/houseCostTextView2"
         app:layout_constraintVertical_bias="0.7" />
+
+    <ImageView
+        android:id="@+id/transportImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="110dp"
+        android:src="@drawable/ion"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/transportNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="ION Train"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+    <TextView
+        android:id="@+id/transportRentTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:text="Rent"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/transportNameTextView" />
+
+    <TextView
+        android:id="@+id/transportMortgageTestView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mortgage Value"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/threeTransportRentTextView"
+        app:layout_constraintTop_toBottomOf="@+id/fourTransportRentTextView"
+        app:layout_constraintVertical_bias="0.65999997" />
+
+    <TextView
+        android:id="@+id/transportMortgageValueTestView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$100"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/transportMortgageTestView"
+        app:layout_constraintEnd_toEndOf="@+id/fourTransportRentValueTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

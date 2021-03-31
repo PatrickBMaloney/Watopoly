@@ -43,6 +43,10 @@ public class Player implements Serializable {
         return position;
     }
 
+    public int getNumRailways() {
+        return numRailways;
+    }
+
     public void setPosition(int position) {
         this.position = position;
     }
