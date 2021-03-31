@@ -16,6 +16,7 @@ import com.example.watopoly.fragment.PlayerInfoHeaderFragment;
 import com.example.watopoly.model.ChanceCard;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Player;
+import com.example.watopoly.util.ChanceCards;
 
 public class ChanceCardActivity extends AppCompatActivity {
 
@@ -55,7 +56,8 @@ public class ChanceCardActivity extends AppCompatActivity {
                     finish();
                 }
                 else {
-                    ChanceCard drawnCard = (ChanceCard) getIntent().getSerializableExtra("drawnCard");
+//                    ChanceCard drawnCard = (ChanceCard) getIntent().getSerializableExtra("drawnCard");
+                    ChanceCard drawnCard = ChanceCards.drawRandomChanceCard();
                     chanceCardImg.setImageResource(R.drawable.chance_front);
                     String chanceDescription = drawnCard.getDescription();
                     String chanceTitle = drawnCard.getTitle();
@@ -63,6 +65,7 @@ public class ChanceCardActivity extends AppCompatActivity {
                     ChanceCardActivity.this.chanceDescription.setText(chanceDescription);
                     buttonTextView.setText(buttonText);
                     chanceCardTitle.setText(chanceTitle);
+                    drawnCard.executeAction();
                     continueToBoard = true;
                 }
             }

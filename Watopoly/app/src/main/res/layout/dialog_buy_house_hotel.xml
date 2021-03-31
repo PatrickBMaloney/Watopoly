@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/buyPropertyDescriptionTextView"
+        android:layout_width="286dp"
+        android:layout_height="91dp"
+        android:layout_marginTop="75dp"
+        android:lines="3"
+        android:text="How many houses would you like to purchase?"
+        android:textAlignment="center"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.899"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/buyHouseHotelIncrementer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.894"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buyPropertyDescriptionTextView">
+
+        <Button
+            android:id="@+id/minusBuyHouseButton"
+            android:layout_width="75dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/numHouseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:text="0" />
+
+        <Button
+            android:id="@+id/plusBuyHouseButton"
+            android:layout_width="75dp"
+            android:layout_height="50dp"
+            android:textAlignment="center"
+            android:text="+" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/confirmNumHouses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="Confirm"
+        app:layout_constraintEnd_toEndOf="@+id/buyHouseHotelIncrementer"
+        app:layout_constraintStart_toStartOf="@+id/buyHouseHotelIncrementer"
+        app:layout_constraintTop_toBottomOf="@+id/buyHouseHotelIncrementer" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <fragment
+        android:id="@+id/propertyCardBuyFragment"
+        class="com.example.watopoly.fragment.PropertyFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_property" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,7 @@ import com.example.watopoly.model.Utility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public final class BoardTiles {
 
@@ -59,6 +60,15 @@ public final class BoardTiles {
 
     public static ArrayList<Tile> getTiles() {
         return boardTiles;
+    }
+
+    public static Tile getBuildingTileByName(String tileName){
+        for(Tile currentTile:boardTiles){
+            if(currentTile instanceof Building && currentTile.getName().equals(tileName)){
+                return currentTile;
+            }
+        }
+        return null;
     }
 }
 
