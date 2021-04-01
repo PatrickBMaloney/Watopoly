@@ -29,13 +29,12 @@ public class Board implements Serializable {
             drawingState.put(t, new ArrayList<Player>());
         }
         for (Player p: players) {
-
             drawingState.get(boardTiles.get(0)).add(p);
         }
         boardView.drawBitmap(drawingState);
     }
 
-    public Tile move(Player player, int steps, Bitmap icon) {
+    public Tile move(Player player, int steps) {
         int newPosition = (player.getPosition() + steps) % boardTiles.size();
         if (player.getPosition() + steps > boardTiles.size()) {
             player.passedGo();

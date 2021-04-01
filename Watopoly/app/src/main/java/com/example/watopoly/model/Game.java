@@ -53,8 +53,8 @@ public class Game implements Serializable {
         return players.get(turnNumber % players.size());
     }
 
-    public Tile moveCurrentPlayer(int steps, Bitmap icon) {
-        return board.move(getCurrentPlayer(), steps, icon);
+    public Tile moveCurrentPlayer(int steps) {
+        return board.move(getCurrentPlayer(), steps);
     }
 
     public Player getCurrentPlayer() {

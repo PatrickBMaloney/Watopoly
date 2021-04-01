@@ -195,42 +195,50 @@ public class BoardView extends View {
                 float centerWidth = (c.getLeft() + (c.getRight() - 25))/2;
                 if (players.size() > 0) {
                     // draw right side
-                    canvas.drawRect(new RectF(centerWidth + 5, c.getTop() + 15, c.getRight() - 25, c.getBottom() - 15) , p);
+                    Bitmap b = players.get(0).getBitmapIcon();
+                    canvas.drawBitmap(b, null, new RectF(centerWidth + 5, c.getTop() + 15, c.getRight() - 25, c.getBottom() - 15) , p);
                 }
                 if (players.size() == 2) {
                     // draw left side
-                    canvas.drawRect(new RectF(c.getLeft() + 5, c.getTop() + 15, centerWidth - 5, c.getBottom() - 15) , p);
+                    Bitmap b = players.get(1).getBitmapIcon();
+                    canvas.drawBitmap(b, null, new RectF(c.getLeft() + 5, c.getTop() + 15, centerWidth - 5, c.getBottom() - 15) , p);
                 }
             }
             else if (tile.getTileDirection() == TileDirection.TOP) {
                 float centerHeight = (c.getTop() + (c.getBottom() - 25))/2;
                 if (players.size() > 0) {
                     // draw bottom side
-                    canvas.drawRect(new RectF(c.getLeft() + 3, centerHeight + 5, c.getRight() - 3, c.getBottom() - 25) , p);
+                    Bitmap b = players.get(0).getBitmapIcon();
+                    canvas.drawBitmap(b, null, new RectF(c.getLeft() + 3, centerHeight + 5, c.getRight() - 3, c.getBottom() - 25) , p);
                 }
                 if (players.size() == 2) {
                     // draw top side
-                    canvas.drawRect(new RectF(c.getLeft() + 3, c.getTop() + 5, c.getRight() - 3,centerHeight - 5) , p);
+                    Bitmap b = players.get(1).getBitmapIcon();
+                    canvas.drawBitmap(b, null, new RectF(c.getLeft() + 3, c.getTop() + 5, c.getRight() - 3,centerHeight - 5) , p);
                 }
             }
             else if (tile.getTileDirection() == TileDirection.RIGHT) {
                 float centerWidth = (c.getLeft() + 25 + c.getRight())/2;
                 if (players.size() > 0) {
                     // draw left side
-                    canvas.drawRect(new RectF(c.getLeft() + 25, c.getTop()  + 15, centerWidth - 5, c.getBottom() - 15) , p);
+                    Bitmap b = players.get(0).getBitmapIcon();
+                    canvas.drawBitmap(b, null, new RectF(c.getLeft() + 25, c.getTop()  + 15, centerWidth - 5, c.getBottom() - 15) , p);
                 }
                 if (players.size() == 2) {
                     // draw right side
-                    canvas.drawRect(new RectF(centerWidth + 5, c.getTop()  + 15, c.getLeft() - 5, c.getBottom() - 15) , p);
+                    Bitmap b = players.get(1).getBitmapIcon();
+                    canvas.drawBitmap(b, null, new RectF(centerWidth + 5, c.getTop()  + 15, c.getLeft() - 5, c.getBottom() - 15) , p);
                 }
             }
             else if (tile.getTileDirection() == TileDirection.BOTTOM) {
                 float centerHeight = ((c.getTop()-25) + c.getBottom())/2;
                 if (players.size() > 0) {
-                    canvas.drawRect(new RectF(c.getLeft() + 10, centerHeight  + 25, c.getRight() - 5, c.getTop() + 5) , p);
+                    Bitmap b = players.get(0).getBitmapIcon();
+                    canvas.drawBitmap(b, null, new RectF(c.getLeft() + 10, centerHeight  + 25, c.getRight() - 5, c.getTop() + 5) , p);
                 }
                 if (players.size() == 2) {
-                    canvas.drawRect(new RectF(c.getLeft() + 10, centerHeight  + 45, c.getRight() - 5, c.getTop() + 5) , p);
+                    Bitmap b = players.get(1).getBitmapIcon();
+                    canvas.drawBitmap(b, null, new RectF(c.getLeft() + 10, centerHeight  + 45, c.getRight() - 5, c.getTop() + 5) , p);
                 }
             }
             else if (tile.getTileDirection() == TileDirection.CORNER) {
@@ -239,19 +247,23 @@ public class BoardView extends View {
 
                 if (players.size() > 0) {
                     // bottom right
-                    canvas.drawRect(new RectF(centerWidth + 5, centerHeight + 5, c.getRight() - 5, c.getBottom() - 5), p);
+                    Bitmap b = players.get(0).getBitmapIcon();
+                    canvas.drawBitmap(b, null, new RectF(centerWidth + 5, centerHeight + 5, c.getRight() - 5, c.getBottom() - 5), p);
                 }
                 if (players.size() > 1) {
                     // bottom left
-                    canvas.drawRect(new RectF(c.getLeft() + 5, centerHeight + 5, centerWidth - 5, c.getBottom() - 5), p);
+                    Bitmap b = players.get(1).getBitmapIcon();
+                    canvas.drawBitmap(b, null, new RectF(c.getLeft() + 5, centerHeight + 5, centerWidth - 5, c.getBottom() - 5), p);
                 }
                 if (players.size() > 2) {
                     // top left
-                    canvas.drawRect(new RectF(c.getLeft() + 5, c.getTop() + 5, centerWidth - 5, centerHeight - 5), p);
+                    Bitmap b = players.get(2).getBitmapIcon();
+                    canvas.drawBitmap(b, null, new RectF(c.getLeft() + 5, c.getTop() + 5, centerWidth - 5, centerHeight - 5), p);
                 }
                 if (players.size() > 3) {
                     // top right
-                    canvas.drawRect(new RectF(centerWidth + 5, c.getTop() + 5, c.getRight() - 5, centerHeight - 5), p);
+                    Bitmap b = players.get(3).getBitmapIcon();
+                    canvas.drawBitmap(b, null, new RectF(centerWidth + 5, c.getTop() + 5, c.getRight() - 5, centerHeight - 5), p);
                 }
             }
 

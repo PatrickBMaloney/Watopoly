@@ -2,6 +2,7 @@ package com.example.watopoly.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.drawable.BitmapDrawable;
@@ -98,7 +99,8 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             ArrayList<String> names = intent.getStringArrayListExtra("names");
 
             for (int x = 0; x < names.size(); x++) {
-                Player player = new Player(names.get(x), startingMoney, colours.get(x), icons.get(x));
+                Bitmap bitmapIcon = BitmapFactory.decodeResource(getResources(), icons.get(x));
+                Player player = new Player(names.get(x), startingMoney, colours.get(x), icons.get(x), bitmapIcon);
                 Game gameState = Game.getInstance();
                 gameState.addPlayer(player);
             }
@@ -118,12 +120,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
         Player currPlayer = game.getCurrentPlayer();
 
-        Drawable drawableIcon = getResources().getDrawable(currPlayer.getIcon());
-        drawableIcon.setColorFilter(new LightingColorFilter(Color.parseColor(currPlayer.getColour()), 1));
-
-        Bitmap icon = ((BitmapDrawable) drawableIcon).getBitmap();
-
-        Tile tile = game.moveCurrentPlayer(diceRollResult, icon);
+        Tile tile = game.moveCurrentPlayer(diceRollResult);
 
 //        //move this after animating
 //        final Dialog dialog = new Dialog(MainGameViewActivity.this, R.style.Theme_Dialog);
