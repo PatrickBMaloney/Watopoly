@@ -195,12 +195,18 @@ public class BoardView extends View {
                 if (players.size() > 0) {
                     // draw right side
                     Bitmap b = players.get(0).getBitmapIcon();
-                    canvas.drawBitmap(b, null, new RectF(centerWidth + 5, c.getTop() + 15, c.getRight() - 25, c.getBottom() - 15) , p);
+                    canvas.drawBitmap(b,
+                            null,
+                            new RectF(centerWidth + 5, c.getTop() + 15, c.getRight() - 25, c.getBottom() - 15),
+                            p);
                 }
                 if (players.size() == 2) {
                     // draw left side
                     Bitmap b = players.get(1).getBitmapIcon();
-                    canvas.drawBitmap(b, null, new RectF(c.getLeft() + 5, c.getTop() + 15, centerWidth - 5, c.getBottom() - 15) , p);
+                    canvas.drawBitmap(b,
+                            null,
+                            new RectF(c.getLeft() + 5, c.getTop() + 15, centerWidth - 5, c.getBottom() - 15),
+                            p);
                 }
             }
             else if (tile.getTileDirection() == TileDirection.TOP) {

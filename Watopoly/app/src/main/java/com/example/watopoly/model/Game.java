@@ -1,9 +1,5 @@
 package com.example.watopoly.model;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.util.Pair;
-
 import com.example.watopoly.view.BoardView;
 
 import java.io.FileInputStream;

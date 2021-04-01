@@ -76,6 +76,7 @@ public class Board implements Serializable {
         if (emptyDrawingState) {
             for (Player p: players) {
                 drawingState.get(boardTiles.get(0)).add(p);
+                boardTiles.get(0).incrementCurrNumberOfPlayers();
             }
         }
 
