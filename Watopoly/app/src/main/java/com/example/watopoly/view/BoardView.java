@@ -186,7 +186,6 @@ public class BoardView extends View {
 
     public void drawPieces(Canvas canvas) {
         Paint p = new Paint();
-        p.setColor(Color.RED);
 
         for (Tile tile: drawingState.keySet()) {
             ArrayList<Player> players = drawingState.get(tile);
@@ -266,17 +265,10 @@ public class BoardView extends View {
                     canvas.drawBitmap(b, null, new RectF(centerWidth + 5, c.getTop() + 5, c.getRight() - 5, centerHeight - 5), p);
                 }
             }
-
-
-
-
-
         }
-
-
     }
 
-    public void drawBitmap(Map<Tile, ArrayList<Player>> drawingState) {
+    public void drawDrawingState(Map<Tile, ArrayList<Player>> drawingState) {
         this.drawPieces = true;
         this.drawingState = drawingState;
         invalidate();

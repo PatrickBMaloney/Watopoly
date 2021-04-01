@@ -3,6 +3,8 @@ package com.example.watopoly.model;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
+import com.example.watopoly.util.BitmapDataObject;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -12,7 +14,7 @@ public class Player implements Serializable {
     private Double money;
     private String colour;
     private int icon;
-    private transient Bitmap bitmapIcon;
+    private BitmapDataObject bitmapDataObject;
 
     private ArrayList<Property> properties = new ArrayList<>();
     private int jailFreeCards = 0;
@@ -48,7 +50,7 @@ public class Player implements Serializable {
             }
         }
         bmOut.setPixels(pixels, 0, width, 0, 0, width, height);
-        bitmapIcon = bmOut;
+        bitmapDataObject = new BitmapDataObject(bmOut);
     }
 
     public String getName() {
@@ -68,7 +70,7 @@ public class Player implements Serializable {
     }
 
     public Bitmap getBitmapIcon() {
-        return bitmapIcon;
+        return bitmapDataObject.getBitmap();
     }
 
     public int getPosition() {
