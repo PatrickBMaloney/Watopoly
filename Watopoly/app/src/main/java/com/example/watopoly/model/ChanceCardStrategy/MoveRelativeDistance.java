@@ -8,15 +8,8 @@ public class MoveRelativeDistance extends ChanceCard {
 
     public void executeAction(){
         Game gameState = Game.getInstance();
-        if(numSpaces > 0) {
-            gameState.moveCurrentPlayer(numSpaces);
-        }
-        else { //moving backwards
-            gameState.moveCurrentPlayer(38 + numSpaces);
-            if (gameState.getCurrentPlayer().getPosition() != 0) {
-                gameState.getCurrentPlayer().payAmount(200); //remove money they earned from passing go
-            }
-        }
+        int currPosition = gameState.getCurrentPlayer().getPosition();
+        gameState.getCurrentPlayer().setPosition(currPosition + numSpaces);
     }
 
     public MoveRelativeDistance(String title, String description, int numSpaces){
