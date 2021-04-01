@@ -42,7 +42,7 @@ public class Player implements Serializable {
             for (int x = 0; x < width; ++x) {
                 // get current index in 2D-matrix
                 int index = y * width + x;
-                if (pixels[index] != 0) {
+                if (pixels[index] < 0) {
                     pixels[index] = Color.parseColor(getColour());
                 }
             }

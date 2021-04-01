@@ -1,20 +1,30 @@
 package com.example.watopoly.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.DrawableContainer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,8 +33,15 @@ import com.example.watopoly.R;
 import com.example.watopoly.fragment.DiceRollFragment;
 import com.example.watopoly.fragment.FragmentCallbackListener;
 import com.example.watopoly.fragment.PlayerInfoHeaderFragment;
+import com.example.watopoly.fragment.PropertyFragment;
+import com.example.watopoly.model.Building;
+import com.example.watopoly.model.CardTile;
+import com.example.watopoly.model.ChanceCard;
 import com.example.watopoly.model.Game;
+import com.example.watopoly.model.Jail;
 import com.example.watopoly.model.Player;
+import com.example.watopoly.model.Property;
+import com.example.watopoly.model.TaxTile;
 import com.example.watopoly.model.Tile;
 import com.example.watopoly.util.GameSaveManager;
 import com.example.watopoly.view.BoardView;
@@ -99,8 +116,10 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             ArrayList<String> names = intent.getStringArrayListExtra("names");
 
             for (int x = 0; x < names.size(); x++) {
-                Bitmap bitmapIcon = BitmapFactory.decodeResource(getResources(), icons.get(x));
-                Player player = new Player(names.get(x), startingMoney, colours.get(x), icons.get(x), bitmapIcon);
+                Drawable d = getResources().getDrawable(icons.get(x));
+                Bitmap b = ((BitmapDrawable) d).getBitmap();
+
+                Player player = new Player(names.get(x), startingMoney, colours.get(x), icons.get(x), b);
                 Game gameState = Game.getInstance();
                 gameState.addPlayer(player);
             }
@@ -118,118 +137,116 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         int diceRollResult = diceRollFragment.getDiceRollResult();
         final Game game = Game.getInstance();
 
-        Player currPlayer = game.getCurrentPlayer();
-
         Tile tile = game.moveCurrentPlayer(diceRollResult);
 
-//        //move this after animating
-//        final Dialog dialog = new Dialog(MainGameViewActivity.this, R.style.Theme_Dialog);
-//        if (tile instanceof CardTile) {
-//            Intent intent = new Intent(this, ChanceCardActivity.class);
-//            intent.putExtra("drawnCard", (ChanceCard)((CardTile) tile).getLastDrawn());
-//            startActivityForResult(intent, 1);
-//        } else if (tile instanceof Property) {
-//            final Property property = (Property) tile;
-//            if (property.getOwner() == null) {
-//                dialog.setContentView(R.layout.dialog_buy_house);
-//                Button buyButton = dialog.findViewById(R.id.buyHouseButton);
-//                Button cancelButton = dialog.findViewById(R.id.skipHouseButton);
-//                TextView desTextView = dialog.findViewById(R.id.buyHouseDescriptionTextView);
-//                String description = String.format("You landed on %s. Would you like to purchase for $%.2f?", property.getName(), property.getPurchasePrice());
-//                if (property.getPurchasePrice() > game.getCurrentPlayer().getMoney()) {
-//                    description = String.format("You landed on %s. Insufficient funds.", property.getName());
-//                    cancelButton.setText("Continue");
-//                    buyButton.setVisibility(View.GONE);
-//                }
-//
-//
-//                desTextView.setText(description);
-//
-//                if (tile instanceof Building) { // TODO: setProperty should accept all property types
-//                    final FragmentManager fm = getSupportFragmentManager();
-//                    PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardBuyFragment);
-//                    propertyFragment.setProperty((Building)tile);
-//                }
-//
-//                buyButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        property.purchase(game.getCurrentPlayer());
-//                        dialog.dismiss();
-//                        destroyPropertyFragment(R.id.propertyCardBuyFragment);
-//                        playerInfoHeaderFragment.refresh();
-//                    }
-//                });
-//                cancelButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dialog.dismiss();
-//                        destroyPropertyFragment(R.id.propertyCardBuyFragment);
-//                    }
-//                });
-//                dialog.show();
-//            } else if (property.getOwner() != game.getCurrentPlayer()) {
-//                dialog.setContentView(R.layout.dialog_pay_rent);
-//                Button continueButton = dialog.findViewById(R.id.payRentContinue);
-//                TextView desTextView = dialog.findViewById(R.id.payRentDescriptionTextView);
-//                TextView renterTextView = dialog.findViewById(R.id.renterTextView);
-//                ImageView renterImageView = dialog.findViewById(R.id.renterImageView);
-//                TextView ownerTextView = dialog.findViewById(R.id.ownerTextView);
-//                ImageView ownerImageView = dialog.findViewById(R.id.ownerImageView);
-//
-//                if (tile instanceof Building) { // TODO: setProperty should accept all property types
-//                    final FragmentManager fm = getSupportFragmentManager();
-//                    PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardFragment);
-//                    propertyFragment.setProperty((Building)tile);
-//                }
-//
-//
-//                String description = String.format("You landed on %s owned by %s", property.getName(), property.getOwner().getName());
-//                renterTextView.setText(String.format("- $%.2f", property.getRentPrice()));
-//                ownerTextView.setText(String.format("+ $%.2f", property.getRentPrice()));
-//                desTextView.setText(description);
-//
-//                renterImageView.setImageResource(game.getCurrentPlayer().getIcon());
-//                ImageViewCompat.setImageTintMode(renterImageView, PorterDuff.Mode.SRC_ATOP);
-//                ImageViewCompat.setImageTintList(renterImageView, ColorStateList.valueOf(Color.parseColor(game.getCurrentPlayer().getColour())));
-//
-//                ownerImageView.setImageResource(property.getOwner().getIcon());
-//                ImageViewCompat.setImageTintMode(ownerImageView, PorterDuff.Mode.SRC_ATOP);
-//                ImageViewCompat.setImageTintList(ownerImageView, ColorStateList.valueOf(Color.parseColor(property.getOwner().getColour())));
-//
-//                continueButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dialog.dismiss();
-//                        destroyPropertyFragment(R.id.propertyCardFragment);
-//                        playerInfoHeaderFragment.refresh();
-//                    }
-//                });
-//                dialog.show();
-//            }
-//        } else if (tile instanceof TaxTile) {
-//            dialog.setContentView(R.layout.dialog_tax);
-//            Button continueButton = dialog.findViewById(R.id.taxContinueButton);
-//            continueButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    dialog.dismiss();
-//                    playerInfoHeaderFragment.refresh();
-//                }
-//            });
-//            dialog.show();
-//
-//        } else if (tile instanceof Jail && game.getCurrentPlayer().getJailed()) {
-//            dialog.setContentView(R.layout.dialog_jailed);
-//            Button continueButton = dialog.findViewById(R.id.jailContinueButton);
-//            continueButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    dialog.dismiss();
-//                }
-//            });
-//            dialog.show();
-//        }
+        //move this after animating
+        final Dialog dialog = new Dialog(MainGameViewActivity.this, R.style.Theme_Dialog);
+        if (tile instanceof CardTile) {
+            Intent intent = new Intent(this, ChanceCardActivity.class);
+            intent.putExtra("drawnCard", (ChanceCard)((CardTile) tile).getLastDrawn());
+            startActivityForResult(intent, 1);
+        } else if (tile instanceof Property) {
+            final Property property = (Property) tile;
+            if (property.getOwner() == null) {
+                dialog.setContentView(R.layout.dialog_buy_house);
+                Button buyButton = dialog.findViewById(R.id.buyHouseButton);
+                Button cancelButton = dialog.findViewById(R.id.skipHouseButton);
+                TextView desTextView = dialog.findViewById(R.id.buyHouseDescriptionTextView);
+                String description = String.format("You landed on %s. Would you like to purchase for $%.2f?", property.getName(), property.getPurchasePrice());
+                if (property.getPurchasePrice() > game.getCurrentPlayer().getMoney()) {
+                    description = String.format("You landed on %s. Insufficient funds.", property.getName());
+                    cancelButton.setText("Continue");
+                    buyButton.setVisibility(View.GONE);
+                }
+
+
+                desTextView.setText(description);
+
+                if (tile instanceof Building) { // TODO: setProperty should accept all property types
+                    final FragmentManager fm = getSupportFragmentManager();
+                    PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardBuyFragment);
+                    propertyFragment.setProperty((Building)tile);
+                }
+
+                buyButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        property.purchase(game.getCurrentPlayer());
+                        dialog.dismiss();
+                        destroyPropertyFragment(R.id.propertyCardBuyFragment);
+                        playerInfoHeaderFragment.refresh();
+                    }
+                });
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        destroyPropertyFragment(R.id.propertyCardBuyFragment);
+                    }
+                });
+                dialog.show();
+            } else if (property.getOwner() != game.getCurrentPlayer()) {
+                dialog.setContentView(R.layout.dialog_pay_rent);
+                Button continueButton = dialog.findViewById(R.id.payRentContinue);
+                TextView desTextView = dialog.findViewById(R.id.payRentDescriptionTextView);
+                TextView renterTextView = dialog.findViewById(R.id.renterTextView);
+                ImageView renterImageView = dialog.findViewById(R.id.renterImageView);
+                TextView ownerTextView = dialog.findViewById(R.id.ownerTextView);
+                ImageView ownerImageView = dialog.findViewById(R.id.ownerImageView);
+
+                if (tile instanceof Building) { // TODO: setProperty should accept all property types
+                    final FragmentManager fm = getSupportFragmentManager();
+                    PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardFragment);
+                    propertyFragment.setProperty((Building)tile);
+                }
+
+
+                String description = String.format("You landed on %s owned by %s", property.getName(), property.getOwner().getName());
+                renterTextView.setText(String.format("- $%.2f", property.getRentPrice()));
+                ownerTextView.setText(String.format("+ $%.2f", property.getRentPrice()));
+                desTextView.setText(description);
+
+                renterImageView.setImageResource(game.getCurrentPlayer().getIcon());
+                ImageViewCompat.setImageTintMode(renterImageView, PorterDuff.Mode.SRC_ATOP);
+                ImageViewCompat.setImageTintList(renterImageView, ColorStateList.valueOf(Color.parseColor(game.getCurrentPlayer().getColour())));
+
+                ownerImageView.setImageResource(property.getOwner().getIcon());
+                ImageViewCompat.setImageTintMode(ownerImageView, PorterDuff.Mode.SRC_ATOP);
+                ImageViewCompat.setImageTintList(ownerImageView, ColorStateList.valueOf(Color.parseColor(property.getOwner().getColour())));
+
+                continueButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        destroyPropertyFragment(R.id.propertyCardFragment);
+                        playerInfoHeaderFragment.refresh();
+                    }
+                });
+                dialog.show();
+            }
+        } else if (tile instanceof TaxTile) {
+            dialog.setContentView(R.layout.dialog_tax);
+            Button continueButton = dialog.findViewById(R.id.taxContinueButton);
+            continueButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    playerInfoHeaderFragment.refresh();
+                }
+            });
+            dialog.show();
+
+        } else if (tile instanceof Jail && game.getCurrentPlayer().getJailed()) {
+            dialog.setContentView(R.layout.dialog_jailed);
+            Button continueButton = dialog.findViewById(R.id.jailContinueButton);
+            continueButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
 
         Log.d("Landed", tile.toString());
         Log.d("Landed", ""+game.getCurrentPlayer().getPosition());

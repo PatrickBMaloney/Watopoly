@@ -1,12 +1,5 @@
 package com.example.watopoly.model;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.util.Pair;
-
-import com.example.watopoly.enums.TileDirection;
 import com.example.watopoly.view.BoardView;
 
 import java.io.Serializable;
@@ -18,7 +11,7 @@ public class Board implements Serializable {
     private ArrayList<Tile> boardTiles = new ArrayList<>();
     private transient BoardView boardView;
 
-    private Map<Tile, ArrayList<Player>> drawingState = new HashMap<Tile, ArrayList<Player>>();
+    private Map<Tile, ArrayList<Player>> drawingState = new HashMap<>();
 
     public void setBoardInfo(BoardView boardView, ArrayList<ChanceCard> cards, ArrayList<Player> players) {
         boardTiles = boardView.getTiles();
@@ -42,38 +35,20 @@ public class Board implements Serializable {
 
         Tile oldTile = boardTiles.get(player.getPosition());
         drawingState.get(oldTile).remove(player);
+        oldTile.decrementCurrNumberOfPlayers();
 
         Tile newTile = boardTiles.get(newPosition);
+        if (newTile.getCurrNumberOfPlayers() == newTile.getMaxNumberOfPlayers()) {
+            newPosition = newPosition + 1;
+            newTile = boardTiles.get(newPosition);
+        }
+        newTile.incrementCurrNumberOfPlayers();
         player.setPosition(newPosition);
         newTile.landOn(player);
         drawingState.get(newTile).add(player);
 
-
-        for (Tile t: drawingState.keySet()) {
-            ArrayList<Player> players = drawingState.get(t);
-
-            if (players.size() > 0) {
-                System.out.print(t.name + " ");
-                for (Player p: players) {
-                    System.out.print(p.getName() + " ");
-                }
-                System.out.println();
-            }
-
-        }
-
         boardView.drawBitmap(drawingState);
 
-        //boardView.drawBitmap(icon, newTile, player.getColour());
-        //canvas.drawBitmap(icon, tile.getCoordinates().left,  tile.getCoordinates().top, paint);
-
-
-
-
-
-
-        // handle multiple people
-        //  use canvas to draw player bitmap
         return boardTiles.get(player.getPosition());
     }
 

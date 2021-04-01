@@ -1,7 +1,6 @@
 package com.example.watopoly.model;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 
 import com.example.watopoly.enums.TileDirection;
 
@@ -38,4 +37,12 @@ public abstract class Tile implements Serializable {
     public int getCurrNumberOfPlayers() {
         return currNumberOfPlayers;
     }
+
+    public int getMaxNumberOfPlayers() {
+        return maxNumberOfPlayers;
+    }
+
+    public void decrementCurrNumberOfPlayers() { currNumberOfPlayers--;}
+
+    public void incrementCurrNumberOfPlayers() { currNumberOfPlayers++;}
 }
