@@ -15,6 +15,7 @@ public class Player implements Serializable {
     private int position = 0;
     private Boolean isJailed = false;
     private int numRailways = 0;
+    private int numUtilities = 0;
 
     public Player(String name, Double money, String colour, int icon) {
         this.name = name;
@@ -43,6 +44,14 @@ public class Player implements Serializable {
         return position;
     }
 
+    public int getNumRailways() {
+        return numRailways;
+    }
+
+    public int getNumUtilities() {
+        return numUtilities;
+    }
+
     public void setPosition(int position) {
         this.position = position;
     }
@@ -65,5 +74,10 @@ public class Player implements Serializable {
 
     public void addProperty(Property property) {
         properties.add(property);
+        if (property instanceof Railway) {
+            numRailways += 1;
+        } else if (property instanceof Utility) {
+            numUtilities += 1;
+        }
     }
 }
