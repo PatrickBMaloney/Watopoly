@@ -2,6 +2,8 @@ package com.example.watopoly.model;
 
 import com.example.watopoly.view.BoardView;
 
+import com.example.watopoly.util.ChanceCards;
+
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
@@ -14,6 +16,7 @@ public class Game implements Serializable {
     private ArrayList<ChanceCard> cards = new ArrayList<>();
     private Board board = new Board();
     private int turnNumber = -1;
+    private int lastRoll = -1;
 
     //Singleton
     private Game(){}
@@ -34,9 +37,7 @@ public class Game implements Serializable {
 
     //public methods
     public void setBoardInfo(BoardView boardView) {
-        //TODO: add new cards and flesh out cards
-        cards.add(new ChanceCard("Tax", "tax"));
-
+        cards = ChanceCards.getAllChanceCards();
         board.setBoardInfo(boardView, cards, players);
     }
 
@@ -51,6 +52,14 @@ public class Game implements Serializable {
 
     public Tile moveCurrentPlayer(int steps) {
         return board.move(getCurrentPlayer(), steps);
+    }
+
+    public void setLastRoll(int roll) {
+        lastRoll = roll;
+    }
+
+    public int getLastRoll() {
+        return lastRoll;
     }
 
     public Player getCurrentPlayer() {

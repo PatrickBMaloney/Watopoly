@@ -2,7 +2,7 @@ package com.example.watopoly.model;
 
 import java.io.Serializable;
 
-public class ChanceCard implements Serializable {
+public abstract class ChanceCard implements Serializable {
     private String title;
     private String description;
 
@@ -13,4 +13,5 @@ public class ChanceCard implements Serializable {
 
     public String getTitle() { return title; }
     public String getDescription() { return description; }
+    public abstract void executeAction();
 }

@@ -5,70 +5,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/drawCard"
-        android:layout_width="230dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="70dp"
-        android:text="COLLECT CHANCE CARD"
-        android:textAlignment="center"
-        android:textColor="#6200EE"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/chanceTitle" />
-
-    <ImageView
-        android:id="@+id/imageChanceCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:adjustViewBounds="true"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.162"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/chance_card" />
-
     <TextView
         android:id="@+id/chanceTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="140dp"
-        android:text="You have landed on a Chance!"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="30dp"
+        android:lines="4"
+        android:text="You landed on a Chance Tile!"
         android:textAlignment="center"
-        android:textSize="20dp"
-        android:textStyle="bold"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/drawCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Draw Chance Card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/chanceTitle" />
+
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
+        android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="305dp" />
+        app:layout_constraintGuide_percent="0.5" />
 
-    <fragment
-        android:id="@+id/playerInfoHeaderFragmentChance"
-        android:name="com.example.watopoly.fragment.PlayerInfoHeaderFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/imageChanceCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.162"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/chance_card" />
 
     <TextView
         android:id="@+id/chanceCardAction"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="57dp"
+        android:layout_marginTop="96dp"
         android:text=""
-        android:textSize="18dp"
         android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="@+id/imageChanceCard"
+        app:layout_constraintHorizontal_bias="0.558"
         app:layout_constraintStart_toStartOf="@+id/imageChanceCard"
         app:layout_constraintTop_toTopOf="@+id/imageChanceCard" />
+
+    <fragment
+            android:id="@+id/playerInfoHeaderFragmentChance"
+            android:name="com.example.watopoly.fragment.PlayerInfoHeaderFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

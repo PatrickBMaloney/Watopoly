@@ -6,10 +6,19 @@ import android.graphics.Paint;
 import com.example.watopoly.enums.TileDirection;
 
 public class Railway extends Property {
+    private int icon;
 
     @Override
     public double getRentPrice() {
-        return this.baseRentPrice;
+        return getRentPrice(this.owner.getNumRailways());
+    }
+
+    public double getRentPrice(int numRailwaysOwned) {
+        return this.baseRentPrice * Math.pow(2,  numRailwaysOwned - 1);
+    }
+
+    public int getIcon() {
+        return this.icon;
     }
 
     @Override
@@ -17,8 +26,9 @@ public class Railway extends Property {
 
     }
 
-    public Railway(String name, TileDirection direction, int baseRentPrice, int purchasePrice) {
+    public Railway(String name, TileDirection direction, int baseRentPrice, int purchasePrice, int transportIcon) {
         super(name, direction, baseRentPrice, purchasePrice);
+        icon = transportIcon;
     }
 
 }
