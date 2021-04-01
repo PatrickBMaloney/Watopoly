@@ -30,4 +30,12 @@ public abstract class Tile implements Serializable {
     public String getName() {
         return name;
     }
+
+    public TileDirection getTileDirection() {
+        return tileDirection;
+    }
+
+    public int getCurrNumberOfPlayers() {
+        return currNumberOfPlayers;
+    }
 }

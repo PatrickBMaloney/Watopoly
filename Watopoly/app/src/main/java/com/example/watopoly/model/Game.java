@@ -1,7 +1,10 @@
 package com.example.watopoly.model;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.Pair;
+
+import com.example.watopoly.view.BoardView;
 
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
@@ -34,11 +37,11 @@ public class Game implements Serializable {
     }
 
     //public methods
-    public void setBoardInfo(Pair<ArrayList<Tile>, Canvas> boardInfo) {
+    public void setBoardInfo(BoardView boardView) {
         //TODO: add new cards and flesh out cards
         cards.add(new ChanceCard("Tax", "tax"));
 
-        board.setBoardInfo(boardInfo, cards);
+        board.setBoardInfo(boardView, cards, players);
     }
 
     public void addPlayer(Player player) {
@@ -50,8 +53,8 @@ public class Game implements Serializable {
         return players.get(turnNumber % players.size());
     }
 
-    public Tile moveCurrentPlayer(int steps) {
-        return board.move(getCurrentPlayer(), steps);
+    public Tile moveCurrentPlayer(int steps, Bitmap icon) {
+        return board.move(getCurrentPlayer(), steps, icon);
     }
 
     public Player getCurrentPlayer() {

@@ -14,6 +14,7 @@ public class Jail extends Tile {
     public Jail() {
         maxNumberOfPlayers = 4;
         tileDirection = TileDirection.CORNER;
+        this.name = "Jail";
     }
 
 }

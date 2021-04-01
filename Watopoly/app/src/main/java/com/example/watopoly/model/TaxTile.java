@@ -18,7 +18,8 @@ public class TaxTile extends Tile {
 
     }
 
-    public TaxTile(TileDirection d) {
+    public TaxTile(TileDirection d, String name) {
         this.tileDirection = d;
+        this.name = name;
     }
 }

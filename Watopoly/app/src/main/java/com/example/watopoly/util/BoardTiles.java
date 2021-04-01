@@ -22,7 +22,7 @@ public final class BoardTiles {
             new Building("CAMJ", TileDirection.LEFT, 2, 60, 50,"#955436"),
             new CardTile("Community Chest", TileDirection.LEFT),
             new Building("Earth Sci", TileDirection.LEFT, 4, 60, 50,"#955436"),
-            new TaxTile(TileDirection.LEFT),
+            new TaxTile(TileDirection.LEFT, "Tax Tile 1"),
             new Railway("Ion Train 1", TileDirection.LEFT, 25, 200),
             new Building("CPH", TileDirection.LEFT, 6, 100, 50,"#AAE0FA"),
             new CardTile("Chance", TileDirection.LEFT),
@@ -54,7 +54,7 @@ public final class BoardTiles {
             new Railway("Ion Train 4", TileDirection.BOTTOM, 25, 200),
             new CardTile("Chance", TileDirection.BOTTOM),
             new Building("DC", TileDirection.BOTTOM, 35, 350, 200,"#0072BB"),
-            new TaxTile(TileDirection.BOTTOM),
+            new TaxTile(TileDirection.BOTTOM, "Tax Tile 2"),
             new Building("E7", TileDirection.BOTTOM, 50, 400, 200,"#0072BB")));
 
     public static ArrayList<Tile> getTiles() {

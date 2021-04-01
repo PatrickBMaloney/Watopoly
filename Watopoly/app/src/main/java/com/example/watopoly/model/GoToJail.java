@@ -22,6 +22,7 @@ public class GoToJail extends Tile {
     public GoToJail() {
         maxNumberOfPlayers = 4;
         tileDirection = TileDirection.CORNER;
+        this.name = "goToJail";
     }
 
     public void setJailLocation(int jailLocation) {

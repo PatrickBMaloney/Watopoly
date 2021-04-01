@@ -2,18 +2,22 @@ package com.example.watopoly.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Pair;
 import android.view.View;
 
+import com.example.watopoly.enums.TileDirection;
 import com.example.watopoly.model.Coordinates;
+import com.example.watopoly.model.Player;
 import com.example.watopoly.model.Tile;
 import com.example.watopoly.util.BoardTiles;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class BoardView extends View {
 
@@ -29,7 +33,9 @@ public class BoardView extends View {
     private static final int totalNumTiles = (numTilesInColumn * 2) + (numTilesInRow * 2) + 4;
     private ArrayList<Tile> tiles = BoardTiles.getTiles();
 
-    private Canvas canvas;
+    // for drawing pieces
+    private Map<Tile, ArrayList<Player>> drawingState;
+    private boolean drawPieces = false;
 
     public BoardView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -39,7 +45,6 @@ public class BoardView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        this.canvas = canvas;
 
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
@@ -60,6 +65,10 @@ public class BoardView extends View {
         drawColumns(canvas, tileInColumnHeight, cornerTileHeight, rowWidth, paint);
         drawRows(canvas, rowTileWidth, cornerTileHeight, paint);
         drawCornerTiles(canvas, cornerTileHeight, rowWidth, paint);
+
+        if (drawPieces) {
+            drawPieces(canvas);
+        }
     }
 
     public void drawColumns(Canvas canvas, float tileInColumnHeight, float cornerTileHeight, float rowWidth, Paint paint) {
@@ -113,9 +122,9 @@ public class BoardView extends View {
                     leftOffset + (rowTileWidth * (i + 1)),
                     spaceAboveAndBelowBoard + rowTileHeight);
             drawRectWithCoordinates(canvas, topRowCoordinates, paint);
-            int topRowRightmostTileIndex = numTilesInColumn + numTilesInRow + 1;
-            tiles.get(topRowRightmostTileIndex-i).setCoordinates(topRowCoordinates);
-            tiles.get(topRowRightmostTileIndex-i).drawOn(canvas);
+            int topRowLeftMostTileIndex = numTilesInColumn + 2;
+            tiles.get(topRowLeftMostTileIndex+i).setCoordinates(topRowCoordinates);
+            tiles.get(topRowLeftMostTileIndex+i).drawOn(canvas);
         }
     }
 
@@ -175,7 +184,93 @@ public class BoardView extends View {
                 paint);
     }
 
-    public Pair<ArrayList<Tile>, Canvas> getBoardInfo() {
-        return new Pair<>(tiles, canvas);
+    public void drawPieces(Canvas canvas) {
+        Paint p = new Paint();
+        p.setColor(Color.RED);
+
+        for (Tile tile: drawingState.keySet()) {
+            ArrayList<Player> players = drawingState.get(tile);
+            Coordinates c = tile.getCoordinates();
+            if (tile.getTileDirection() == TileDirection.LEFT) {
+                float centerWidth = (c.getLeft() + (c.getRight() - 25))/2;
+                if (players.size() > 0) {
+                    // draw right side
+                    canvas.drawRect(new RectF(centerWidth + 5, c.getTop() + 15, c.getRight() - 25, c.getBottom() - 15) , p);
+                }
+                if (players.size() == 2) {
+                    // draw left side
+                    canvas.drawRect(new RectF(c.getLeft() + 5, c.getTop() + 15, centerWidth - 5, c.getBottom() - 15) , p);
+                }
+            }
+            else if (tile.getTileDirection() == TileDirection.TOP) {
+                float centerHeight = (c.getTop() + (c.getBottom() - 25))/2;
+                if (players.size() > 0) {
+                    // draw bottom side
+                    canvas.drawRect(new RectF(c.getLeft() + 3, centerHeight + 5, c.getRight() - 3, c.getBottom() - 25) , p);
+                }
+                if (players.size() == 2) {
+                    // draw top side
+                    canvas.drawRect(new RectF(c.getLeft() + 3, c.getTop() + 5, c.getRight() - 3,centerHeight - 5) , p);
+                }
+            }
+            else if (tile.getTileDirection() == TileDirection.RIGHT) {
+                float centerWidth = (c.getLeft() + 25 + c.getRight())/2;
+                if (players.size() > 0) {
+                    // draw left side
+                    canvas.drawRect(new RectF(c.getLeft() + 25, c.getTop()  + 15, centerWidth - 5, c.getBottom() - 15) , p);
+                }
+                if (players.size() == 2) {
+                    // draw right side
+                    canvas.drawRect(new RectF(centerWidth + 5, c.getTop()  + 15, c.getLeft() - 5, c.getBottom() - 15) , p);
+                }
+            }
+            else if (tile.getTileDirection() == TileDirection.BOTTOM) {
+                float centerHeight = ((c.getTop()-25) + c.getBottom())/2;
+                if (players.size() > 0) {
+                    canvas.drawRect(new RectF(c.getLeft() + 10, centerHeight  + 25, c.getRight() - 5, c.getTop() + 5) , p);
+                }
+                if (players.size() == 2) {
+                    canvas.drawRect(new RectF(c.getLeft() + 10, centerHeight  + 45, c.getRight() - 5, c.getTop() + 5) , p);
+                }
+            }
+            else if (tile.getTileDirection() == TileDirection.CORNER) {
+                float centerHeight = (c.getTop() + c.getBottom())/2;
+                float centerWidth = (c.getLeft() + c.getRight())/2;
+
+                if (players.size() > 0) {
+                    // bottom right
+                    canvas.drawRect(new RectF(centerWidth + 5, centerHeight + 5, c.getRight() - 5, c.getBottom() - 5), p);
+                }
+                if (players.size() > 1) {
+                    // bottom left
+                    canvas.drawRect(new RectF(c.getLeft() + 5, centerHeight + 5, centerWidth - 5, c.getBottom() - 5), p);
+                }
+                if (players.size() > 2) {
+                    // top left
+                    canvas.drawRect(new RectF(c.getLeft() + 5, c.getTop() + 5, centerWidth - 5, centerHeight - 5), p);
+                }
+                if (players.size() > 3) {
+                    // top right
+                    canvas.drawRect(new RectF(centerWidth + 5, c.getTop() + 5, c.getRight() - 5, centerHeight - 5), p);
+                }
+            }
+
+
+
+
+
+        }
+
+
+    }
+
+    public void drawBitmap(Map<Tile, ArrayList<Player>> drawingState) {
+        this.drawPieces = true;
+        this.drawingState = drawingState;
+        invalidate();
+    }
+
+    public ArrayList<Tile> getTiles() {
+        return tiles;
     }
 }
