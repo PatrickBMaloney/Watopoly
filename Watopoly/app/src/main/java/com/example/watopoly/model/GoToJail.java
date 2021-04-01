@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import com.example.watopoly.enums.TileDirection;
 
 public class GoToJail extends Tile {
-    int jailLocation = 9;
+    int jailLocation = 0;
 
     @Override
     public void landOn(Player player) {
