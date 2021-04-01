@@ -3,6 +3,8 @@ package com.example.watopoly.model;
 import android.graphics.Canvas;
 import android.util.Pair;
 
+import com.example.watopoly.util.ChanceCards;
+
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
@@ -37,8 +39,7 @@ public class Game implements Serializable {
     //public methods
     public void setBoardInfo(Pair<ArrayList<Tile>, Canvas> boardInfo) {
         //TODO: add new cards and flesh out cards
-        cards.add(new ChanceCard("Tax", "tax"));
-
+        cards = ChanceCards.getAllChanceCards();
         board.setBoardInfo(boardInfo, cards);
     }
 

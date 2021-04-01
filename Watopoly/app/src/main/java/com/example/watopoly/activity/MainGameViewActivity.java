@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -124,6 +125,19 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         //TODO: board setup
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        FragmentManager fm = getSupportFragmentManager();
+        playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
+        playerInfoHeaderFragment.refresh();
+
+        final Game game = Game.getInstance();
+        Tile tile = game.moveCurrentPlayer(0);
+        showDialogByLandingTile(tile);
+    }
+
     //FragmentCallbackListener diceRolled
     @Override
     public void onCallback() {
@@ -132,13 +146,33 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         game.setLastRoll(diceRollResult);
         Tile tile = game.moveCurrentPlayer(diceRollResult);
 
-        //move this after animating
-        final Dialog dialog = new Dialog(MainGameViewActivity.this, R.style.Theme_Dialog);
         if (tile instanceof CardTile) {
             Intent intent = new Intent(this, ChanceCardActivity.class);
             intent.putExtra("drawnCard", (ChanceCard)((CardTile) tile).getLastDrawn());
             startActivityForResult(intent, 1);
-        } else if (tile instanceof Property) {
+        }
+        else {
+            showDialogByLandingTile(tile);
+        }
+        
+        Log.d("Landed", tile.toString());
+        Log.d("Landed", ""+game.getCurrentPlayer().getPosition());
+
+        diceRollFragment.getView().setVisibility(View.GONE);
+        actionLinearLayout.setVisibility(View.VISIBLE);
+    }
+    public void destroyPropertyFragment(int id) {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentById(id);
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.remove(fragment);
+        fragmentTransaction.commit();
+    }
+
+    public void showDialogByLandingTile(Tile tile){
+        final Dialog dialog = new Dialog(MainGameViewActivity.this, R.style.Theme_Dialog);
+        final Game game = Game.getInstance();
+        if (tile instanceof Property) {
             final Property property = (Property) tile;
             if (property.getOwner() == null) {
                 dialog.setContentView(R.layout.dialog_buy_house);
@@ -237,19 +271,6 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             dialog.show();
         }
 
-        Log.d("Landed", tile.toString());
-        Log.d("Landed", ""+game.getCurrentPlayer().getPosition());
-
-        diceRollFragment.getView().setVisibility(View.GONE);
-        actionLinearLayout.setVisibility(View.VISIBLE);
-
-
     }
-    public void destroyPropertyFragment(int id) {
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(id);
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.remove(fragment);
-        fragmentTransaction.commit();
-    }
+
 }
