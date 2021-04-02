@@ -6,7 +6,6 @@ import com.example.watopoly.model.ChanceCardStrategy.GetOutOfJailCard;
 import com.example.watopoly.model.ChanceCardStrategy.GoToJailCard;
 import com.example.watopoly.model.ChanceCardStrategy.MoveRelativeDistanceCard;
 import com.example.watopoly.model.ChanceCardStrategy.MoveToTileCard;
-import com.example.watopoly.model.Tile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +13,6 @@ import java.util.Random;
 
 public final class ChanceCards {
 
-    private ArrayList<Tile> tiles = BoardTiles.getTiles();
     private static ArrayList<ChanceStrategy> chanceCards = new ArrayList<>(Arrays.asList(
         new GainLoseMoneyCard("It's time to be fees arranged.", "Next school term is on the horizon. It's time to pay your tuition on Quest! Lose $200", -200),
         new GainLoseMoneyCard("You won coop student of the year!", "Congrats on your achievement! You get a picture with Feridun and a $20 award.", 20),
