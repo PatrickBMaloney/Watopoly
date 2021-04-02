@@ -3,13 +3,16 @@ package com.example.watopoly.model.ChanceCardStrategy;
 import com.example.watopoly.model.ChanceCard;
 import com.example.watopoly.model.Game;
 
-public class GetOutOfJailCard implements ChanceCard {
+public class MoveRelativeDistanceCard implements ChanceCard {
+    private int numSpaces;
     private String title;
     private String description;
 
+    @Override
     public void executeAction(){
         Game gameState = Game.getInstance();
-        gameState.getCurrentPlayer().addJailFreeCard();
+        int currPosition = gameState.getCurrentPlayer().getPosition();
+        gameState.getCurrentPlayer().setPosition(currPosition + numSpaces);
     }
 
     @Override
@@ -22,8 +25,10 @@ public class GetOutOfJailCard implements ChanceCard {
         return description;
     }
 
-    public GetOutOfJailCard(String title, String description){
+    public MoveRelativeDistanceCard(String title, String description, int numSpaces){
         this.title = title;
         this.description = description;
+        this.numSpaces = numSpaces;
     }
+
 }

@@ -1,6 +1,5 @@
 package com.example.watopoly.model.ChanceCardStrategy;
 
-import com.example.watopoly.model.Board;
 import com.example.watopoly.model.ChanceCard;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Jail;
@@ -9,7 +8,9 @@ import com.example.watopoly.util.BoardTiles;
 
 import java.util.ArrayList;
 
-public class GoToJail extends ChanceCard {
+public class GoToJailCard implements ChanceCard {
+    private String title;
+    private String description;
 
     public void executeAction(){
         Game gameState = Game.getInstance();
@@ -17,8 +18,19 @@ public class GoToJail extends ChanceCard {
         gameState.getCurrentPlayer().setPosition(findIndexOfJailTile());
     }
 
-    public GoToJail(String title, String description){
-        super(title, description);
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+    public GoToJailCard(String title, String description){
+        this.title = title;
+        this.description = description;
     }
 
     private int findIndexOfJailTile(){
