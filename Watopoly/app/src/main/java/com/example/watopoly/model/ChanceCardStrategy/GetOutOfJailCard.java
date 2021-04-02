@@ -3,7 +3,7 @@ package com.example.watopoly.model.ChanceCardStrategy;
 import com.example.watopoly.model.ChanceCard;
 import com.example.watopoly.model.Game;
 
-public class GetOutOfJailCard implements ChanceCard {
+public class GetOutOfJailCard implements ChanceStrategy {
     private String title;
     private String description;
 

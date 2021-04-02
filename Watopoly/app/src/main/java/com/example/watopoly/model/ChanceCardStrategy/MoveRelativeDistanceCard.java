@@ -3,7 +3,7 @@ package com.example.watopoly.model.ChanceCardStrategy;
 import com.example.watopoly.model.ChanceCard;
 import com.example.watopoly.model.Game;
 
-public class MoveRelativeDistanceCard implements ChanceCard {
+public class MoveRelativeDistanceCard implements ChanceStrategy {
     private int numSpaces;
     private String title;
     private String description;

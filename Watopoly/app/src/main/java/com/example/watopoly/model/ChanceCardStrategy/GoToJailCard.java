@@ -8,7 +8,7 @@ import com.example.watopoly.util.BoardTiles;
 
 import java.util.ArrayList;
 
-public class GoToJailCard implements ChanceCard {
+public class GoToJailCard implements ChanceStrategy {
     private String title;
     private String description;
 

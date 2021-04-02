@@ -1,7 +1,17 @@
 package com.example.watopoly.model;
 
-public interface ChanceCard {
-    public abstract String getTitle();
-    public abstract String getDescription();
-    public abstract void executeAction();
+import com.example.watopoly.model.ChanceCardStrategy.ChanceStrategy;
+
+public class ChanceCard {
+    private ChanceStrategy strategy;
+
+    public ChanceCard(){}
+
+    public void setStrat(ChanceStrategy strategy){
+        this.strategy = strategy;
+    }
+
+    public void executeStrategy(){
+        strategy.executeAction();
+    }
 }

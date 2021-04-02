@@ -1,6 +1,6 @@
 package com.example.watopoly.util;
 
-import com.example.watopoly.model.ChanceCard;
+import com.example.watopoly.model.ChanceCardStrategy.ChanceStrategy;
 import com.example.watopoly.model.ChanceCardStrategy.GainLoseMoneyCard;
 import com.example.watopoly.model.ChanceCardStrategy.GetOutOfJailCard;
 import com.example.watopoly.model.ChanceCardStrategy.GoToJailCard;
@@ -15,7 +15,7 @@ import java.util.Random;
 public final class ChanceCards {
 
     private ArrayList<Tile> tiles = BoardTiles.getTiles();
-    private static ArrayList<ChanceCard> chanceCards = new ArrayList<>(Arrays.asList(
+    private static ArrayList<ChanceStrategy> chanceCards = new ArrayList<>(Arrays.asList(
         new GainLoseMoneyCard("It's time to be fees arranged.", "Next school term is on the horizon. It's time to pay your tuition on Quest! Lose $200", -200),
         new GainLoseMoneyCard("You won coop student of the year!", "Congrats on your achievement! You get a picture with Feridun and a $20 award.", 20),
         new GainLoseMoneyCard("You got stuck with a bad landlord.", "Pay $50 for repairs.", -50),
@@ -50,10 +50,10 @@ public final class ChanceCards {
         new GainLoseMoneyCard("Give into your bubble tea addiction.", "You have no choice but to enjoy a delicious milk tea from your favourite bubble tea shop. Spend $20", 20),
         new GainLoseMoneyCard("Geese have stolen your lunch money.", "On your way to 8:30 class some geese attacked you on V1 green and took your money. Lose $20", -20)));
 
-    public static ArrayList<ChanceCard> getAllChanceCards(){
+    public static ArrayList<ChanceStrategy> getAllChanceCards(){
         return chanceCards;
     }
-    public static ChanceCard drawRandomChanceCard(){
+    public static ChanceStrategy drawRandomChanceCard(){
         Random rand = new Random();
         return chanceCards.get(rand.nextInt(chanceCards.size()));
     }

@@ -3,7 +3,7 @@ package com.example.watopoly.model.ChanceCardStrategy;
 import com.example.watopoly.model.ChanceCard;
 import com.example.watopoly.model.Game;
 
-public class GainLoseMoneyCard implements ChanceCard {
+public class GainLoseMoneyCard implements ChanceStrategy {
     private double amount;
     private String title;
     private String description;
