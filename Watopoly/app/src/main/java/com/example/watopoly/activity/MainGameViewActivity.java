@@ -79,6 +79,16 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         actionLinearLayout.setVisibility(View.GONE);
     }
 
+    private void mortgage(){
+        //TODO this is bad code rewrite Ellen
+        new GameSaveManager.SaveData(this).execute();
+        Game gameState = Game.getInstance();
+
+        Intent mortgageIntent = new Intent(getApplicationContext(), MortgageActivity.class);
+        mortgageIntent.putExtra("gameState", gameState);
+        startActivity(mortgageIntent);
+    }
+
     private void linkView() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
@@ -102,6 +112,12 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             @Override
             public void onClick(View v) {
                 startTurn();
+            }
+        });
+        mortgageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mortgage();
             }
         });
 
