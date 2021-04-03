@@ -60,6 +60,7 @@ public class MortgagePropertyListAdapter extends RecyclerView.Adapter<MortgagePr
         holder.propertyHeader.setText(properties.get(position).getName());
         if (properties.get(position) instanceof Building) {
             Building building = (Building) properties.get(position);
+            holder.propertyHeader.setBackgroundTintMode(PorterDuff.Mode.SRC_ATOP);
             holder.propertyHeader.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(building.getPropertyHex())));
         }
         String priceText = "$"+properties.get(position).getPurchasePrice();

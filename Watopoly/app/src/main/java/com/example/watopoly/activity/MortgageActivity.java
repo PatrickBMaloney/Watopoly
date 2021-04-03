@@ -29,7 +29,11 @@ public class MortgageActivity extends AppCompatActivity {
     private PlayerInfoHeaderFragment playerInfoHeaderFragment;
     private RecyclerView mortgageRecyclerView;
     private MortgagePropertyListAdapter mortgageAdapter;
+//    private RecyclerView unmortgageRecyclerView;
+//    private MortgagePropertyListAdapter unmortgageAdapter;
     Player myPlayer;
+    private Button finishMortgageButton;
+    private Button backToMainButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class MortgageActivity extends AppCompatActivity {
 
         linkView();
         setupAdapter();
+        mortgageProperties();
     }
 
     private void linkView() {
@@ -53,11 +58,57 @@ public class MortgageActivity extends AppCompatActivity {
 
         FragmentManager fm = getSupportFragmentManager();
         playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
+
+        finishMortgageButton = findViewById(R.id.finishMortgageButton);
+        finishMortgageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishMortgaging();
+            }
+        });
+
+        backToMainButton = findViewById(R.id.backToMainButton);
+        backToMainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void setupAdapter() {
-        ArrayList<Property> properties = myPlayer.getProperties();
-        mortgageAdapter = new MortgagePropertyListAdapter(properties);
+        ArrayList<Property> mortProperties = new ArrayList<>();
+        ArrayList<Property> unmortProperties = new ArrayList<>();
+        ArrayList<Property> allProperties = myPlayer.getProperties();
+        for (int i=0; i<allProperties.size(); i++){
+            if (allProperties.get(i).getMortgaged() == false){
+                mortProperties.add(allProperties.get(i));
+            } else {
+                unmortProperties.add(allProperties.get(i));
+            }
+        }
+
+        mortgageAdapter = new MortgagePropertyListAdapter(mortProperties);
         mortgageRecyclerView.setAdapter(mortgageAdapter);
+
+//        unmortgageAdapter = new MortgagePropertyListAdapter(unmortProperties);
+//        unmortgageRecyclerView.setAdapter(unmortgageAdapter);
     }
+
+    private void mortgageProperties(){
+        mortgageAdapter.setSelected(-1);
+        mortgageAdapter.notifyDataSetChanged();
+//        unmortgageAdapter.setSelected(-1);
+//        unmortgageAdapter.notifyDataSetChanged();
+    }
+
+    private void finishMortgaging(){
+        if (mortgageAdapter.getSelected() == -1) { return; }
+        Property selectedProperty = myPlayer.getProperties().get(mortgageAdapter.getSelected());
+        selectedProperty.mortgage();
+        myPlayer.receiveAmount(selectedProperty.getPurchasePrice());
+        playerInfoHeaderFragment.refresh();
+        finish();
+    }
+
 }
