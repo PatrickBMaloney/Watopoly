@@ -6,11 +6,11 @@ import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.widget.ImageViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.watopoly.R;
@@ -18,27 +18,30 @@ import com.example.watopoly.model.Building;
 import com.example.watopoly.model.Property;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MortgagePropertyListAdapter extends RecyclerView.Adapter<MortgagePropertyListAdapter.PropertyInfoHolder> {
     private ArrayList<Property> properties;
 
-    private Integer selected = -1;
+        ArrayList<Integer> selected = new ArrayList<>();
 
     public class PropertyInfoHolder extends RecyclerView.ViewHolder {
         TextView propertyHeader;
         TextView price;
-        RadioButton radioButton;
+        CheckBox checkBox;
         PropertyInfoHolder (final View itemView) {
             super(itemView);
             propertyHeader = itemView.findViewById(R.id.propertyRowTextView);
             price = itemView.findViewById(R.id.dollarValueTextView);
-            radioButton = itemView.findViewById(R.id.mortgagePropertyRadioButton);
-            radioButton.setOnClickListener(new View.OnClickListener() {
+            checkBox = itemView.findViewById(R.id.mortgagePropertyCheckBox);
+            checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    notifyItemChanged(selected);
-                    selected = getAdapterPosition();
-                    notifyItemChanged(selected);
+                    if (selected.contains(getAdapterPosition())){
+                        selected.remove(getAdapterPosition());
+                    } else {
+                    selected.add(getAdapterPosition());
+                    }
                 }
             });
         }
@@ -65,7 +68,7 @@ public class MortgagePropertyListAdapter extends RecyclerView.Adapter<MortgagePr
         }
         String priceText = "$"+properties.get(position).getPurchasePrice();
         holder.price.setText(priceText);
-        holder.radioButton.setChecked(selected == position);
+        holder.checkBox.setChecked(selected.contains(position));
     }
 
     @Override
@@ -80,9 +83,11 @@ public class MortgagePropertyListAdapter extends RecyclerView.Adapter<MortgagePr
 
     //Getters and Setters
 
-    public int getSelected() { return selected; }
+    public ArrayList<Integer> getSelected() { return selected; }
 
-    public void setSelected(int selected) { this.selected = selected; }
+    public void setSelected(int selected) { this.selected.add(selected); }
+
+    public void clearSelected() { this.selected.clear(); }
 
     public ArrayList<Property> getProperties() { return properties; }
 }

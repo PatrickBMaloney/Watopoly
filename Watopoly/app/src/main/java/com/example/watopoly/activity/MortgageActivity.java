@@ -29,11 +29,13 @@ public class MortgageActivity extends AppCompatActivity {
     private PlayerInfoHeaderFragment playerInfoHeaderFragment;
     private RecyclerView mortgageRecyclerView;
     private MortgagePropertyListAdapter mortgageAdapter;
-//    private RecyclerView unmortgageRecyclerView;
-//    private MortgagePropertyListAdapter unmortgageAdapter;
+    private RecyclerView unmortgageRecyclerView;
+    private MortgagePropertyListAdapter unmortgageAdapter;
     Player myPlayer;
     private Button finishMortgageButton;
     private Button backToMainButton;
+    private ArrayList<Property> mortProperties = new ArrayList<>();
+    private ArrayList<Property> unmortProperties = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,10 @@ public class MortgageActivity extends AppCompatActivity {
         mortgageRecyclerView = findViewById(R.id.mortgageRecyclerView);
         mortgageRecyclerView.setLayoutManager(layoutManager1);
 
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(this);
+        unmortgageRecyclerView = findViewById(R.id.unmortgageRecyclerView);
+        unmortgageRecyclerView.setLayoutManager(layoutManager2);
+
         FragmentManager fm = getSupportFragmentManager();
         playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
 
@@ -77,8 +83,6 @@ public class MortgageActivity extends AppCompatActivity {
     }
 
     private void setupAdapter() {
-        ArrayList<Property> mortProperties = new ArrayList<>();
-        ArrayList<Property> unmortProperties = new ArrayList<>();
         ArrayList<Property> allProperties = myPlayer.getProperties();
         for (int i=0; i<allProperties.size(); i++){
             if (allProperties.get(i).getMortgaged() == false){
@@ -91,22 +95,34 @@ public class MortgageActivity extends AppCompatActivity {
         mortgageAdapter = new MortgagePropertyListAdapter(mortProperties);
         mortgageRecyclerView.setAdapter(mortgageAdapter);
 
-//        unmortgageAdapter = new MortgagePropertyListAdapter(unmortProperties);
-//        unmortgageRecyclerView.setAdapter(unmortgageAdapter);
+        unmortgageAdapter = new MortgagePropertyListAdapter(unmortProperties);
+        unmortgageRecyclerView.setAdapter(unmortgageAdapter);
     }
 
     private void mortgageProperties(){
-        mortgageAdapter.setSelected(-1);
+        mortgageAdapter.clearSelected();
         mortgageAdapter.notifyDataSetChanged();
-//        unmortgageAdapter.setSelected(-1);
-//        unmortgageAdapter.notifyDataSetChanged();
+        unmortgageAdapter.clearSelected();
+        unmortgageAdapter.notifyDataSetChanged();
     }
 
     private void finishMortgaging(){
-        if (mortgageAdapter.getSelected() == -1) { return; }
-        Property selectedProperty = myPlayer.getProperties().get(mortgageAdapter.getSelected());
-        selectedProperty.mortgage();
-        myPlayer.receiveAmount(selectedProperty.getPurchasePrice());
+        ArrayList<Integer> mortgageList = mortgageAdapter.getSelected();
+        ArrayList<Integer> unmortageList = unmortgageAdapter.getSelected();
+        if (mortgageList.size() == 0 && unmortageList.size() == 0) { return; }
+
+        for (int i =0; i<mortgageList.size(); i++){
+            Property selectedProperty = mortProperties.get(mortgageList.get(i));
+            selectedProperty.mortgage();
+            myPlayer.receiveAmount(selectedProperty.getPurchasePrice());
+        }
+
+        for (int i =0; i<unmortageList.size(); i++){
+            Property selectedProperty = unmortProperties.get(unmortageList.get(i));
+            selectedProperty.unMortgage();
+            myPlayer.payAmount(selectedProperty.getPurchasePrice());
+        }
+
         playerInfoHeaderFragment.refresh();
         finish();
     }

@@ -80,7 +80,6 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
     }
 
     private void mortgage(){
-        //TODO this is bad code rewrite Ellen
         new GameSaveManager.SaveData(this).execute();
         Game gameState = Game.getInstance();
 
