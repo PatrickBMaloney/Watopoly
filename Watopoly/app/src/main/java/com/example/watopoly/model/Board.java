@@ -10,10 +10,10 @@ public class Board implements Serializable {
     private ArrayList<Tile> boardTiles = new ArrayList<>();
     private transient Canvas canvas;
 
-    public void setBoardInfo(Pair<ArrayList<Tile>, Canvas> boardInfo, ArrayList<ChanceCard> cards) {
+    public void setBoardInfo(Pair<ArrayList<Tile>, Canvas> boardInfo) {
         boardTiles = boardInfo.first;
         canvas = boardInfo.second;
-        setup(cards);
+        setup();
     }
 
     public Tile move(Player player, int steps) {
@@ -31,7 +31,7 @@ public class Board implements Serializable {
         return boardTiles.get(player.getPosition());
     }
 
-    private void setup(ArrayList<ChanceCard> cards) {
+    private void setup() {
         int jailPosition = 0;
         for (int x = 0; x < boardTiles.size(); x++) {
             if (boardTiles.get(x) instanceof Jail) {
@@ -48,8 +48,6 @@ public class Board implements Serializable {
 
             if (boardTiles.get(x) instanceof CardTile) {
                 CardTile cardTile = (CardTile) boardTiles.get(x);
-                cardTile.setCards(cards);
-
             }
         }
 
