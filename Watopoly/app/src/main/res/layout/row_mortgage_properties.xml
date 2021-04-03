@@ -22,7 +22,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
-        android:background="#E91E63"
         android:padding="3pt"
         android:text="Property Name"
         android:textSize="25dp"
@@ -31,13 +30,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/jailTitleTextView" />
 
-    <CheckBox
-        android:id="@+id/mortgageCheckBox"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <RadioButton
+        android:id="@+id/mortgagePropertyRadioButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="@+id/dollarValueTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/dollarValueTextView"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

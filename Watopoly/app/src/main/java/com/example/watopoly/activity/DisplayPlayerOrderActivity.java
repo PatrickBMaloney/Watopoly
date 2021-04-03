@@ -15,7 +15,6 @@ import com.example.watopoly.R;
 import com.example.watopoly.adapter.RollToGoFirstAdaptor;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -75,7 +74,7 @@ public class DisplayPlayerOrderActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(this);
-        shapeRecyclerView = findViewById(R.id.shapeOptionRecyclerView);
+        shapeRecyclerView = findViewById(R.id.mortgageRecyclerView);
         shapeRecyclerView.setLayoutManager(layoutManager1);
         shapeAdapter = new RollToGoFirstAdaptor(icons, colours, rollValues);
         shapeRecyclerView.setAdapter(shapeAdapter);

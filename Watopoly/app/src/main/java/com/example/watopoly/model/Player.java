@@ -32,6 +32,8 @@ public class Player implements Serializable {
         return money;
     }
 
+    public ArrayList<Property> getProperties(){ return properties;}
+
     public String getColour() {
         return colour;
     }
