@@ -114,6 +114,7 @@ public class MortgageActivity extends AppCompatActivity {
         for (int i =0; i<mortgageList.size(); i++){
             Property selectedProperty = mortProperties.get(mortgageList.get(i));
             selectedProperty.mortgage();
+            //TODO: Create a price for mortgaging
             myPlayer.receiveAmount(selectedProperty.getPurchasePrice());
         }
 
