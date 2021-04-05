@@ -12,7 +12,8 @@ public class MoveRelativeDistanceCard implements ChanceStrategy {
     public void executeAction(){
         Game gameState = Game.getInstance();
         int currPosition = gameState.getCurrentPlayer().getPosition();
-        gameState.getCurrentPlayer().setPosition(currPosition + numSpaces);
+        int newPosition = ((currPosition + numSpaces) < 0) ? currPosition + numSpaces + 38 : currPosition + numSpaces;
+        gameState.getCurrentPlayer().setPosition(newPosition);
     }
 
     @Override

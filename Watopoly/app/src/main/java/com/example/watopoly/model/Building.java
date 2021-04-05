@@ -41,6 +41,10 @@ public class Building extends Property {
         }
     }
 
+    public int getNumberOfHouses(){ return numberOfHouses; }
+
+    public boolean isHasHotel(){ return hasHotel; }
+
     public double getRentPriceWithHotel() {
         return Math.ceil((69.8 * baseRentPrice) / 10) * 10;
     }
@@ -88,6 +92,18 @@ public class Building extends Property {
     //TODO: find what this needs
     public void upgrade() {
 
+    }
+
+    public void buyHouses(int numHouses){
+        Game game = Game.getInstance();
+        game.getCurrentPlayer().payAmount(numHouses * housePrice);
+        numberOfHouses += numHouses;
+    }
+
+    public void buyHotel(){
+        Game game = Game.getInstance();
+        game.getCurrentPlayer().payAmount(housePrice);
+        hasHotel = true;
     }
 
     public Building(String name, TileDirection direction, double baseRentPrice, double purchasePrice, double housePrice, String hexCode) {
