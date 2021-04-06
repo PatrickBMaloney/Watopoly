@@ -3,14 +3,17 @@ package com.example.watopoly.activity;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.ToggleButton;
 
 import com.example.watopoly.R;
@@ -37,8 +40,10 @@ public class ViewAssetsActivity extends AppCompatActivity {
 
         largeProp = (View) findViewById(R.id.propertyCardBuyFragmentAssets);
         buttons = (View) findViewById(R.id.actionsLinearLayoutAssets);
-        setButtons();
-        linkView();
+//        setButtons();
+//        linkView();
+        final FragmentManager fm = getSupportFragmentManager();
+        playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragmentAssets);
         Player myPlayer = gameState.getCurrentPlayer();
         playerInfoHeaderFragment.setPlayer(myPlayer);
     }
@@ -51,27 +56,25 @@ public class ViewAssetsActivity extends AppCompatActivity {
 
         myAssetsButton.setChecked(true);
         allAssetsButton.setChecked(false);
-        myAssetsButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        myAssetsButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    allAssetsButton.setChecked(false);
-                } else {
-                    allAssetsButton.setChecked(true);
-                }
-            }
-        });
-        allAssetsButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    myAssetsButton.setChecked(false);
-                } else {
+            public void onClick(View v) {
                     myAssetsButton.setChecked(true);
-                }
+                    allAssetsButton.setChecked(false);
+                    //only call if switching from allAssets to your assets
+                    if(!myAssetsButton.isChecked()) {
+                        linkView();
+                    }
             }
         });
 
+        allAssetsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                allAssetsButton.setChecked(true);
+                myAssetsButton.setChecked(false);
+            }
+        });
         return_to_board.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,9 +84,11 @@ public class ViewAssetsActivity extends AppCompatActivity {
 
     }
     private void linkView() {
+        //TO-DO: check for other properties (to display correctly)
         final FragmentManager fm = getSupportFragmentManager();
         playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragmentAssets);
         int size = gameState.getCurrentPlayer().getProperties().size(); //size of properties
+
         //will start setting all properties
         for(int i = 0; i < size; i++) {
             String frag = "propertyCardBuyFragment" + String.valueOf(i);

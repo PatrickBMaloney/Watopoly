@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="320dp">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@id/guideline8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/container0"
+            android:layout_width="wrap_content"
+            android:layout_height="65dp">
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment0"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                tools:layout="@layout/fragment_property" />
+
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment1"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment0"
+                tools:layout="@layout/fragment_property" />
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment2"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment1"
+                tools:layout="@layout/fragment_property" />
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment3"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment2"
+                tools:layout="@layout/fragment_property" />
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment4"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment3"
+                tools:layout="@layout/fragment_property" />
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment5"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment4"
+                tools:layout="@layout/fragment_property" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/container1"
+            android:layout_width="wrap_content"
+            android:layout_height="65dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container0">
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment6"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                tools:layout="@layout/fragment_property" />
+
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment7"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment6"
+                tools:layout="@layout/fragment_property" />
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment8"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment7"
+                tools:layout="@layout/fragment_property" />
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment9"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment8"
+                tools:layout="@layout/fragment_property" />
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment10"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment9"
+                tools:layout="@layout/fragment_property" />
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment11"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment10"
+                tools:layout="@layout/fragment_property" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/container2"
+            android:layout_width="wrap_content"
+            android:layout_height="65dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container1">
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment12"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                tools:layout="@layout/fragment_property" />
+
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment13"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment12"
+                tools:layout="@layout/fragment_property" />
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment14"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment13"
+                tools:layout="@layout/fragment_property" />
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment15"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment14"
+                tools:layout="@layout/fragment_property" />
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment16"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment15"
+                tools:layout="@layout/fragment_property" />
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment17"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment16"
+                tools:layout="@layout/fragment_property" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/container3"
+            android:layout_width="wrap_content"
+            android:layout_height="65dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container2">
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment18"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                tools:layout="@layout/fragment_property" />
+
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment19"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment18"
+                tools:layout="@layout/fragment_property" />
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment20"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment19"
+                tools:layout="@layout/fragment_property" />
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment21"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment20"
+                tools:layout="@layout/fragment_property" />
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment22"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment21"
+                tools:layout="@layout/fragment_property" />
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment23"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment22"
+                tools:layout="@layout/fragment_property" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/container4"
+            android:layout_width="wrap_content"
+            android:layout_height="65dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container3">
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment24"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                tools:layout="@layout/fragment_property" />
+
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment25"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment24"
+                tools:layout="@layout/fragment_property" />
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment26"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment25"
+                tools:layout="@layout/fragment_property" />
+
+            <fragment
+                android:id="@+id/propertyCardBuyFragment27"
+                class="com.example.watopoly.fragment.PropertyFragment"
+                android:layout_width="34dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_toRightOf="@id/propertyCardBuyFragment26"
+                tools:layout="@layout/fragment_property" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <fragment
+        android:id="@+id/propertyCardBuyFragmentAssets"
+        class="com.example.watopoly.fragment.PropertyFragment"
+        android:layout_width="230dp"
+        android:layout_height="280dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.162"
+        app:layout_constraintStart_toStartOf="@+id/guideline8"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout="@layout/fragment_property" />
+
+    <LinearLayout
+        android:id="@+id/actionsLinearLayoutAssets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="120dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/propertyCardBuyFragmentAssets"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/buyHouseButtonAssets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buy Houses" />
+
+        <Button
+            android:id="@+id/tradeSellButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Trade/Sell" />
+
+        <Button
+            android:id="@+id/mortgageButtonAssets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mortgage" />
+
+    </LinearLayout>
+
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/relativeLayoutAssets"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:gravity="bottom|end"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/back_to_board"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/return_to_board_button"
+            android:elevation="3dp"
+            android:gravity="center"
+            android:stateListAnimator="@null" />
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
