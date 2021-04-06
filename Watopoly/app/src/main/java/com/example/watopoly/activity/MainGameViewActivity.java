@@ -6,8 +6,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -288,6 +286,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                     title.setText("You already have 4 houses and a hotel!");
                 }
 
+                // if they don't have enough money for anything don't show any incrementers
                 if (game.getCurrentPlayer().getMoney() < housePrice){
                     dialog.findViewById(R.id.buyHouseIncrementer).setVisibility(View.GONE);
                     dialog.findViewById(R.id.buyHotelIncrementer).setVisibility(View.GONE);
@@ -295,7 +294,20 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                     TextView title = dialog.findViewById(R.id.buyPropertyDescriptionTextView);
                     title.setPadding(0, 100, 0, 0);
                     title.setTextSize(20);
-                    title.setText("Insufficient funds");
+                    title.setLines(3);
+                    title.setText("Insufficient funds. You are unable to purchase any properties");
+                }
+
+                // if they don't have a full set don't show the incrementers
+                if (game.getCurrentPlayer().getMoney() < housePrice){
+                    dialog.findViewById(R.id.buyHouseIncrementer).setVisibility(View.GONE);
+                    dialog.findViewById(R.id.buyHotelIncrementer).setVisibility(View.GONE);
+                    dialog.findViewById(R.id.currrentHousesAndHotels).setVisibility(View.GONE);
+                    TextView title = dialog.findViewById(R.id.buyPropertyDescriptionTextView);
+                    title.setPadding(0, 100, 0, 0);
+                    title.setTextSize(20);
+                    title.setLines(3);
+                    title.setText("You do not possess a full set. You are unable to purchase any properties.");
                 }
 
                 // if they can't afford a hotel, don't show the hotel incrementer
