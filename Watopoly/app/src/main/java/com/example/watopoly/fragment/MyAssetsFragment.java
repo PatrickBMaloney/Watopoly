@@ -18,7 +18,7 @@ import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Player;
 import com.example.watopoly.model.Property;
 
-public class myAssetsFragment extends Fragment {
+public class MyAssetsFragment extends Fragment {
 
     private Game gameState = Game.getInstance();
     View largeProp;
