@@ -37,8 +37,7 @@ public class Game implements Serializable {
 
     //public methods
     public void setBoardInfo(BoardView boardView) {
-        cards = ChanceCards.getAllChanceCards();
-        board.setBoardInfo(boardView, cards, players);
+        board.setBoardInfo(boardView, players);
     }
 
     public void addPlayer(Player player) {

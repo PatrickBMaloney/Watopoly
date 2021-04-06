@@ -11,14 +11,13 @@ import java.util.Map;
 public class Board implements Serializable {
     private ArrayList<Tile> boardTiles = new ArrayList<>();
     private transient BoardView boardView;
-
     private Map<Tile, ArrayList<Player>> drawingState = new HashMap<>();
 
-    public void setBoardInfo(BoardView boardView, ArrayList<ChanceCard> cards, ArrayList<Player> players) {
+    public void setBoardInfo(BoardView boardView, ArrayList<Player> players) {
         boardTiles = boardView.getTiles();
         this.boardView = boardView;
         setupDrawingState(players);
-        setupCards(cards);
+        setup();
     }
 
     public Tile move(Player player, int steps) {
@@ -83,7 +82,7 @@ public class Board implements Serializable {
         boardView.drawDrawingState(drawingState);
     }
 
-    private void setupCards(ArrayList<ChanceCard> cards) {
+    private void setup() {
         int jailPosition = 0;
         for (int x = 0; x < boardTiles.size(); x++) {
             if (boardTiles.get(x) instanceof Jail) {
@@ -100,8 +99,6 @@ public class Board implements Serializable {
 
             if (boardTiles.get(x) instanceof CardTile) {
                 CardTile cardTile = (CardTile) boardTiles.get(x);
-                cardTile.setCards(cards);
-
             }
         }
 

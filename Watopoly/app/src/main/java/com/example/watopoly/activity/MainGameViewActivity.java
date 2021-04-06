@@ -150,7 +150,6 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
         if (tile instanceof CardTile) {
             Intent intent = new Intent(this, ChanceCardActivity.class);
-            intent.putExtra("drawnCard", (ChanceCard)((CardTile) tile).getLastDrawn());
             startActivityForResult(intent, 1);
         }
         else {

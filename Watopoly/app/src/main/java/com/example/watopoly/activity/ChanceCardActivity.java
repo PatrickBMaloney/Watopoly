@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.watopoly.R;
 import com.example.watopoly.fragment.PlayerInfoHeaderFragment;
 import com.example.watopoly.model.ChanceCard;
+import com.example.watopoly.model.ChanceCardStrategy.ChanceStrategy;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Player;
 import com.example.watopoly.util.ChanceCards;
@@ -57,15 +58,18 @@ public class ChanceCardActivity extends AppCompatActivity {
                     finish();
                 }
                 else {
-                    ChanceCard drawnCard = ChanceCards.drawRandomChanceCard();
+                    ChanceStrategy drawnStrategy = ChanceCards.drawRandomChanceCard();
+                    ChanceCard card = new ChanceCard();
+                    card.setStrat(drawnStrategy);
+                    card.executeStrategy();
+
                     chanceCardImg.setImageResource(R.drawable.chance_front);
-                    String chanceDescription = drawnCard.getDescription();
-                    String chanceTitle = drawnCard.getTitle();
+                    String chanceDescription = drawnStrategy.getDescription();
+                    String chanceTitle = drawnStrategy.getTitle();
                     String buttonText = "CONTINUE";
                     ChanceCardActivity.this.chanceDescription.setText(chanceDescription);
                     buttonTextView.setText(buttonText);
                     chanceCardTitle.setText(chanceTitle);
-                    drawnCard.executeAction();
                     continueToBoard = true;
                 }
             }
