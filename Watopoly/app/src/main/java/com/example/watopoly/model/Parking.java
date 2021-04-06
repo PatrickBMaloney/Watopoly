@@ -14,6 +14,7 @@ public class Parking extends Tile {
     public Parking() {
         maxNumberOfPlayers = 4;
         tileDirection = TileDirection.CORNER;
+        this.name = "Parking";
     }
 
 }

@@ -1,7 +1,6 @@
 package com.example.watopoly.model;
 
-import android.graphics.Canvas;
-import android.util.Pair;
+import com.example.watopoly.view.BoardView;
 
 import com.example.watopoly.util.ChanceCards;
 
@@ -37,9 +36,8 @@ public class Game implements Serializable {
     }
 
     //public methods
-    public void setBoardInfo(Pair<ArrayList<Tile>, Canvas> boardInfo) {
-        //TODO: add new cards and flesh out cards
-        board.setBoardInfo(boardInfo);
+    public void setBoardInfo(BoardView boardView) {
+        board.setBoardInfo(boardView, players);
     }
 
     public void addPlayer(Player player) {
