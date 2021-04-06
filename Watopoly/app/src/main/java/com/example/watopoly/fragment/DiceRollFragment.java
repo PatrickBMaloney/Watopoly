@@ -81,7 +81,7 @@ public class DiceRollFragment extends Fragment {
         return diceRollResult;
     }
 
-    public void setRollButtonHidden(boolean isHidden) {
-        rollDiceButton.setVisibility( isHidden ? View.GONE : View.VISIBLE);
+    public void setRollButtonVisibility(int visibility) {
+        rollDiceButton.setVisibility(visibility);
     }
 }

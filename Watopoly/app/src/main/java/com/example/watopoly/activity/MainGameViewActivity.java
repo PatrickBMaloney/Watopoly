@@ -84,6 +84,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         Game gameState = Game.getInstance();
         playerInfoHeaderFragment.setPlayer(gameState.nextTurn());
         diceRollFragment.getView().setVisibility(View.VISIBLE);
+        diceRollFragment.setRollButtonVisibility(View.VISIBLE);
         actionLinearLayout.setVisibility(View.GONE);
     }
 
@@ -227,6 +228,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         int diceRollResult = diceRollFragment.getDiceRollResult();
         Game game = Game.getInstance();
         game.setLastRoll(diceRollResult);
+        diceRollFragment.setRollButtonVisibility(View.INVISIBLE);
         animateMove(diceRollResult);
     }
 
