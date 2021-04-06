@@ -43,14 +43,20 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/newGameButton"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="110dp"
-        android:layout_height="255dp"
+    <Button
+        android:id="@+id/joinGameButton"
+        android:layout_width="133dp"
+        android:layout_height="73dp"
+        android:backgroundTint="#fcdb03"
+        app:layout_constraintBaseline_toBaselineOf="@+id/continueGameButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6"
-        app:srcCompat="@drawable/goose" />
+        android:text="JOIN GAME"
+        android:textSize="18sp"
+
+
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

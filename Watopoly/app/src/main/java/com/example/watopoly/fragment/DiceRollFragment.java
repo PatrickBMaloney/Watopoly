@@ -35,8 +35,8 @@ public class DiceRollFragment extends Fragment {
         rollDiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int num1 = (int)(Math.random()*6+1);
-                int num2 = (int)(Math.random()*6+1);
+                int num1 = (int)(Math.random()*6+1);;
+                int num2 = (int)(Math.random()*6+1);;
 
                 diceRollResult = num1 + num2;
                 isDouble = num1 == num2;

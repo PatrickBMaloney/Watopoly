@@ -28,24 +28,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/shapeLinearLayout"/>
 
-    <Button
-        android:id="@+id/passToFirstPlayerBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:backgroundTint="#308AEA"
-        android:padding="16dp"
-        android:text="Next Player"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.619"
-        app:layout_constraintStart_toEndOf="@+id/rollToGoFirstBtn"
-        app:layout_constraintTop_toBottomOf="@+id/rollToGoFirstBtn"
-        app:layout_constraintVertical_bias="0.804" />
-
     <TextView
         android:id="@+id/diceRollResultTextView"
         android:layout_width="wrap_content"
@@ -71,15 +53,14 @@
 
     <TextView
         android:id="@+id/playerRollingTextView"
-        android:layout_width="184dp"
         android:layout_height="35dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
         android:text="TextView"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.003"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="40dp"
+        android:textColor="#000000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <fragment

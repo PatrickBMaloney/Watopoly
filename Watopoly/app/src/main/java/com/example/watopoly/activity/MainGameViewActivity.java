@@ -368,7 +368,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         else if (requestCode == MORTGAGE_TILE_REQUEST_CODE) {
             Tile tile = game.moveCurrentPlayer(0);
             showDialogByLandingTile(tile);
-            }
+        }
         else if (requestCode == VIEW_ASSETS_REQUEST_CODE) {
             FragmentManager fm = getSupportFragmentManager();
             playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
@@ -406,11 +406,11 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                 final TextView desTextView;
                 String description;
                 dialog.setContentView(R.layout.dialog_buy_house);
-                 buyButton = dialog.findViewById(R.id.buyHouseButton);
+                buyButton = dialog.findViewById(R.id.buyHouseButton);
                 mortgageButton = dialog.findViewById(R.id.mortgageBuyPropertyButton);
                 cancelButton = dialog.findViewById(R.id.skipHouseButton);
-                 desTextView = dialog.findViewById(R.id.buyHouseDescriptionTextView);
-                 description = String.format("You landed on %s. Would you like to purchase for $%.2f?", property.getName(), property.getPurchasePrice());
+                desTextView = dialog.findViewById(R.id.buyHouseDescriptionTextView);
+                description = String.format("You landed on %s. Would you like to purchase for $%.2f?", property.getName(), property.getPurchasePrice());
                 if (property.getPurchasePrice() > game.getCurrentPlayer().getMoney()) {
                     description = String.format("You landed on %s. Insufficient funds to purchase for $%.2f.", property.getName(), property.getPurchasePrice());
                     cancelButton.setText("Continue");
@@ -496,17 +496,17 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
             }
         } else if (tile instanceof TaxTile) {
-                dialog.setContentView(R.layout.dialog_tax);
-                Button continueButton = dialog.findViewById(R.id.taxContinueButton);
-                continueButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                        playerInfoHeaderFragment.refresh();
-                    }
-                });
+            dialog.setContentView(R.layout.dialog_tax);
+            Button continueButton = dialog.findViewById(R.id.taxContinueButton);
+            continueButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    playerInfoHeaderFragment.refresh();
+                }
+            });
 
-                dialog.show();
+            dialog.show();
         } else if (tile instanceof Jail && game.getCurrentPlayer().getJailed()) {
             dialog.setContentView(R.layout.dialog_jailed);
             Button continueButton = dialog.findViewById(R.id.bankruptButton);

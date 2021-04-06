@@ -25,9 +25,11 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
         Button btnNewGame = findViewById(R.id.newGameButton);
         Button btnContinueGame = findViewById(R.id.continueGameButton);
+        Button btnJoinGame = (Button) findViewById(R.id.joinGameButton);
         btnContinueGame.setVisibility(View.GONE);
         btnNewGame.setOnClickListener(this);
         btnContinueGame.setOnClickListener(this);
+        btnJoinGame.setOnClickListener(this);
 
         try  {
             FileInputStream inputStream = openFileInput("savedGameState");
@@ -43,8 +45,10 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         if (view.getId() == R.id.continueGameButton) {
             intent = new Intent(this, MainGameViewActivity.class);
             intent.putExtra("continue","");
+        }  else if (view.getId() == R.id.joinGameButton) {
+            intent = new Intent(this, ShowRoomsActivity.class);
         } else {
-            intent = new Intent(this, NumberOfPlayersActivity.class);
+            intent = new Intent(this, CreateRoomActivity.class);
         }
 
         startActivity(intent);

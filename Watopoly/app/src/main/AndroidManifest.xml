@@ -60,6 +60,19 @@
             android:screenOrientation="landscape" />
         <activity android:name=".activity.BuyHouseHotelActivity"
             android:screenOrientation="landscape" />
+         <activity android:name=".activity.CreateRoomActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.ShowRoomsActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.WaitForRoomActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.GameDiceRollActivity"
+            android:screenOrientation="landscape" />
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>
