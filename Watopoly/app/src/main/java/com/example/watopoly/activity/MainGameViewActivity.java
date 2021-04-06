@@ -1,7 +1,6 @@
 package com.example.watopoly.activity;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
@@ -96,13 +95,6 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
         //TODO: bind button to the activity
         Button viewAssetButton = findViewById(R.id.viewAssetButton);
-        viewAssetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainGameViewActivity.this, ViewAssetsActivity.class);
-                startActivity(intent);
-            }
-        });
         Button tradeButton = findViewById(R.id.tradeButton);
         Button mortgageButton = findViewById(R.id.mortgageButton);
         Button endTurnButton = findViewById(R.id.endTurnButton);
