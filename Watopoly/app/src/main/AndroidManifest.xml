@@ -38,9 +38,6 @@
         <activity
             android:name=".activity.ChanceCardActivity"
             android:screenOrientation="landscape" />
-        <activity
-            android:name=".activity.ViewAssetsActivity"
-            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
