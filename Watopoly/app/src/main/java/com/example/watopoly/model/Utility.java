@@ -6,10 +6,10 @@ import android.graphics.Paint;
 import com.example.watopoly.enums.TileDirection;
 
 public class Utility extends Property {
-    private Game game = Game.getInstance();
 
     @Override
     public double getRentPrice() {
+        Game game = Game.getInstance();
         if (this.owner.getNumUtilities() == 2) {
             return 10 * game.getLastRoll();
         } else if (this.owner.getNumUtilities() == 1) {

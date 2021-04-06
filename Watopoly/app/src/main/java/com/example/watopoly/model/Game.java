@@ -35,13 +35,16 @@ public class Game implements Serializable {
         }
     }
 
-    //public methods
-    public void setBoardInfo(BoardView boardView) {
-        board.setBoardInfo(boardView, players);
+    public ArrayList<Tile> getBoardTiles() {
+        return board.getBoardTiles();
     }
 
     public void addPlayer(Player player) {
         players.add(player);
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 
     public Player nextTurn() {
