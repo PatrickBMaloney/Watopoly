@@ -40,6 +40,10 @@ public class Player implements Serializable {
         return icon;
     }
 
+    public ArrayList<Property> getProperties() {
+        return properties;
+    }
+
     public int getPosition() {
         return position;
     }
