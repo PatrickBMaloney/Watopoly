@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -43,6 +44,9 @@ import com.example.watopoly.util.GameSaveManager;
 import com.example.watopoly.view.BoardView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class MainGameViewActivity extends AppCompatActivity implements FragmentCallbackListener {
     //TODO: move this somewhere else?
@@ -51,6 +55,16 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
     private PlayerInfoHeaderFragment playerInfoHeaderFragment;
     private DiceRollFragment diceRollFragment;
     private LinearLayout actionLinearLayout;
+
+    private Map<Tile, ArrayList<Player>> drawingState = new HashMap<>();
+    private BoardView boardView;
+    private Button viewAssetButton;
+    private Button tradeButton;
+    private Button mortgageButton;
+    private Button endTurnButton;
+
+    private static int CHANCE_REQUEST_CODE = 1;
+    private static int JAIL_OPTION_REQUEST_CODE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +86,24 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         startTurn();
     }
 
-    private void startTurn() {
-        new GameSaveManager.SaveData(this).execute();
+    //Not Ideal but fixes the sync issue
+    public void onSaveComplete() {
         Game gameState = Game.getInstance();
         playerInfoHeaderFragment.setPlayer(gameState.nextTurn());
         diceRollFragment.getView().setVisibility(View.VISIBLE);
+        diceRollFragment.setRollButtonVisibility(View.VISIBLE);
         actionLinearLayout.setVisibility(View.GONE);
+
+        if (gameState.getCurrentPlayer().getJailed()) {
+            Intent intent = new Intent(this, JailOptionsActivity.class);
+            startActivityForResult(intent, JAIL_OPTION_REQUEST_CODE);
+        }
     }
+
+    private void startTurn() {
+        new GameSaveManager.SaveData(this).execute();
+    }
+
 
     private void linkView() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -90,10 +115,10 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         diceRollFragment.setCallbackListener(this);
 
         //TODO: bind button to the activity
-        Button viewAssetButton = findViewById(R.id.viewAssetButton);
-        Button tradeButton = findViewById(R.id.tradeButton);
-        Button mortgageButton = findViewById(R.id.mortgageButton);
-        Button endTurnButton = findViewById(R.id.endTurnButton);
+        viewAssetButton = findViewById(R.id.viewAssetButton);
+        tradeButton = findViewById(R.id.tradeButton);
+        mortgageButton = findViewById(R.id.mortgageButton);
+        endTurnButton = findViewById(R.id.endTurnButton);
         endTurnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,46 +147,124 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         }
 
         // board setup
+        boardView = findViewById(R.id.board);
+        setupDrawingState();
+    }
+
+    private void drawPlayerOnTile(Tile newTile) {
+        //removes players
+        Game game = Game.getInstance();
+        for (Tile tile: drawingState.keySet()) {
+            ArrayList<Player> playerList = drawingState.get(tile);
+            for (Iterator<Player> iterator = playerList.iterator(); iterator.hasNext(); ) {
+                Player currPlayer = iterator.next();
+                if (currPlayer.getName().equals(game.getCurrentPlayer().getName())) {
+                    iterator.remove();
+                    tile.decrementCurrNumberOfPlayers();
+                }
+            }
+        }
+
+        drawingState.get(newTile).add(game.getCurrentPlayer());
+        boardView.drawDrawingState(drawingState);
+    }
+
+    private void onAnimationFinish(int diceRoll) {
+        Game game = Game.getInstance();
+        Tile tile = game.moveCurrentPlayer(diceRoll);
+        drawPlayerOnTile(tile);
+
+        if (tile instanceof CardTile) {
+            Intent intent = new Intent(this, ChanceCardActivity.class);
+            startActivityForResult(intent, CHANCE_REQUEST_CODE);
+        }
+        else {
+            showDialogByLandingTile(tile);
+        }
+
+        Log.d("Landed", tile.toString());
+        Log.d("Landed", ""+game.getCurrentPlayer().getPosition());
+
+        diceRollFragment.getView().setVisibility(View.GONE);
+        Boolean isJailed = game.getCurrentPlayer().getJailed();
+        mortgageButton.setVisibility(isJailed ? View.GONE : View.VISIBLE);
+        tradeButton.setVisibility(isJailed ? View.GONE : View.VISIBLE);
+        actionLinearLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void animateMove(final int steps) {
+        int delay = 300;
+        for (int x = 0; x <= steps; x++) {
+            final int delta = x;
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Game game = Game.getInstance();
+                    int currPos = game.getCurrentPlayer().getPosition() + delta;
+                    Tile tile = game.getBoardTiles().get(currPos % game.getBoardTiles().size());
+                    drawPlayerOnTile(tile);
+
+                    if (delta == steps) {
+                        onAnimationFinish(steps);
+                    }
+                }
+            }, delay*x + delay);
+        }
+    }
+
+    private void setupDrawingState() {
         Game gameState = Game.getInstance();
-        BoardView boardView = findViewById(R.id.board);
-        gameState.setBoardInfo(boardView);
+        ArrayList<Tile> tiles = gameState.getBoardTiles();
+        for (Tile t: tiles) {
+            drawingState.put(t, new ArrayList<Player>());
+        }
+
+        for (Player p: gameState.getPlayers()) {
+            drawingState.get(tiles.get(p.getPosition())).add(p);
+            tiles.get(p.getPosition()).incrementCurrNumberOfPlayers();
+        }
+
+        boardView.drawDrawingState(drawingState);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Game game = Game.getInstance();
+        if (requestCode == CHANCE_REQUEST_CODE) {
+            FragmentManager fm = getSupportFragmentManager();
+            playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
+            playerInfoHeaderFragment.refresh();
 
-        FragmentManager fm = getSupportFragmentManager();
-        playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
-        playerInfoHeaderFragment.refresh();
-
-        final Game game = Game.getInstance();
-        Tile tile = game.moveCurrentPlayer(0);
-        showDialogByLandingTile(tile);
+            Tile tile = game.moveCurrentPlayer(0);
+            drawPlayerOnTile(tile);
+            showDialogByLandingTile(tile);
+            Boolean isJailed = game.getCurrentPlayer().getJailed();
+            mortgageButton.setVisibility(isJailed ? View.GONE : View.VISIBLE);
+            tradeButton.setVisibility(isJailed ? View.GONE : View.VISIBLE);
+        }
+        else if (requestCode == JAIL_OPTION_REQUEST_CODE) {
+            Boolean isJailed = game.getCurrentPlayer().getJailed();
+            if (isJailed) {
+                diceRollFragment.getView().setVisibility(View.GONE);
+                mortgageButton.setVisibility(View.GONE);
+                tradeButton.setVisibility(View.GONE);
+                actionLinearLayout.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     //FragmentCallbackListener diceRolled
     @Override
     public void onCallback() {
         int diceRollResult = diceRollFragment.getDiceRollResult();
-        final Game game = Game.getInstance();
+        Game game = Game.getInstance();
         game.setLastRoll(diceRollResult);
-        Tile tile = game.moveCurrentPlayer(diceRollResult);
-
-        if (tile instanceof CardTile) {
-            Intent intent = new Intent(this, ChanceCardActivity.class);
-            startActivityForResult(intent, 1);
-        }
-        else {
-            showDialogByLandingTile(tile);
-        }
-        
-        Log.d("Landed", tile.toString());
-        Log.d("Landed", ""+game.getCurrentPlayer().getPosition());
-
-        diceRollFragment.getView().setVisibility(View.GONE);
-        actionLinearLayout.setVisibility(View.VISIBLE);
+        diceRollFragment.setRollButtonVisibility(View.INVISIBLE);
+        animateMove(diceRollResult);
     }
+
     public void destroyPropertyFragment(int id) {
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(id);
@@ -270,8 +373,8 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                 }
             });
             dialog.show();
+        } else {
+            playerInfoHeaderFragment.refresh();
         }
-
     }
-
 }

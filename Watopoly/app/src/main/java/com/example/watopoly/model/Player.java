@@ -117,12 +117,12 @@ public class Player implements Serializable {
 
     public void addJailFreeCard(){ jailFreeCards += 1; }
 
-    public boolean useJailFreecard(){
-        if (jailFreeCards == 0){
-            return false;
-        }
+    public int getNumberOfJailFreeCards() {
+        return jailFreeCards;
+    }
+
+    public void useJailFreeCard(){
         jailFreeCards -= 1;
         isJailed = false;
-        return true;
     }
 }

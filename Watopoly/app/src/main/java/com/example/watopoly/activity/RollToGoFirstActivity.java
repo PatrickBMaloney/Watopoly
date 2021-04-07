@@ -72,7 +72,6 @@ public class RollToGoFirstActivity extends AppCompatActivity implements Fragment
             @Override
             public void onClick(View v) {
                 finishRolling();
-                diceRollFragment.setRollButtonHidden(false);
             }
         });
     }
@@ -105,6 +104,7 @@ public class RollToGoFirstActivity extends AppCompatActivity implements Fragment
             startActivity(playerOrderIntent);
         } else {
             currentTurn++;
+            diceRollFragment.setRollButtonVisibility(View.VISIBLE);
             playerDiceRoll();
         }
     }
@@ -115,7 +115,7 @@ public class RollToGoFirstActivity extends AppCompatActivity implements Fragment
         rollValues.add(diceRollResult);
         diceRollResultTextView.setText(""+diceRollResult);
 
-        diceRollFragment.setRollButtonHidden(true);
+        diceRollFragment.setRollButtonVisibility(View.INVISIBLE);
         nextPlayerDiceRollButton.setVisibility(View.VISIBLE);
     }
 }

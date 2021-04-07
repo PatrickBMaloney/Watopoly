@@ -66,5 +66,13 @@ public class GameSaveManager {
             }
             return null;
         }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            MainGameViewActivity mainActivity = activityWeakReference.get();
+            if (mainActivity == null || mainActivity.isFinishing()) return;
+            mainActivity.onSaveComplete();
+        }
     }
 }

@@ -16,11 +16,6 @@ public class CardTile extends Tile{
     }
 
     @Override
-    public void landOn(Player player) {
-        Random rand = new Random();
-    }
-
-    @Override
     public void drawOn(Canvas canvas) {
 
     }

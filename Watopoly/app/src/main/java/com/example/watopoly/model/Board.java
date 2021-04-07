@@ -1,23 +1,20 @@
 package com.example.watopoly.model;
 
-import com.example.watopoly.view.BoardView;
-
+import com.example.watopoly.util.BoardTiles;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+
 
 public class Board implements Serializable {
-    private ArrayList<Tile> boardTiles = new ArrayList<>();
-    private transient BoardView boardView;
-    private Map<Tile, ArrayList<Player>> drawingState = new HashMap<>();
+    private ArrayList<Tile> boardTiles;
 
-    public void setBoardInfo(BoardView boardView, ArrayList<Player> players) {
-        boardTiles = boardView.getTiles();
-        this.boardView = boardView;
-        setupDrawingState(players);
+    public Board() {
+        boardTiles = BoardTiles.getTiles();
         setup();
+    }
+
+    public ArrayList<Tile> getBoardTiles() {
+        return boardTiles;
     }
 
     public Tile move(Player player, int steps) {
@@ -26,60 +23,16 @@ public class Board implements Serializable {
             player.passedGo();
         }
 
-        // remove player from old Tile
-        for (Tile tile: drawingState.keySet()) {
-            ArrayList<Player> playerList = drawingState.get(tile);
-            for (Iterator<Player> iterator = playerList.iterator(); iterator.hasNext(); ) {
-                Player currPlayer = iterator.next();
-                if (currPlayer.getName().equals(player.getName())) {
-                    iterator.remove();
-                    tile.decrementCurrNumberOfPlayers();
-                }
-            }
-        }
-
         // calculate new Tile
         Tile newTile = boardTiles.get(newPosition);
-        if (newTile.getCurrNumberOfPlayers() == newTile.getMaxNumberOfPlayers()) {
-            newPosition = newPosition + 1;
-            newTile = boardTiles.get(newPosition);
-        }
-        if (newTile.getName().equals("goToJail")) {
-            newPosition = 9;
-            newTile = boardTiles.get(newPosition);
-        }
-
-        // add player to new Tile
-        newTile.incrementCurrNumberOfPlayers();
+        //Do we need this?
+//        if (newTile.getCurrNumberOfPlayers() == newTile.getMaxNumberOfPlayers()) {
+//            newPosition = newPosition + 1;
+//            newTile = boardTiles.get(newPosition);
+//        }
         player.setPosition(newPosition);
         newTile.landOn(player);
-        drawingState.get(newTile).add(player);
-
-        boardView.drawDrawingState(drawingState);
         return boardTiles.get(player.getPosition());
-    }
-
-    private void setupDrawingState(ArrayList<Player> players) {
-        for (Tile t: boardTiles) {
-            drawingState.put(t, new ArrayList<Player>());
-        }
-
-        boolean emptyDrawingState = true;
-        for (Tile t: drawingState.keySet()) {
-            ArrayList<Player> p = drawingState.get(t);
-            if (p.size() > 0) {
-                emptyDrawingState = false;
-            }
-        }
-
-        if (emptyDrawingState) {
-            for (Player p: players) {
-                drawingState.get(boardTiles.get(0)).add(p);
-                boardTiles.get(0).incrementCurrNumberOfPlayers();
-            }
-        }
-
-        boardView.drawDrawingState(drawingState);
     }
 
     private void setup() {
@@ -95,10 +48,6 @@ public class Board implements Serializable {
             if (boardTiles.get(x) instanceof GoToJail) {
                 GoToJail goToJail = (GoToJail) boardTiles.get(x);
                 goToJail.setJailLocation(jailPosition);
-            }
-
-            if (boardTiles.get(x) instanceof CardTile) {
-                CardTile cardTile = (CardTile) boardTiles.get(x);
             }
         }
 
