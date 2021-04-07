@@ -84,14 +84,14 @@ public class AllAssetsFragment extends Fragment {
     private void showPlayerAssets(View root, int Player) {
 
         final FragmentManager fm = getChildFragmentManager();
-        int size = gameState.getCurrentPlayer().getProperties().size(); //number of properties
+        int size = gameState.getPlayers().get(Player).getProperties().size(); //number of properties
 
         TextView moneyTextView = root.findViewById(moneyID[Player]);
         ImageView avatarImageView = root.findViewById(imageID[Player]);
 
         moneyTextView.setText("$"+gameState.getPlayers().get(Player).getMoney().toString());
 
-        avatarImageView.setImageResource(gameState.getCurrentPlayer().getIcon());
+        avatarImageView.setImageResource(gameState.getPlayers().get(Player).getIcon());
         ImageViewCompat.setImageTintMode(avatarImageView, PorterDuff.Mode.SRC_ATOP);
         ImageViewCompat.setImageTintList(avatarImageView, ColorStateList.valueOf(Color.parseColor(gameState.getPlayers().get(Player).getColour())));
         //will start setting all properties
@@ -99,11 +99,11 @@ public class AllAssetsFragment extends Fragment {
             String frag = "propCard" + String.valueOf(i) + "." + String.valueOf(Player);
             int resourceViewID = getResources().getIdentifier(frag, "id", requireActivity().getPackageName());
             PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(resourceViewID);
-            final Property property = gameState.getCurrentPlayer().getProperties().get(i); //get the current property
+            final Property property = gameState.getPlayers().get(Player).getProperties().get(i); //get the current property
             propertyFragment.setProperty(property);
         }
 
-        for(int j = size; j < 20; j++) {
+        for(int j = size; j < 26; j++) {
             String frag = "propCard" + String.valueOf(j) + "." + String.valueOf(Player);
             int resourceViewID = getResources().getIdentifier(frag, "id", requireActivity().getPackageName());
             View hideFrag = root.findViewById(resourceViewID);

@@ -26,7 +26,7 @@ public class MyAssetsFragment extends Fragment {
     View largeProp;
     View buttons;
     private Property prev;
-    private int [] ids = new int[20];
+    private int [] ids = new int[26];
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,6 +70,13 @@ public class MyAssetsFragment extends Fragment {
         ids[17] = R.id.propertyCardBuyFragment17;
         ids[18] = R.id.propertyCardBuyFragment18;
         ids[19] = R.id.propertyCardBuyFragment19;
+        ids[20] = R.id.propertyCardBuyFragment20;
+        ids[21] = R.id.propertyCardBuyFragment21;
+        ids[22] = R.id.propertyCardBuyFragment22;
+        ids[23] = R.id.propertyCardBuyFragment23;
+        ids[24] = R.id.propertyCardBuyFragment24;
+        ids[25] = R.id.propertyCardBuyFragment25;
+
     }
     private void linkView(View root) {
         largeProp = (View) root.findViewById(R.id.propertyCardBuyFragmentAssets);
@@ -112,7 +119,7 @@ public class MyAssetsFragment extends Fragment {
         }
 
         //set View to none for rest
-        for(int j = size; j < 20; j++) {
+        for(int j = size; j < 26; j++) {
             View hideFrag = root.findViewById(ids[j]);
             if(hideFrag != null) {
                 hideFrag.setVisibility(View.GONE);
