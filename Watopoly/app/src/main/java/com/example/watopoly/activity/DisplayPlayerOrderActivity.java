@@ -74,7 +74,7 @@ public class DisplayPlayerOrderActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(this);
-        shapeRecyclerView = findViewById(R.id.mortgageRecyclerView);
+        shapeRecyclerView = findViewById(R.id.shapeOptionRecyclerView);
         shapeRecyclerView.setLayoutManager(layoutManager1);
         shapeAdapter = new RollToGoFirstAdaptor(icons, colours, rollValues);
         shapeRecyclerView.setAdapter(shapeAdapter);

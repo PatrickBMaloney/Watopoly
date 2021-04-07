@@ -1,8 +1,10 @@
 package com.example.watopoly.activity;
 
+import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -52,12 +54,19 @@ public class EnterPlayerInfoActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(this);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
-        shapeRecyclerView = findViewById(R.id.mortgageRecyclerView);
+        shapeRecyclerView = findViewById(R.id.shapeOptionRecyclerView);
         shapeRecyclerView.setLayoutManager(layoutManager1);
         colourRecyclerView = findViewById(R.id.ColourOptionRecyclerView);
         colourRecyclerView.setLayoutManager(layoutManager2);
         titleTextView = findViewById(R.id.enterPlayerInfoTitleTextView);
         nameEditText = findViewById(R.id.nameEditText);
+        enterPlayerInfoButton = findViewById(R.id.enterPlayerInfoButton);
+        enterPlayerInfoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishEntering();
+            }
+        });
 
         dialog = new Dialog(EnterPlayerInfoActivity.this,R.style.Theme_Dialog);
         dialog.setContentView(R.layout.dialog_next_player);
