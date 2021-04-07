@@ -25,17 +25,11 @@ public class Board implements Serializable {
 
         // calculate new Tile
         Tile newTile = boardTiles.get(newPosition);
-        if (newTile.getCurrNumberOfPlayers() == newTile.getMaxNumberOfPlayers()) {
-            newPosition = newPosition + 1;
-            newTile = boardTiles.get(newPosition);
-        }
-        if (newTile.getName().equals("goToJail")) {
-            newPosition = 9;
-            newTile = boardTiles.get(newPosition);
-        }
-
-        // add player to new Tile
-        newTile.incrementCurrNumberOfPlayers();
+        //Do we need this?
+//        if (newTile.getCurrNumberOfPlayers() == newTile.getMaxNumberOfPlayers()) {
+//            newPosition = newPosition + 1;
+//            newTile = boardTiles.get(newPosition);
+//        }
         player.setPosition(newPosition);
         newTile.landOn(player);
         return boardTiles.get(player.getPosition());

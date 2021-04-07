@@ -38,6 +38,9 @@
         <activity
             android:name=".activity.ChanceCardActivity"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.JailOptionsActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
