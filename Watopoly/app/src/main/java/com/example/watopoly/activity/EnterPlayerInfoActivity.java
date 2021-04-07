@@ -58,7 +58,6 @@ public class EnterPlayerInfoActivity extends AppCompatActivity {
         colourRecyclerView.setLayoutManager(layoutManager2);
         titleTextView = findViewById(R.id.enterPlayerInfoTitleTextView);
         nameEditText = findViewById(R.id.nameEditText);
-        f
 
         dialog = new Dialog(EnterPlayerInfoActivity.this,R.style.Theme_Dialog);
         dialog.setContentView(R.layout.dialog_next_player);
