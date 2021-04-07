@@ -110,7 +110,6 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         Game gameState = Game.getInstance();
 
         Intent mortgageIntent = new Intent(getApplicationContext(), MortgageActivity.class);
-        mortgageIntent.putExtra("gameState", gameState);
         startActivity(mortgageIntent);
     }
 
