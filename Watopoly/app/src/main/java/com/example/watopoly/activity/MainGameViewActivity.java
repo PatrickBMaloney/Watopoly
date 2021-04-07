@@ -116,6 +116,14 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
         //TODO: bind button to the activity
         viewAssetButton = findViewById(R.id.viewAssetButton);
+        Button viewAssetButton = findViewById(R.id.viewAssetButton);
+        viewAssetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainGameViewActivity.this, ViewAssetsActivity.class);
+                startActivity(intent);
+            }
+        });
         tradeButton = findViewById(R.id.tradeButton);
         mortgageButton = findViewById(R.id.mortgageButton);
         endTurnButton = findViewById(R.id.endTurnButton);

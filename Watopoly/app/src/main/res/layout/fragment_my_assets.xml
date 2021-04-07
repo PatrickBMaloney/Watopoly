@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/viewMyAssetsParent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="320dp">
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/propRecycleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/guideline8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <fragment
+        android:id="@+id/propertyCardBuyFragmentAssets"
+        class="com.example.watopoly.fragment.PropertyFragment"
+        android:layout_width="230dp"
+        android:layout_height="280dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.162"
+        app:layout_constraintStart_toStartOf="@+id/guideline8"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout="@layout/fragment_property" />
+
+    <LinearLayout
+        android:id="@+id/actionsLinearLayoutAssets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="120dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/propertyCardBuyFragmentAssets"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/buyHouseButtonAssets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buy Houses" />
+
+        <Button
+            android:id="@+id/tradeSellButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Trade/Sell" />
+
+        <Button
+            android:id="@+id/mortgageButtonAssets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mortgage" />
+
+    </LinearLayout>
+
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/relativeLayoutAssets"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:gravity="bottom|end"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/back_to_board"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/return_to_board_button"
+            android:elevation="3dp"
+            android:gravity="center"
+            android:stateListAnimator="@null" />
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,6 +54,10 @@ public class Player implements Serializable {
         bitmapDataObject = new BitmapDataObject(bmOut);
     }
 
+    public ArrayList<Property> getProperties() {
+        return properties;
+    }
+
     public String getName() {
         return name;
     }
