@@ -11,6 +11,9 @@ import android.widget.Button;
 
 import com.example.watopoly.R;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
@@ -20,10 +23,18 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        Button btnNewGame = (Button) findViewById(R.id.newGameButton);
-        Button btnContinueGame = (Button) findViewById(R.id.continueGameButton);
+        Button btnNewGame = findViewById(R.id.newGameButton);
+        Button btnContinueGame = findViewById(R.id.continueGameButton);
+        btnContinueGame.setVisibility(View.GONE);
         btnNewGame.setOnClickListener(this);
         btnContinueGame.setOnClickListener(this);
+
+        try  {
+            FileInputStream inputStream = openFileInput("savedGameState");
+            btnContinueGame.setVisibility(View.VISIBLE);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

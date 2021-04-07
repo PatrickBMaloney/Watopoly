@@ -3,9 +3,12 @@ package com.example.watopoly.model.ChanceCardStrategy;
 import com.example.watopoly.model.ChanceCard;
 import com.example.watopoly.model.Game;
 
-public class GainLoseMoney extends ChanceCard {
+public class GainLoseMoneyCard implements ChanceStrategy {
     private double amount;
+    private String title;
+    private String description;
 
+    @Override
     public void executeAction(){
         Game gameState = Game.getInstance();
         if(amount > 0){
@@ -16,8 +19,19 @@ public class GainLoseMoney extends ChanceCard {
         }
     }
 
-    public GainLoseMoney(String title, String description, double amount){
-        super(title, description);
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+    public GainLoseMoneyCard(String title, String description, double amount){
+        this.title = title;
+        this.description = description;
         this.amount = amount;
     }
 }

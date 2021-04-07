@@ -28,7 +28,7 @@ public abstract class Property extends Tile {
 
     @Override
     public void landOn(Player player) {
-        if (owner != null && owner != player && !isMortgaged) {
+        if (owner != null && owner != player && !isMortgaged && !owner.getJailed()) {
             player.payAmount(getRentPrice());
             owner.receiveAmount(getRentPrice());
         }

@@ -52,6 +52,9 @@
         <activity
             android:name=".activity.MortgageActivity"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.JailOptionsActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

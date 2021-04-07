@@ -1,7 +1,6 @@
 package com.example.watopoly.model;
 
-import android.graphics.Canvas;
-import android.util.Pair;
+import com.example.watopoly.view.BoardView;
 
 import com.example.watopoly.util.ChanceCards;
 
@@ -36,15 +35,16 @@ public class Game implements Serializable {
         }
     }
 
-    //public methods
-    public void setBoardInfo(Pair<ArrayList<Tile>, Canvas> boardInfo) {
-        //TODO: add new cards and flesh out cards
-        cards = ChanceCards.getAllChanceCards();
-        board.setBoardInfo(boardInfo, cards);
+    public ArrayList<Tile> getBoardTiles() {
+        return board.getBoardTiles();
     }
 
     public void addPlayer(Player player) {
         players.add(player);
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 
     public Player nextTurn() {
@@ -66,6 +66,10 @@ public class Game implements Serializable {
 
     public Player getCurrentPlayer() {
         return players.get(turnNumber % players.size());
+    }
+
+    public int getTurnNumber() {
+        return turnNumber;
     }
 
     public void resetGame() {

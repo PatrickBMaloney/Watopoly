@@ -1,17 +1,17 @@
 package com.example.watopoly.model;
 
-import java.io.Serializable;
+import com.example.watopoly.model.ChanceCardStrategy.ChanceStrategy;
 
-public abstract class ChanceCard implements Serializable {
-    private String title;
-    private String description;
+public class ChanceCard {
+    private ChanceStrategy strategy;
 
-    public ChanceCard(String title, String description){
-        this.title = title;
-        this.description = description;
+    public ChanceCard(){}
+
+    public void setStrat(ChanceStrategy strategy){
+        this.strategy = strategy;
     }
 
-    public String getTitle() { return title; }
-    public String getDescription() { return description; }
-    public abstract void executeAction();
+    public void executeStrategy(){
+        strategy.executeAction();
+    }
 }
