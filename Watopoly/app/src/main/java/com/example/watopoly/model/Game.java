@@ -35,13 +35,16 @@ public class Game implements Serializable {
         }
     }
 
-    //public methods
-    public void setBoardInfo(BoardView boardView) {
-        board.setBoardInfo(boardView, players);
+    public ArrayList<Tile> getBoardTiles() {
+        return board.getBoardTiles();
     }
 
     public void addPlayer(Player player) {
         players.add(player);
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 
     public Player nextTurn() {
@@ -65,12 +68,12 @@ public class Game implements Serializable {
         return players.get(turnNumber % players.size());
     }
 
+    public int getTurnNumber() {
+        return turnNumber;
+    }
+
     public void resetGame() {
         players.clear();
         //TODO: clear other object as we add them
-    }
-
-    public ArrayList<Player> getPlayers() {
-        return players;
     }
 }

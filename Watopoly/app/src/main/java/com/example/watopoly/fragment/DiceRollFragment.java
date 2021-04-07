@@ -21,6 +21,7 @@ import com.example.watopoly.R;
 public class DiceRollFragment extends Fragment {
     private FragmentCallbackListener callbackListener;
     private int diceRollResult = 0;
+    private Boolean isDouble = false;
     private Button rollDiceButton;
 
     @Nullable
@@ -38,6 +39,7 @@ public class DiceRollFragment extends Fragment {
                 int num2 = (int)(Math.random()*6+1);
 
                 diceRollResult = num1 + num2;
+                isDouble = num1 == num2;
                 dice1ImageView.setImageResource(getDiceImageResource(num1));
                 dice2ImageView.setImageResource(getDiceImageResource(num2));
 
@@ -81,7 +83,11 @@ public class DiceRollFragment extends Fragment {
         return diceRollResult;
     }
 
-    public void setRollButtonHidden(boolean isHidden) {
-        rollDiceButton.setVisibility( isHidden ? View.GONE : View.VISIBLE);
+    public Boolean getIsDouble() {
+        return isDouble;
+    }
+
+    public void setRollButtonVisibility(int visibility) {
+        rollDiceButton.setVisibility(visibility);
     }
 }
