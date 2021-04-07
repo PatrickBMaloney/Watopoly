@@ -68,6 +68,10 @@ public class Game implements Serializable {
         return players.get(turnNumber % players.size());
     }
 
+    public int getTurnNumber() {
+        return turnNumber;
+    }
+
     public void resetGame() {
         players.clear();
         //TODO: clear other object as we add them

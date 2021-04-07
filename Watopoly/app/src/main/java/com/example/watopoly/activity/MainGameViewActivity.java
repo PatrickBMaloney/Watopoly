@@ -86,8 +86,8 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         startTurn();
     }
 
-    private void startTurn() {
-        new GameSaveManager.SaveData(this).execute();
+    //Not Ideal but fixes the sync issue
+    public void onSaveComplete() {
         Game gameState = Game.getInstance();
         playerInfoHeaderFragment.setPlayer(gameState.nextTurn());
         diceRollFragment.getView().setVisibility(View.VISIBLE);
@@ -99,6 +99,11 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             startActivityForResult(intent, JAIL_OPTION_REQUEST_CODE);
         }
     }
+
+    private void startTurn() {
+        new GameSaveManager.SaveData(this).execute();
+    }
+
 
     private void linkView() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
