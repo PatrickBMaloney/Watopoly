@@ -1,19 +1,20 @@
 package com.example.watopoly.model;
 
-import android.graphics.Canvas;
-import android.util.Pair;
-
+import com.example.watopoly.util.BoardTiles;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Board implements Serializable {
-    private ArrayList<Tile> boardTiles = new ArrayList<>();
-    private transient Canvas canvas;
 
-    public void setBoardInfo(Pair<ArrayList<Tile>, Canvas> boardInfo) {
-        boardTiles = boardInfo.first;
-        canvas = boardInfo.second;
+public class Board implements Serializable {
+    private ArrayList<Tile> boardTiles;
+
+    public Board() {
+        boardTiles = BoardTiles.getTiles();
         setup();
+    }
+
+    public ArrayList<Tile> getBoardTiles() {
+        return boardTiles;
     }
 
     public Tile move(Player player, int steps) {
@@ -22,12 +23,15 @@ public class Board implements Serializable {
             player.passedGo();
         }
 
-        Tile tile = boardTiles.get(newPosition);
+        // calculate new Tile
+        Tile newTile = boardTiles.get(newPosition);
+        //Do we need this?
+//        if (newTile.getCurrNumberOfPlayers() == newTile.getMaxNumberOfPlayers()) {
+//            newPosition = newPosition + 1;
+//            newTile = boardTiles.get(newPosition);
+//        }
         player.setPosition(newPosition);
-        tile.landOn(player);
-
-        //handle multiple people
-        //  use canvas to draw player bitmap
+        newTile.landOn(player);
         return boardTiles.get(player.getPosition());
     }
 
@@ -44,10 +48,6 @@ public class Board implements Serializable {
             if (boardTiles.get(x) instanceof GoToJail) {
                 GoToJail goToJail = (GoToJail) boardTiles.get(x);
                 goToJail.setJailLocation(jailPosition);
-            }
-
-            if (boardTiles.get(x) instanceof CardTile) {
-                CardTile cardTile = (CardTile) boardTiles.get(x);
             }
         }
 

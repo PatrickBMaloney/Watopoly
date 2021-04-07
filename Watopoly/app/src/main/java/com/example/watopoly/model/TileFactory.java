@@ -100,7 +100,7 @@ public class TileFactory {
                 tile = new Utility(tileInfo.name, tileInfo.direction, tileInfo.baseRentPrice, tileInfo.purchasePrice);
                 break;
             case Tax:
-                tile = new TaxTile(tileInfo.direction);
+                tile = new TaxTile(tileInfo.direction, "Tax");
                 break;
         }
         return tile;
