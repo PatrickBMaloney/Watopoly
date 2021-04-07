@@ -65,7 +65,7 @@ public class MortgagePropertyListAdapter extends RecyclerView.Adapter<MortgagePr
             Building building = (Building) properties.get(position);
             holder.propertyHeader.setBackgroundColor(Color.parseColor(building.getPropertyHex()));
         }
-        String priceText = "$"+properties.get(position).getPurchasePrice();
+        String priceText = "$"+(properties.get(position).getPurchasePrice()/2);
         holder.price.setText(priceText);
         holder.checkBox.setChecked(selected.contains(position));
     }

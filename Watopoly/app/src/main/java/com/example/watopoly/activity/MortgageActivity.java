@@ -114,14 +114,13 @@ public class MortgageActivity extends AppCompatActivity {
         for (int i =0; i<mortgageList.size(); i++){
             Property selectedProperty = mortProperties.get(mortgageList.get(i));
             selectedProperty.mortgage();
-            //TODO: Create a price for mortgaging
-            myPlayer.receiveAmount(selectedProperty.getPurchasePrice());
+            myPlayer.receiveAmount(selectedProperty.getPurchasePrice()/2);
         }
 
         for (int i =0; i<unmortageList.size(); i++){
             Property selectedProperty = unmortProperties.get(unmortageList.get(i));
             selectedProperty.unMortgage();
-            myPlayer.payAmount(selectedProperty.getPurchasePrice());
+            myPlayer.payAmount(selectedProperty.getPurchasePrice()/2);
         }
 
         playerInfoHeaderFragment.refresh();
