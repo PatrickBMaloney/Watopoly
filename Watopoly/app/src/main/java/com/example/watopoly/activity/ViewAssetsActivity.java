@@ -36,9 +36,9 @@ public class ViewAssetsActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         myAssets = (View) findViewById(R.id.myAssetsFragment);
-//        allAssets = (View) findViewById(R.id.allAssetsFragment);
+        allAssets = (View) findViewById(R.id.allAssetsFragment);
         myAssets.setVisibility(View.VISIBLE);
-//        allAssets.setVisibility(View.GONE);
+        allAssets.setVisibility(View.GONE);
         setButtons();
         final FragmentManager fm = getSupportFragmentManager();
         playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragmentAssets);
@@ -60,7 +60,7 @@ public class ViewAssetsActivity extends AppCompatActivity {
                 myAssetsButton.setChecked(true);
                 allAssetsButton.setChecked(false);
                 myAssets.setVisibility(View.VISIBLE);
-//                allAssets.setVisibility(View.GONE);
+                allAssets.setVisibility(View.GONE);
             }
         });
         allAssetsButton.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +69,7 @@ public class ViewAssetsActivity extends AppCompatActivity {
                 allAssetsButton.setChecked(true);
                 myAssetsButton.setChecked(false);
                 myAssets.setVisibility(View.GONE);
-//                allAssets.setVisibility(View.VISIBLE);
+                allAssets.setVisibility(View.VISIBLE);
             }
         });
     }

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.watopoly.R;
 import com.example.watopoly.fragment.PropertyFragment;
 import com.example.watopoly.model.Building;
+import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Property;
 import com.example.watopoly.model.Railway;
 import com.example.watopoly.model.Utility;
@@ -34,7 +35,6 @@ public class PropertyListAdapter extends RecyclerView.Adapter<PropertyListAdapte
         this.props = props;
         this.mOnPropClickListener = onPropClickListener;
     }
-
     @NonNull
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
