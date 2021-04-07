@@ -14,6 +14,7 @@ public class GoTile extends Tile {
     public GoTile() {
         maxNumberOfPlayers = 4;
         tileDirection = TileDirection.CORNER;
+        this.name = "GoTile";
     }
 
 }

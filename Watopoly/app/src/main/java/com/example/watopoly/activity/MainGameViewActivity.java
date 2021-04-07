@@ -1,16 +1,16 @@
 package com.example.watopoly.activity;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Canvas;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -89,20 +89,8 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         diceRollFragment = (DiceRollFragment) fm.findFragmentById(R.id.rollToMoveFragment);
         diceRollFragment.setCallbackListener(this);
 
-        Game gameState = Game.getInstance();
-        BoardView boardView = findViewById(R.id.board);
-        Pair<ArrayList<Tile>, Canvas> boardInfo = boardView.getBoardInfo();
-        gameState.setBoardInfo(boardInfo);
-
         //TODO: bind button to the activity
         Button viewAssetButton = findViewById(R.id.viewAssetButton);
-        viewAssetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainGameViewActivity.this, ViewAssetsActivity.class);
-                startActivity(intent);
-            }
-        });
         Button tradeButton = findViewById(R.id.tradeButton);
         Button mortgageButton = findViewById(R.id.mortgageButton);
         Button endTurnButton = findViewById(R.id.endTurnButton);
@@ -124,13 +112,19 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             ArrayList<String> names = intent.getStringArrayListExtra("names");
 
             for (int x = 0; x < names.size(); x++) {
-                Player player = new Player(names.get(x), startingMoney, colours.get(x), icons.get(x));
+                Drawable d = getResources().getDrawable(icons.get(x));
+                Bitmap b = ((BitmapDrawable) d).getBitmap();
+
+                Player player = new Player(names.get(x), startingMoney, colours.get(x), icons.get(x), b);
                 Game gameState = Game.getInstance();
                 gameState.addPlayer(player);
             }
         }
 
-        //TODO: board setup
+        // board setup
+        Game gameState = Game.getInstance();
+        BoardView boardView = findViewById(R.id.board);
+        gameState.setBoardInfo(boardView);
     }
 
     @Override
