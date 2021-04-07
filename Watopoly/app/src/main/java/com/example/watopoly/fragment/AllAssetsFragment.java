@@ -31,9 +31,6 @@ import com.example.watopoly.model.Property;
 public class AllAssetsFragment extends Fragment {
 
     private Game gameState = Game.getInstance();
-    int [] playerID = new int[4];
-    int [] imageID = new int[4];
-    int [] moneyID = new int[4];
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
