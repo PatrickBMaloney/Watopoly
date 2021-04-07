@@ -71,4 +71,8 @@ public class Game implements Serializable {
         players.clear();
         //TODO: clear other object as we add them
     }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
 }

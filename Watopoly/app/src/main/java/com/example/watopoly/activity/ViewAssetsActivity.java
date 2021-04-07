@@ -1,4 +1,4 @@
-package com.example.watopoly.activity;
+ package com.example.watopoly.activity;
 
 import android.os.Bundle;
 
