@@ -17,6 +17,7 @@ import com.example.watopoly.R;
 import com.example.watopoly.fragment.AllAssetsFragment;
 import com.example.watopoly.fragment.PlayerInfoHeaderFragment;
 import com.example.watopoly.fragment.MyAssetsFragment;
+import com.example.watopoly.fragment.PropertyFragment;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Player;
 import com.example.watopoly.model.Property;
@@ -25,8 +26,6 @@ public class ViewAssetsActivity extends AppCompatActivity {
 
     private Game gameState = Game.getInstance();
     private PlayerInfoHeaderFragment playerInfoHeaderFragment;
-    View largeProp;
-    View buttons;
     View myAssets;
     View allAssets;
     @Override
@@ -36,13 +35,10 @@ public class ViewAssetsActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-        largeProp = (View) findViewById(R.id.propertyCardBuyFragmentAssets);
-        buttons = (View) findViewById(R.id.actionsLinearLayoutAssets);
-
         myAssets = (View) findViewById(R.id.myAssetsFragment);
-        allAssets = (View) findViewById(R.id.allAssetsFragment);
+//        allAssets = (View) findViewById(R.id.allAssetsFragment);
         myAssets.setVisibility(View.VISIBLE);
-        allAssets.setVisibility(View.GONE);
+//        allAssets.setVisibility(View.GONE);
         setButtons();
         final FragmentManager fm = getSupportFragmentManager();
         playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragmentAssets);
@@ -64,7 +60,7 @@ public class ViewAssetsActivity extends AppCompatActivity {
                 myAssetsButton.setChecked(true);
                 allAssetsButton.setChecked(false);
                 myAssets.setVisibility(View.VISIBLE);
-                allAssets.setVisibility(View.GONE);
+//                allAssets.setVisibility(View.GONE);
             }
         });
         allAssetsButton.setOnClickListener(new View.OnClickListener() {
@@ -73,9 +69,8 @@ public class ViewAssetsActivity extends AppCompatActivity {
                 allAssetsButton.setChecked(true);
                 myAssetsButton.setChecked(false);
                 myAssets.setVisibility(View.GONE);
-                allAssets.setVisibility(View.VISIBLE);
+//                allAssets.setVisibility(View.VISIBLE);
             }
         });
     }
-
 }

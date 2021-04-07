@@ -4,6 +4,9 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,16 +14,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
 import com.example.watopoly.R;
+import com.example.watopoly.adapter.PropertyListAdapter;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Player;
 import com.example.watopoly.model.Property;
 
 import java.lang.reflect.Field;
 
-public class MyAssetsFragment extends Fragment {
+public class MyAssetsFragment extends Fragment implements PropertyListAdapter.onPropClickListener{
 
     private Game gameState = Game.getInstance();
     View largeProp;
@@ -33,9 +38,16 @@ public class MyAssetsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_my_assets, container, false);
+
+        largeProp = (View) root.findViewById(R.id.propertyCardBuyFragmentAssets);
+        buttons = (View) root.findViewById(R.id.actionsLinearLayoutAssets);
+        largeProp.setVisibility(View.GONE);
+        buttons.setVisibility(View.GONE);
         setButtons(root);
-        addIdsToArray();
-        linkView(root);
+        RecyclerView rv = (RecyclerView) root.findViewById(R.id.propRecycleView);
+        PropertyListAdapter adapter = new PropertyListAdapter(getContext(),gameState.getCurrentPlayer().getProperties(), this);
+        rv.setAdapter(adapter);
+        rv.setLayoutManager(new GridLayoutManager(getContext(), 6));
         return root;
     }
 
@@ -49,84 +61,22 @@ public class MyAssetsFragment extends Fragment {
         });
     }
 
-    private void addIdsToArray() {
-        ids[0] = R.id.propertyCardBuyFragment0;
-        ids[1] = R.id.propertyCardBuyFragment1;
-        ids[2] = R.id.propertyCardBuyFragment2;
-        ids[3] = R.id.propertyCardBuyFragment3;
-        ids[4] = R.id.propertyCardBuyFragment4;
-        ids[5] = R.id.propertyCardBuyFragment5;
-        ids[6] = R.id.propertyCardBuyFragment6;
-        ids[7] = R.id.propertyCardBuyFragment7;
-        ids[8] = R.id.propertyCardBuyFragment8;
-        ids[9] = R.id.propertyCardBuyFragment9;
-        ids[10] = R.id.propertyCardBuyFragment10;
-        ids[11] = R.id.propertyCardBuyFragment11;
-        ids[12] = R.id.propertyCardBuyFragment12;
-        ids[13] = R.id.propertyCardBuyFragment13;
-        ids[14] = R.id.propertyCardBuyFragment14;
-        ids[15] = R.id.propertyCardBuyFragment15;
-        ids[16] = R.id.propertyCardBuyFragment16;
-        ids[17] = R.id.propertyCardBuyFragment17;
-        ids[18] = R.id.propertyCardBuyFragment18;
-        ids[19] = R.id.propertyCardBuyFragment19;
-        ids[20] = R.id.propertyCardBuyFragment20;
-        ids[21] = R.id.propertyCardBuyFragment21;
-        ids[22] = R.id.propertyCardBuyFragment22;
-        ids[23] = R.id.propertyCardBuyFragment23;
-        ids[24] = R.id.propertyCardBuyFragment24;
-        ids[25] = R.id.propertyCardBuyFragment25;
-
-    }
-    private void linkView(View root) {
-        largeProp = (View) root.findViewById(R.id.propertyCardBuyFragmentAssets);
-        buttons = (View) root.findViewById(R.id.actionsLinearLayoutAssets);
-        //TO-DO: check for other properties (to display correctly)
-        final FragmentManager fm = getChildFragmentManager();
-        int size = gameState.getCurrentPlayer().getProperties().size(); //size of properties
-
-        //will start setting all properties
-        for(int i = 0; i < size; i++) {
-            PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(ids[i]);
-            final Property property = gameState.getCurrentPlayer().getProperties().get(i); //get the current property
-            propertyFragment.setProperty(property);
-            View prop = root.findViewById(ids[i]);
-            prop.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    //populate large version
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN: {
-                            if(prev == null) {
-                                prev = property; //set prev to current if null
-                            }
-                            if (largeProp.getVisibility() == View.VISIBLE && prev==property) {
-                                largeProp.setVisibility(View.GONE);
-                                buttons.setVisibility(View.GONE);
-                            } else {
-                                PropertyFragment propLarge = (PropertyFragment) fm.findFragmentById(R.id.propertyCardBuyFragmentAssets); //get large prop
-                                propLarge.setProperty(property);
-                                largeProp.setVisibility(View.VISIBLE);
-                                buttons.setVisibility(View.VISIBLE);
-                                prev = property;
-                            }
-                        }
-                        default:
-                    }
-                    return true;
-                }
-            });
+    @Override
+    public void onPropClick(int propNum) {
+        Property property = gameState.getCurrentPlayer().getProperties().get(propNum);
+        if(prev == null) {
+            prev = property; //set prev to current if null
         }
-
-        //set View to none for rest
-        for(int j = size; j < 26; j++) {
-            View hideFrag = root.findViewById(ids[j]);
-            if(hideFrag != null) {
-                hideFrag.setVisibility(View.GONE);
-            }
+        if (largeProp.getVisibility() == View.VISIBLE && prev==property) {
+            largeProp.setVisibility(View.GONE);
+            buttons.setVisibility(View.GONE);
+        } else {
+            FragmentManager fm = getChildFragmentManager();
+            PropertyFragment propLarge = (PropertyFragment) fm.findFragmentById(R.id.propertyCardBuyFragmentAssets); //get large prop
+            propLarge.setProperty(property);
+            largeProp.setVisibility(View.VISIBLE);
+            buttons.setVisibility(View.VISIBLE);
+            prev = property;
         }
-        //hide large view
-        largeProp.setVisibility(View.GONE);
-        buttons.setVisibility(View.GONE);
     }
 }
