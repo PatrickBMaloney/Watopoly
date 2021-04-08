@@ -13,7 +13,7 @@
         android:visibility="visible"
         app:constraint_referenced_ids="utilityMortgageTestView,utilityImageView,utilityNameTextView,utilityOneOwnedTextView,
                                        utilityTwoOwnedTextView,utilityMortgageValueTestView"
-        tools:visibility="visible" />
+        tools:visibility="gone" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/transportCardGroup"
@@ -105,12 +105,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:constraint_referenced_ids="houseCostTextView2,houseCostTextView,MortgageValueTextView,
+        app:constraint_referenced_ids="houseCostTextView2,houseCostTextView,mortgageValueTextView,
                                        fourHouseValueTextView,twoHouseValueTextView,threeHouseValueTextView,
                                        oneHouseValueTextView,propertyNameTextView,propertyNameBorderTextView,
                                        baseRentTextView,oneHouseTextView,twoHouseTextView,threeHouseTextView,
                                        fourHouseTextView,oneHotelTextView,textView16"
-        tools:visibility="gone" />
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/cardBorderTextView"
@@ -158,13 +158,13 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MortgageValueTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/mortgageValueTextView" />
 
     <TextView
-        android:id="@+id/MortgageValueTextView"
+        android:id="@+id/mortgageValueTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Martgage Value $100"
+        android:text="Mortgage Value $100"
         android:textAlignment="textEnd"
         android:textColor="#171717"
         android:textSize="14sp"
