@@ -46,7 +46,7 @@ import java.util.Map;
 
 public class MainGameViewActivity extends AppCompatActivity implements FragmentCallbackListener {
     //TODO: move this somewhere else?
-    private static final double startingMoney = 500;
+    private static final double startingMoney = 0;
 
     private PlayerInfoHeaderFragment playerInfoHeaderFragment;
     private DiceRollFragment diceRollFragment;
@@ -117,9 +117,10 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         TextView headerTextView = dialog.findViewById(R.id.playerBankruptTextView);
         TextView messageTextView = dialog.findViewById(R.id.bankruptMessageTextView);
         String header = String.format("%s is Bankrupt!", game.getCurrentPlayer().getName());
-        String message = String.format("%s cannot afford to pay and is out of the game.  All assets owned by %s have been returned to the bank.", game.getCurrentPlayer().getName());
+        String message = String.format("%s cannot afford to pay and is out of the game.  All assets owned by this player have been returned to the bank.", game.getCurrentPlayer().getName());
         messageTextView.setText(message);
         headerTextView.setText(header);
+        dialog.show();
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -377,6 +378,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                 dialog.show();
             } else if (property.getOwner() != game.getCurrentPlayer()) {
                 if (property.getRentPrice() > game.getCurrentPlayer().getAvailableFunds()) {
+                    dialog.dismiss();
                     bankrupt();
                 } else {
                     dialog.setContentView(R.layout.dialog_pay_rent);
@@ -431,17 +433,35 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             }
             }
         } else if (tile instanceof TaxTile) {
-            dialog.setContentView(R.layout.dialog_tax);
-            Button continueButton = dialog.findViewById(R.id.taxContinueButton);
-            continueButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                    playerInfoHeaderFragment.refresh();
+            if (150.0 > game.getCurrentPlayer().getAvailableFunds()) {
+                dialog.dismiss();
+                bankrupt();
+            } else {
+                dialog.setContentView(R.layout.dialog_tax);
+                Button continueButton = dialog.findViewById(R.id.taxContinueButton);
+                Button mortgageTaxButton = dialog.findViewById(R.id.mortgageTaxButton);
+                if (150.0 > game.getCurrentPlayer().getMoney()) {
+                    continueButton.setVisibility(View.GONE);
+                    mortgageTaxButton.setVisibility(View.VISIBLE);
                 }
-            });
-            dialog.show();
+                continueButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        playerInfoHeaderFragment.refresh();
+                    }
+                });
 
+                mortgageTaxButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        destroyPropertyFragment(R.id.propertyCardFragment);
+                        mortgage(MORTGAGE_TILE_REQUEST_CODE);
+                    }
+                });
+                dialog.show();
+            }
         } else if (tile instanceof Jail && game.getCurrentPlayer().getJailed()) {
             dialog.setContentView(R.layout.dialog_jailed);
             Button continueButton = dialog.findViewById(R.id.bankruptContinueButton);
