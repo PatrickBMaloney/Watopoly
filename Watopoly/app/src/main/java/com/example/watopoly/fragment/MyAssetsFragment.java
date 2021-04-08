@@ -94,7 +94,7 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(requireActivity(), TradeSellPropertiesActivity.class);
-                startActivityForResult(intent, 5);
+                startActivityForResult(intent, 999);
             }
         });
     }

@@ -56,6 +56,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="No" />
+
+        <Button
+            android:id="@+id/mortgageBuyPropertyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mortgage"
+            android:visibility="gone" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline

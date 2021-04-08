@@ -41,5 +41,13 @@ public abstract class Property extends Tile {
     public void setOwner(Player owner) {
         this.owner = owner;
     }
+    public boolean getMortgaged() { return isMortgaged;}
+
+    public void mortgage() {
+        isMortgaged = true;
+    }
+    public void unMortgage() {
+        isMortgaged = false;
+    }
 }
 

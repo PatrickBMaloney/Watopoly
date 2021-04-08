@@ -65,8 +65,11 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
     private static int CHANCE_REQUEST_CODE = 1;
     private static int JAIL_OPTION_REQUEST_CODE = 2;
-    private static int TRADE_REQUEST_CODE = 3;
-    private static int VIEW_ASSETS_REQUEST_CODE = 4;
+    private static int MORTGAGE_REQUEST_CODE = 3;
+    private static int MORTGAGE_TILE_REQUEST_CODE = 4;
+    private static int TRADE_REQUEST_CODE = 5;
+    private static int VIEW_ASSETS_REQUEST_CODE = 6;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +110,12 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
     }
 
 
+    private void mortgage(int requestCode){
+        Intent mortgageIntent = new Intent(getApplicationContext(), MortgageActivity.class);
+//        startActivity(mortgageIntent);
+        startActivityForResult(mortgageIntent,requestCode);
+    }
+
     private void linkView() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
@@ -140,6 +149,12 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             @Override
             public void onClick(View v) {
                 startTurn();
+            }
+        });
+        mortgageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mortgage(MORTGAGE_REQUEST_CODE);
             }
         });
 
@@ -277,6 +292,15 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
             playerInfoHeaderFragment.refresh();
         }
+        else if (requestCode == MORTGAGE_REQUEST_CODE) {
+            FragmentManager fm = getSupportFragmentManager();
+            playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
+            playerInfoHeaderFragment.refresh();
+        }
+        else if (requestCode == MORTGAGE_TILE_REQUEST_CODE) {
+            Tile tile = game.moveCurrentPlayer(0);
+            showDialogByLandingTile(tile);
+            }
     }
 
     //FragmentCallbackListener diceRolled
@@ -303,17 +327,23 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         if (tile instanceof Property) {
             final Property property = (Property) tile;
             if (property.getOwner() == null) {
+                final Button buyButton;
+                final Button cancelButton;
+                final Button mortgageButton;
+                final TextView desTextView;
+                String description;
                 dialog.setContentView(R.layout.dialog_buy_house);
-                Button buyButton = dialog.findViewById(R.id.buyHouseButton);
-                Button cancelButton = dialog.findViewById(R.id.skipHouseButton);
-                TextView desTextView = dialog.findViewById(R.id.buyHouseDescriptionTextView);
-                String description = String.format("You landed on %s. Would you like to purchase for $%.2f?", property.getName(), property.getPurchasePrice());
+                 buyButton = dialog.findViewById(R.id.buyHouseButton);
+                 cancelButton = dialog.findViewById(R.id.skipHouseButton);
+                 mortgageButton = dialog.findViewById(R.id.mortgageBuyPropertyButton);
+                 desTextView = dialog.findViewById(R.id.buyHouseDescriptionTextView);
+                 description = String.format("You landed on %s. Would you like to purchase for $%.2f?", property.getName(), property.getPurchasePrice());
                 if (property.getPurchasePrice() > game.getCurrentPlayer().getMoney()) {
-                    description = String.format("You landed on %s. Insufficient funds.", property.getName());
+                    description = String.format("You landed on %s. Insufficient funds to purchase for $%.2f.", property.getName(), property.getPurchasePrice());
                     cancelButton.setText("Continue");
+                    mortgageButton.setVisibility(View.VISIBLE);
                     buyButton.setVisibility(View.GONE);
                 }
-
 
                 desTextView.setText(description);
 
@@ -337,10 +367,19 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                         destroyPropertyFragment(R.id.propertyCardBuyFragment);
                     }
                 });
+                mortgageButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        destroyPropertyFragment(R.id.propertyCardBuyFragment);
+                        mortgage(MORTGAGE_TILE_REQUEST_CODE);
+                    }
+                });
                 dialog.show();
             } else if (property.getOwner() != game.getCurrentPlayer()) {
                 dialog.setContentView(R.layout.dialog_pay_rent);
                 Button continueButton = dialog.findViewById(R.id.payRentContinue);
+                Button mortgageRentButton = dialog.findViewById(R.id.mortgageRentButton);
                 TextView desTextView = dialog.findViewById(R.id.payRentDescriptionTextView);
                 TextView renterTextView = dialog.findViewById(R.id.renterTextView);
                 ImageView renterImageView = dialog.findViewById(R.id.renterImageView);
@@ -350,7 +389,10 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                 final FragmentManager fm = getSupportFragmentManager();
                 PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardFragment);
                 propertyFragment.setProperty(property);
-
+                if (property.getRentPrice() > game.getCurrentPlayer().getMoney()) {
+                    continueButton.setVisibility(View.GONE);
+                    mortgageRentButton.setVisibility(View.VISIBLE);
+                }
                 String description = String.format("You landed on %s owned by %s", property.getName(), property.getOwner().getName());
 
                 renterTextView.setText(String.format("- $%.2f", property.getRentPrice()));
@@ -371,6 +413,15 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                         dialog.dismiss();
                         destroyPropertyFragment(R.id.propertyCardFragment);
                         playerInfoHeaderFragment.refresh();
+                    }
+                });
+
+                mortgageRentButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        destroyPropertyFragment(R.id.propertyCardFragment);
+                        mortgage(MORTGAGE_TILE_REQUEST_CODE);
                     }
                 });
                 dialog.show();

@@ -32,7 +32,7 @@ public class Utility extends Property {
     }
 
     public Utility(String name, TileDirection direction, double baseRentPrice, double purchasePrice) {
-        super(name, direction, baseRentPrice, purchasePrice);
+        super(name, direction, baseRentPrice, purchasePrice );
     }
 
 }
