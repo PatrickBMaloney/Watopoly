@@ -14,11 +14,11 @@ public class Building extends Property {
     private boolean hasHotel = false;
     private String hexCode;
     private double housePrice;
-    private boolean fullSetOwned = false;
 
     @Override
     public double getRentPrice() {
-        return hasHotel ? getRentPriceWithHotel() : getRentPrice(numberOfHouses, fullSetOwned);
+        Player currentPlayer = Game.getInstance().getCurrentPlayer();
+        return hasHotel ? getRentPriceWithHotel() : getRentPrice(numberOfHouses, currentPlayer.ownsFullSet(hexCode));
     }
 
     public double getHousePrice(){ return housePrice; }
@@ -55,8 +55,6 @@ public class Building extends Property {
     public String getPropertyHex() {
         return hexCode;
     }
-
-    public boolean isFullSetOwned() { return fullSetOwned; }
 
     @Override
     public void drawOn(Canvas canvas) {
@@ -109,17 +107,6 @@ public class Building extends Property {
         Game game = Game.getInstance();
         game.getCurrentPlayer().payAmount(housePrice);
         hasHotel = true;
-    }
-
-    public void setFullColorSet(){
-        List<Building> colorSet = BoardTiles.getTilesByColor(hexCode);
-        for(Building property: colorSet){
-            property.setFullSetOwned(true);
-        }
-    }
-
-    private void setFullSetOwned(boolean fullSetOwned){
-        this.fullSetOwned = fullSetOwned;
     }
 
     public Building(String name, TileDirection direction, double baseRentPrice, double purchasePrice, double housePrice, String hexCode) {

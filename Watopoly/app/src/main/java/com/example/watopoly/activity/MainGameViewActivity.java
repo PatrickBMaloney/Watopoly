@@ -63,6 +63,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
     private static int JAIL_OPTION_REQUEST_CODE = 2;
     private static int MORTGAGE_REQUEST_CODE = 3;
     private static int MORTGAGE_TILE_REQUEST_CODE = 4;
+    private static int VIEW_ASSETS_REQUEST_CODE = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +126,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainGameViewActivity.this, ViewAssetsActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, VIEW_ASSETS_REQUEST_CODE);
             }
         });
         tradeButton = findViewById(R.id.tradeButton);
@@ -280,6 +281,11 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             Tile tile = game.moveCurrentPlayer(0);
             showDialogByLandingTile(tile);
             }
+        else if (requestCode == VIEW_ASSETS_REQUEST_CODE) {
+            FragmentManager fm = getSupportFragmentManager();
+            playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
+            playerInfoHeaderFragment.refresh();
+        }
     }
 
     //FragmentCallbackListener diceRolled

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player implements Serializable {
-    private static final int goAmount = 200;
+    private static final int goAmount = 10000;
     private String name;
     private Double money;
     private String colour;
@@ -24,6 +24,7 @@ public class Player implements Serializable {
     private Boolean isJailed = false;
     private int numRailways = 0;
     private int numUtilities = 0;
+    private List<String> fullsets = new ArrayList<>();
 
     public Player(String name, Double money, String colour, int icon, Bitmap bitmapIcon) {
         this.name = name;
@@ -112,6 +113,14 @@ public class Player implements Serializable {
         isJailed = jailed;
     }
 
+    public Boolean ownsFullSet(String hexcode){
+        return fullsets.contains(hexcode);
+    }
+
+    public void addFullSet(String hexcode){
+        fullsets.add(hexcode);
+    }
+
     public void addProperty(Property property) {
         properties.add(property);
         if (property instanceof Railway) {
@@ -123,7 +132,7 @@ public class Player implements Serializable {
             // check if player owns full set
             List<Building> colorSet = BoardTiles.getTilesByColor(((Building) property).getPropertyHex());
             if (properties.containsAll(colorSet)){
-                ((Building) property).setFullColorSet();
+                fullsets.add(((Building) property).getPropertyHex());
             }
         }
     }

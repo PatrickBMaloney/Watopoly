@@ -75,7 +75,7 @@ public class BuyHouseHotelActivity extends AppCompatActivity {
         }
 
         // if they don't have a full set don't show the incrementers
-        if (!currentTile.isFullSetOwned()){
+        if (!gameState.getCurrentPlayer().ownsFullSet(currentTile.getPropertyHex())){
             findViewById(R.id.buyHouseIncrementer).setVisibility(View.GONE);
             findViewById(R.id.buyHotelIncrementer).setVisibility(View.INVISIBLE);
             findViewById(R.id.currrentHousesAndHotels).setVisibility(View.GONE);

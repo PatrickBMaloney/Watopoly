@@ -1,30 +1,22 @@
 package com.example.watopoly.fragment;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.watopoly.R;
 import com.example.watopoly.activity.BuyHouseHotelActivity;
-import com.example.watopoly.activity.EnterPlayerInfoActivity;
 import com.example.watopoly.adapter.PropertyListAdapter;
-import com.example.watopoly.model.Building;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Property;
-import com.example.watopoly.util.BoardTiles;
 
 public class MyAssetsFragment extends Fragment implements PropertyListAdapter.onPropClickListener{
 
@@ -33,6 +25,7 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
     View buttons;
     private Property prev;
     private int [] ids = new int[26];
+    private FragmentCallbackListener callbackListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,6 +56,18 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
         });
     }
 
+    public void setCallbackListener(FragmentCallbackListener callbackListener) {
+        this.callbackListener = callbackListener;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (callbackListener != null) {
+            callbackListener.onCallback();
+        }
+    }
+
     @Override
     public void onPropClick(int propNum) {
         final Property property = gameState.getCurrentPlayer().getProperties().get(propNum);
@@ -87,7 +92,7 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
             public void onClick(View v) {
                 Intent intent = new Intent(MyAssetsFragment.this.getActivity(), BuyHouseHotelActivity.class);
                 intent.putExtra("property", property.getName());
-                startActivity(intent);
+                startActivityForResult(intent, 0);
             }
         });
     }
