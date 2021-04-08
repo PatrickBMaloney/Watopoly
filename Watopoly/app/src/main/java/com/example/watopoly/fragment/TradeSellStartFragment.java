@@ -1,6 +1,7 @@
 package com.example.watopoly.fragment;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -26,6 +27,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.watopoly.R;
+import com.example.watopoly.activity.TradeSellPropertiesActivity;
 import com.example.watopoly.adapter.PropertyListTradeAdapter;
 import com.example.watopoly.fragment.Dialog.InsufficientFundsRHS;
 import com.example.watopoly.fragment.Dialog.InsufficientFundsYou;
@@ -74,6 +76,18 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
 
         TextView requesterName = (TextView) root.findViewById(R.id.requesterName);
         requesterName.setText(gameState.getCurrentPlayer().getName());
+
+        TextView requesterBalance = (TextView) root.findViewById(R.id.requesterBalance);
+        requesterBalance.setText("Balance: $" + gameState.getCurrentPlayer().getMoney().toString());
+
+        Button return_to_board = (Button) root.findViewById(R.id.back_to_board);
+        return_to_board.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+
         int size = gameState.getPlayers().size();
         if(size > 1) {
             int addPlayer = 0;
@@ -149,6 +163,8 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
             PropertyListTradeAdapter adapterRHS = new PropertyListTradeAdapter(getContext(), playerOrder[0].getProperties(), 1, this);
             recyclerViewRHS.setAdapter(adapterRHS);
             recyclerViewRHS.setLayoutManager(new GridLayoutManager(getContext(), 3));
+            TextView traderBalance = (TextView) root.findViewById(R.id.traderBalance);
+            traderBalance.setText("Balance: $" + playerOrder[0].getMoney().toString());
         }
 
         Button requestTrade = (Button) root.findViewById(R.id.playerRequestTrade);
@@ -182,7 +198,7 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
                     });
                     dialog.show();
                    TradeSellRequestSentFragment showFinalTrade = new TradeSellRequestSentFragment(playerOrder[playerPos],
-                           moneyGive, moneyTake);
+                           moneyGive, moneyTake, propGive, propTake);
                    parentLayout.removeAllViews();
                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.startTradeSellFragment, showFinalTrade).commitNow();
                 }
@@ -216,6 +232,13 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
             PropertyListTradeAdapter adapterRHS = new PropertyListTradeAdapter(getContext(), playerOrder[position].getProperties(), 1, this);
             recyclerViewRHS.setAdapter(adapterRHS);
             recyclerViewRHS.setLayoutManager(new GridLayoutManager(getContext(), 3));
+            TextView traderBalance = (TextView) current.findViewById(R.id.traderBalance);
+            traderBalance.setText("Balance: $" + playerOrder[position].getMoney().toString());
+            EditText moneyWant = (EditText) current.findViewById(R.id.inputMoneyP1);
+            moneyWant.setText("");
+            moneyTake = "0";
+
+            propTake.clear();
             playerPos = position;
         }
 

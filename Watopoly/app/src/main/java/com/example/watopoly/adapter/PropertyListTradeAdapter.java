@@ -30,6 +30,7 @@ public class PropertyListTradeAdapter extends RecyclerView.Adapter<PropertyListT
     ArrayList<Property> props;
     int requester;
     private onChoosePropListener mOnChoosePropListener;
+    ArrayList<Property> currPlayerOffer;
 
     public PropertyListTradeAdapter(Context c, ArrayList<Property> props, int requester, @NonNull onChoosePropListener onChoosePropListener) {
         context = c;
@@ -38,10 +39,10 @@ public class PropertyListTradeAdapter extends RecyclerView.Adapter<PropertyListT
         this.mOnChoosePropListener = onChoosePropListener;
     }
 
-    public PropertyListTradeAdapter(Context c, ArrayList<Property> props, int requester) {
+    public PropertyListTradeAdapter(Context c, ArrayList<Property> props, ArrayList<Property> currPlayerOffer) {
         context = c;
         this.props = props;
-        this.requester = requester;
+        this.currPlayerOffer = currPlayerOffer;
     }
 
     @NonNull
@@ -53,7 +54,7 @@ public class PropertyListTradeAdapter extends RecyclerView.Adapter<PropertyListT
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PropertyListTradeAdapter.viewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final PropertyListTradeAdapter.viewHolder holder, final int position) {
 
         Property property = props.get(position);
         if (property instanceof Building) {
@@ -105,7 +106,16 @@ public class PropertyListTradeAdapter extends RecyclerView.Adapter<PropertyListT
                     mOnChoosePropListener.onChoosePropClick(requester, props.get(position), isChecked);
                 }
             });
+        } else {
+            if(currPlayerOffer.contains(property)) {
+                holder.checkboxTradeProp.setChecked(true);
+                holder.checkboxTradeProp.setClickable(false);
+            } else {
+                holder.checkboxTradeProp.setChecked(false);
+                holder.checkboxTradeProp.setClickable(false);
+            }
         }
+
     }
 
     @Override

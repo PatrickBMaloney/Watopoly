@@ -31,25 +31,56 @@ import com.example.watopoly.fragment.Dialog.InsufficientFundsYou;
 import com.example.watopoly.fragment.Dialog.NoResourcesSelected;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Player;
+import com.example.watopoly.model.Property;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 public class TradeSellRequestSentFragment extends Fragment {
     private Game gameState = Game.getInstance();
     private Player selected;
     private String moneyGive;
     private String moneyTake;
+    private ArrayList<Property> propGive;
+    private ArrayList<Property> propTake;
 
-    public TradeSellRequestSentFragment(Player selected, String moneyGive, String moneyTake) {
+    public TradeSellRequestSentFragment(Player selected, String moneyGive, String moneyTake,
+                                        ArrayList<Property> propGive, ArrayList<Property> propTake) {
         this.selected = selected;
         this.moneyGive = moneyGive;
         this.moneyTake = moneyTake;
+        this.propGive = propGive;
+        this.propTake = propTake;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_trade_sell_request_sent, container, false);
+
+        Button rejectTrade = (Button) root.findViewById(R.id.playerRejectTrade);
+        rejectTrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(getContext(),R.style.Theme_Dialog);
+                dialog.setContentView(R.layout.dialog_trade_rejected);
+                TextView tradeRejected = (TextView) dialog.findViewById(R.id.tradeRejectedText);
+                tradeRejected.setText("Trade Rejected");
+                TextView returnToPlayer = (TextView) dialog.findViewById(R.id.returnToPlayerText);
+                returnToPlayer.setText("Please return the phone to " + gameState.getCurrentPlayer().getName());
+                Button continuePlayerButton = dialog.findViewById(R.id.continuePlayerButton);
+                continuePlayerButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        getActivity().finish();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
 
         ImageView requesterImage = (ImageView) root.findViewById(R.id.playerIconImageView);
         requesterImage.setImageResource(gameState.getCurrentPlayer().getIcon());
@@ -59,19 +90,20 @@ public class TradeSellRequestSentFragment extends Fragment {
         TextView requesterName = (TextView) root.findViewById(R.id.requesterName);
         requesterName.setText(gameState.getCurrentPlayer().getName());
 
-        TextView requesterMoney = (TextView) root.findViewById(R.id.requesterMoney);
-        requesterMoney.setText(gameState.getCurrentPlayer().getMoney().toString());
+        TextView requesterBalance = (TextView) root.findViewById(R.id.requesterBalance);
+        requesterBalance.setText("Balance: $" + gameState.getCurrentPlayer().getMoney().toString());
+
 
         ImageView traderImage = (ImageView) root.findViewById(R.id.playerIconImageViewTrader);
-        requesterImage.setImageResource(selected.getIcon());
+        traderImage.setImageResource(selected.getIcon());
         ImageViewCompat.setImageTintMode(traderImage, PorterDuff.Mode.SRC_ATOP);
         ImageViewCompat.setImageTintList(traderImage, ColorStateList.valueOf(Color.parseColor(selected.getColour())));
 
         TextView traderName = (TextView) root.findViewById(R.id.traderName);
         traderName.setText(selected.getName());
 
-        TextView traderMoney = (TextView) root.findViewById(R.id.traderMoney);
-        traderMoney.setText(selected.getMoney().toString());
+        TextView traderBalance = (TextView) root.findViewById(R.id.traderBalance);
+        traderBalance.setText("Balance: $" + selected.getMoney().toString());
 
         final TextView moneyOffer = (TextView) root.findViewById(R.id.dollarSign0);
         final TextView moneyWant = (TextView) root.findViewById(R.id.dollarSign1);
@@ -80,12 +112,12 @@ public class TradeSellRequestSentFragment extends Fragment {
         moneyWant.setText("$" + moneyTake);
 
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.offerPropRecyclerView);
-        PropertyListTradeAdapter adapter = new PropertyListTradeAdapter(getContext(), gameState.getCurrentPlayer().getProperties(), 0);
+        PropertyListTradeAdapter adapter = new PropertyListTradeAdapter(getContext(), gameState.getCurrentPlayer().getProperties(), propGive);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
         RecyclerView recyclerViewRHS = (RecyclerView) root.findViewById(R.id.takePropRecyclerView);
-        PropertyListTradeAdapter adapterRHS = new PropertyListTradeAdapter(getContext(), selected.getProperties(), 1);
+        PropertyListTradeAdapter adapterRHS = new PropertyListTradeAdapter(getContext(), selected.getProperties(), propTake);
         recyclerViewRHS.setAdapter(adapterRHS);
         recyclerViewRHS.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
