@@ -48,7 +48,7 @@ public class JailOptionsActivity extends AppCompatActivity implements FragmentCa
         rollDoubleButton = findViewById(R.id.jailRollButton);
         Button payFineButton = findViewById(R.id.jailFineButton);
         Button jailFreeCardButton = findViewById(R.id.jailFreeCardButton);
-        Button continueButton = findViewById(R.id.bankruptContinueButton);
+        Button continueButton = findViewById(R.id.bankruptButton);
 
         jailFreeCardButton.setVisibility(game.getCurrentPlayer().getNumberOfJailFreeCards() > 0 ? View.VISIBLE : View.GONE);
         payFineButton.setVisibility(game.getCurrentPlayer().getMoney() >= jailFine ? View.VISIBLE : View.GONE);

@@ -65,7 +65,7 @@
             android:text="Jail free card" />
 
         <Button
-            android:id="@+id/bankruptContinueButton"
+            android:id="@+id/bankruptButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Continue" />

@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Player implements Serializable {
-    private static final int goAmount = 0;
+    private static final int goAmount = 200;
     private String name;
     private Double money;
     private String colour;

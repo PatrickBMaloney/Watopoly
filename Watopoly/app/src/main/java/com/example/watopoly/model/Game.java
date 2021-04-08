@@ -78,11 +78,7 @@ public class Game implements Serializable {
     }
 
     public void removePlayer(Player player) {
-        if (players.size() == 2) {
-            //TODO end game
-        } else {
             player.bankruptcy();
             players.remove(player);
-        }
     }
 }

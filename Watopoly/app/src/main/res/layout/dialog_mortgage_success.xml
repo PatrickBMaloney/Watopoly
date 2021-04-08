@@ -7,7 +7,7 @@
     android:background="#FFFFFF">
 
     <TextView
-        android:id="@+id/playerBankruptTextView"
+        android:id="@+id/headerBankruptTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="136dp"
@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.691"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playerBankruptTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/headerBankruptTextView" />
 
     <TextView
         android:id="@+id/moneyTextView"
@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/propertyTextView" />
 
     <Button
-        android:id="@+id/bankruptContinueButton"
+        android:id="@+id/bankruptButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="124dp"

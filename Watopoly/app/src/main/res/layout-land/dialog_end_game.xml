@@ -8,37 +8,49 @@
     tools:ignore="MissingDefaultResource">
 
     <TextView
-        android:id="@+id/headerBankruptTextView"
+        android:id="@+id/headerEndGameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
-        android:text="Player is Bankrupt!"
+        android:layout_marginTop="52dp"
+        android:text="Player is the Winner!"
         android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/bankruptButton"
+        android:id="@+id/endgameButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CONTINUE"
+        android:text="Return To Menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerBankruptTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/headerEndGameTextView"
+        app:layout_constraintVertical_bias="0.678" />
 
     <TextView
-        android:id="@+id/bankruptMessageTextView"
+        android:id="@+id/endgameMessageTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:text="Player is out of the game.  All assets owned by player have been returned to the bank."
-        app:layout_constraintBottom_toTopOf="@+id/bankruptButton"
+        android:text="Congratulations Player for winning this game of Watopoly!"
+        app:layout_constraintBottom_toTopOf="@+id/endgameButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerBankruptTextView"
+        app:layout_constraintTop_toBottomOf="@+id/headerEndGameTextView"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/winnerImageView"
+        android:layout_width="87dp"
+        android:layout_height="82dp"
+        app:layout_constraintBottom_toTopOf="@+id/endgameButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/endgameMessageTextView"
+        app:srcCompat="@drawable/anchor" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

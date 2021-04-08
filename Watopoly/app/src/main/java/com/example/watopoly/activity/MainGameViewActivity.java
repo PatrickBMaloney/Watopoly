@@ -46,7 +46,7 @@ import java.util.Map;
 
 public class MainGameViewActivity extends AppCompatActivity implements FragmentCallbackListener {
     //TODO: move this somewhere else?
-    private static final double startingMoney = 0;
+    private static final double startingMoney = 500;
 
     private PlayerInfoHeaderFragment playerInfoHeaderFragment;
     private DiceRollFragment diceRollFragment;
@@ -109,25 +109,57 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
     }
 
     private void bankrupt(){
-        Game game = Game.getInstance();
-        game.removePlayer(game.getCurrentPlayer());
+        final Game game = Game.getInstance();
         final Dialog dialog = new Dialog(MainGameViewActivity.this, R.style.Theme_Dialog);
         dialog.setContentView(R.layout.dialog_bankruptcy);
-        Button continueButton = dialog.findViewById(R.id.bankruptContinueButton);
-        TextView headerTextView = dialog.findViewById(R.id.playerBankruptTextView);
+        Button continueButton = dialog.findViewById(R.id.bankruptButton);
+        TextView headerTextView = dialog.findViewById(R.id.headerBankruptTextView);
         TextView messageTextView = dialog.findViewById(R.id.bankruptMessageTextView);
         String header = String.format("%s is Bankrupt!", game.getCurrentPlayer().getName());
         String message = String.format("%s cannot afford to pay and is out of the game.  All assets owned by this player have been returned to the bank.", game.getCurrentPlayer().getName());
         messageTextView.setText(message);
         headerTextView.setText(header);
-        dialog.show();
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                game.removePlayer(game.getCurrentPlayer());
                 dialog.dismiss();
-                startTurn();
+                if (game.getPlayers().size() == 1){
+                    endgame();
+                } else{
+                    startTurn();
+                }
             }
         });
+        dialog.show();
+    }
+
+    private void endgame(){
+        final Game game = Game.getInstance();
+        Player winner = game.getPlayers().get(0);
+        final Dialog dialog = new Dialog(MainGameViewActivity.this, R.style.Theme_Dialog);
+        dialog.setContentView(R.layout.dialog_end_game);
+        Button continueButton = dialog.findViewById(R.id.endgameButton);
+        TextView headerTextView = dialog.findViewById(R.id.headerEndGameTextView);
+        TextView messageTextView = dialog.findViewById(R.id.endgameMessageTextView);
+        ImageView winnerImage = dialog.findViewById(R.id.winnerImageView);
+        String header = String.format("%s is the Winner!", winner.getName());
+        String message = String.format("Congratulations %s for winning this game of Watopoly!", winner.getName());
+        messageTextView.setText(message);
+        headerTextView.setText(header);
+        winnerImage.setImageResource(winner.getIcon());
+        ImageViewCompat.setImageTintMode(winnerImage, PorterDuff.Mode.SRC_ATOP);
+        ImageViewCompat.setImageTintList(winnerImage, ColorStateList.valueOf(Color.parseColor(winner.getColour())));
+        continueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                game.resetGame();
+                dialog.dismiss();
+                Intent menuIntent = new Intent(getApplicationContext(), MainMenuActivity.class);
+                startActivity(menuIntent);
+            }
+        });
+        dialog.show();
     }
 
     private void linkView() {
@@ -464,7 +496,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             }
         } else if (tile instanceof Jail && game.getCurrentPlayer().getJailed()) {
             dialog.setContentView(R.layout.dialog_jailed);
-            Button continueButton = dialog.findViewById(R.id.bankruptContinueButton);
+            Button continueButton = dialog.findViewById(R.id.bankruptButton);
             continueButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
