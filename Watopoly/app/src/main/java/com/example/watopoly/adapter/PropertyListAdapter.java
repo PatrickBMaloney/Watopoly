@@ -152,6 +152,7 @@ public class PropertyListAdapter extends RecyclerView.Adapter<PropertyListAdapte
 
         @Override
         public void onClick(View v) {
+            //over here, i could change the view of the "big prop" by passing the view and changing its visibility here
             onPropClickListener.onPropClick(getAdapterPosition());
         }
     }

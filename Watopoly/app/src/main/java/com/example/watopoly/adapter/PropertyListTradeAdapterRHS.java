@@ -2,7 +2,6 @@ package com.example.watopoly.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,31 +21,25 @@ import com.example.watopoly.model.Utility;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class PropertyListTradeAdapter extends RecyclerView.Adapter<PropertyListTradeAdapter.viewHolder>{
+public class PropertyListTradeAdapterRHS extends RecyclerView.Adapter<PropertyListTradeAdapterRHS.viewHolder> {
 
     Context context;
     ArrayList<Property> props;
-    int requester;
-    private onChoosePropListener mOnChoosePropListener;
-
-    public PropertyListTradeAdapter(Context c, ArrayList<Property> props, int requester, onChoosePropListener onChoosePropListener) {
+    public PropertyListTradeAdapterRHS(Context c, ArrayList<Property> props) {
         context = c;
         this.props = props;
-        this.requester = requester;
-        this.mOnChoosePropListener = onChoosePropListener;
     }
 
     @NonNull
     @Override
-    public PropertyListTradeAdapter.viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PropertyListTradeAdapterRHS.viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.recyclerview_trade_properties, parent, false);
-        return new viewHolder(view, mOnChoosePropListener);
+        return new viewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PropertyListTradeAdapter.viewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull PropertyListTradeAdapterRHS.viewHolder holder, int position) {
         Property property = props.get(position);
         if (property instanceof Building) {
             Building building = (Building) property;
@@ -97,7 +90,7 @@ public class PropertyListTradeAdapter extends RecyclerView.Adapter<PropertyListT
         return props.size();
     }
 
-    public class viewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class viewHolder extends RecyclerView.ViewHolder {
         View buildingCardGroup;
         View transportationCardGroup;
         View utilityCardGroup;
@@ -122,54 +115,34 @@ public class PropertyListTradeAdapter extends RecyclerView.Adapter<PropertyListT
 
         CheckBox checkboxTradeProp;
 
-        public viewHolder(@NonNull View itemView, onChoosePropListener onChoosePropListener) {
+        public viewHolder(@NonNull View itemView) {
             super(itemView);
+            buildingCardGroup = itemView.findViewById(R.id.buildingCardGroup);
+            transportationCardGroup = itemView.findViewById(R.id.transportCardGroup);
+            utilityCardGroup = itemView.findViewById(R.id.utilityCardGroup);
 
-                buildingCardGroup = itemView.findViewById(R.id.buildingCardGroup);
-                transportationCardGroup = itemView.findViewById(R.id.transportCardGroup);
-                utilityCardGroup = itemView.findViewById(R.id.utilityCardGroup);
+            propertyNameTextView = itemView.findViewById(R.id.propertyNameTextView);
+            baseRentTextView = itemView.findViewById(R.id.baseRentTextView);
+            oneHouseValueTextView = itemView.findViewById(R.id.oneHouseValueTextView);
+            twoHouseValueTextView = itemView.findViewById(R.id.twoHouseValueTextView);
+            threeHouseValueTextView = itemView.findViewById(R.id.threeHouseValueTextView);
+            fourHouseValueTextView = itemView.findViewById(R.id.fourHouseValueTextView);
+            oneHotelTextView = itemView.findViewById(R.id.oneHotelTextView);
+            houseCostTextView = itemView.findViewById(R.id.houseCostTextView);
+            hotelCostTextView = itemView.findViewById(R.id.houseCostTextView2);
 
-                propertyNameTextView = itemView.findViewById(R.id.propertyNameTextView);
-                baseRentTextView = itemView.findViewById(R.id.baseRentTextView);
-                oneHouseValueTextView = itemView.findViewById(R.id.oneHouseValueTextView);
-                twoHouseValueTextView = itemView.findViewById(R.id.twoHouseValueTextView);
-                threeHouseValueTextView = itemView.findViewById(R.id.threeHouseValueTextView);
-                fourHouseValueTextView = itemView.findViewById(R.id.fourHouseValueTextView);
-                oneHotelTextView = itemView.findViewById(R.id.oneHotelTextView);
-                houseCostTextView = itemView.findViewById(R.id.houseCostTextView);
-                hotelCostTextView = itemView.findViewById(R.id.houseCostTextView2);
+            transportNameTextView = itemView.findViewById(R.id.transportNameTextView);
+            transportImageView = itemView.findViewById(R.id.transportImageView);
+            transportRentValueTextView = itemView.findViewById(R.id.transportRentValueTextView);
+            twoTransportRentValueTextView = itemView.findViewById(R.id.twoTransportRentValueTextView);
+            threeTransportRentValueTextView = itemView.findViewById(R.id.threeTransportRentValueTextView);
+            fourTransportRentValueTextView = itemView.findViewById(R.id.fourTransportRentValueTextView);
+            transportMortgageValueTestView = itemView.findViewById(R.id.transportMortgageValueTestView);
 
-                transportNameTextView = itemView.findViewById(R.id.transportNameTextView);
-                transportImageView = itemView.findViewById(R.id.transportImageView);
-                transportRentValueTextView = itemView.findViewById(R.id.transportRentValueTextView);
-                twoTransportRentValueTextView = itemView.findViewById(R.id.twoTransportRentValueTextView);
-                threeTransportRentValueTextView = itemView.findViewById(R.id.threeTransportRentValueTextView);
-                fourTransportRentValueTextView = itemView.findViewById(R.id.fourTransportRentValueTextView);
-                transportMortgageValueTestView = itemView.findViewById(R.id.transportMortgageValueTestView);
+            utilityNameTextView = itemView.findViewById(R.id.utilityNameTextView);
+            utilityMortgageValueTestView = itemView.findViewById(R.id.utilityMortgageValueTestView);
 
-                utilityNameTextView = itemView.findViewById(R.id.utilityNameTextView);
-                utilityMortgageValueTestView = itemView.findViewById(R.id.utilityMortgageValueTestView);
-
-                checkboxTradeProp =(CheckBox) itemView.findViewById(R.id.checkboxTradeProp);
-
-                itemView.setOnClickListener(this);
-            }
-
-        @Override
-        public void onClick(View v) {
-            boolean addProp;
-            if(this.checkboxTradeProp.isChecked()) {
-                this.checkboxTradeProp.setChecked(false);
-                addProp = false;
-            } else {
-                this.checkboxTradeProp.setChecked(true);
-                addProp = true;
-            }
-            mOnChoosePropListener.onChoosePropClick(requester, props.get(getAdapterPosition()), addProp);
+            checkboxTradeProp =(CheckBox) itemView.findViewById(R.id.checkboxTradeProp);
         }
-    }
-
-    public interface onChoosePropListener{
-        void onChoosePropClick(int player, Property property, boolean addProp);
     }
 }

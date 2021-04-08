@@ -1,32 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <Button
+        android:id="@+id/playerRequestTrade"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="92dp"
+        android:text="Propose Trade"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        app:layout_constraintEnd_toEndOf="@id/guideline"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/playerRequestTrade">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/offerPropRecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintBottom_toTopOf="@id/inputMoneyP0"
+            app:layout_constraintEnd_toStartOf="@id/guideline"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/playerRequestTrade"
+            app:layout_constraintVertical_bias="0.0" />
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/dollarSign0"
+        android:layout_width="25dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginBottom="4dp"
+        android:text="$:"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <EditText
+        android:id="@+id/inputMoneyP0"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="4dp"
+        android:inputType= "number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dollarSign0"/>
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"/>
+        app:layout_constraintGuide_percent="0.5" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        app:layout_constraintBottom_toTopOf="@id/inputMoneyP0"/>
+
+    <RelativeLayout
+        android:id="@+id/spinnerWrapper"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        >
+        <Spinner
+            android:id="@+id/playerNamesSpinner"
+            android:layout_width="150dp"
+            android:layout_height="50dp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/spinnerWrapper">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/takePropRecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.003"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/spinnerWrapper" />
+
+    </ScrollView>
 
     <TextView
-        android:id="@+id/playerRequestTrade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Trade: "
+        android:id="@+id/dollarSign1"
+        android:layout_width="25dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="220dp"
+        android:layout_marginBottom="4dp"
+        android:text="$:"
         android:textSize="20dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/offerPropRecyclerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/playerRequestTrade"
-        app:layout_constraintEnd_toStartOf="@id/guideline"/>
+    <EditText
+        android:id="@+id/inputMoneyP1"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="4dp"
+        android:inputType= "number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dollarSign1"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.watopoly.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,9 @@ import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
 import com.example.watopoly.R;
+import com.example.watopoly.activity.MainGameViewActivity;
+import com.example.watopoly.activity.TradeSellPropertiesActivity;
+import com.example.watopoly.activity.ViewAssetsActivity;
 import com.example.watopoly.adapter.PropertyListAdapter;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Player;
@@ -31,7 +35,6 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
     View largeProp;
     View buttons;
     private Property prev;
-    private int [] ids = new int[26];
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,10 +56,23 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
 
     private void setButtons(final View root) {
         Button return_to_board = (Button) root.findViewById(R.id.back_to_board);
+        Button trade_sell = (Button) root.findViewById(R.id.tradeSellButton);
+        if(gameState.getCurrentPlayer().getJailed()) {
+            trade_sell.setEnabled(false);
+        } else {
+            trade_sell.setEnabled(true);
+        }
         return_to_board.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
+            }
+        });
+        trade_sell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireActivity(), TradeSellPropertiesActivity.class);
+                startActivity(intent);
             }
         });
     }
