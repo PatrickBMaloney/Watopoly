@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -88,10 +89,12 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
             @Override
             public void afterTextChanged(Editable s) {
                 moneyGive = s.toString();
+                if(moneyGive.isEmpty()) {
+                    moneyGive = "0";
+                }
                 if(Integer.parseInt(moneyGive) > gameState.getCurrentPlayer().getMoney()) {
                     InsufficientFundsYou Ify = new InsufficientFundsYou();
                     Ify.show(getChildFragmentManager(), "InsufficientFundsYou");
-
                 }
             }
         });
@@ -104,6 +107,9 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
             @Override
             public void afterTextChanged(Editable s) {
                 moneyTake = s.toString();
+                if(moneyTake.isEmpty()) {
+                    moneyTake = "0";
+                }
                 if(Integer.parseInt(moneyTake) > playerOrder[playerPos].getMoney()) {
                     InsufficientFundsRHS Ifo = new InsufficientFundsRHS(playerNames[playerPos]);
                     Ifo.show(getChildFragmentManager(), "InsufficientFundsOther");
@@ -123,6 +129,20 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
             recyclerViewRHS.setLayoutManager(new GridLayoutManager(getContext(), 4));
         }
 
+        Button requestTrade = (Button) root.findViewById(R.id.playerRequestTrade);
+        requestTrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Integer.parseInt(moneyGive) > gameState.getCurrentPlayer().getMoney()) {
+                    InsufficientFundsYou Ify = new InsufficientFundsYou();
+                    Ify.show(getChildFragmentManager(), "InsufficientFundsYou");
+                }
+                else if(Integer.parseInt(moneyTake) > playerOrder[playerPos].getMoney()) {
+                    InsufficientFundsRHS Ifo = new InsufficientFundsRHS(playerNames[playerPos]);
+                    Ifo.show(getChildFragmentManager(), "InsufficientFundsOther");
+                }
+            }
+        });
         return root;
     }
 
