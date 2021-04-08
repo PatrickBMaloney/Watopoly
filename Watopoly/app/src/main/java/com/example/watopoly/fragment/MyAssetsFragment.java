@@ -62,7 +62,7 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
     }
 
     @Override
-    public void onPropClick(int propNum) {
+    public void onPropClick(int propNum, int position) {
         Property property = gameState.getCurrentPlayer().getProperties().get(propNum);
         if(prev == null) {
             prev = property; //set prev to current if null
