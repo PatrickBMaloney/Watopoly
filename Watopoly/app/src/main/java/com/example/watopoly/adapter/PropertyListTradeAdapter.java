@@ -31,11 +31,17 @@ public class PropertyListTradeAdapter extends RecyclerView.Adapter<PropertyListT
     int requester;
     private onChoosePropListener mOnChoosePropListener;
 
-    public PropertyListTradeAdapter(Context c, ArrayList<Property> props, int requester, onChoosePropListener onChoosePropListener) {
+    public PropertyListTradeAdapter(Context c, ArrayList<Property> props, int requester, @NonNull onChoosePropListener onChoosePropListener) {
         context = c;
         this.props = props;
         this.requester = requester;
         this.mOnChoosePropListener = onChoosePropListener;
+    }
+
+    public PropertyListTradeAdapter(Context c, ArrayList<Property> props, int requester) {
+        context = c;
+        this.props = props;
+        this.requester = requester;
     }
 
     @NonNull
@@ -92,13 +98,14 @@ public class PropertyListTradeAdapter extends RecyclerView.Adapter<PropertyListT
             holder.utilityNameTextView.setText(utility.getName());
             holder.utilityMortgageValueTestView.setText(String.format("$%.0f", (utility.getPurchasePrice() / 2)));
         }
-
-        holder.checkboxTradeProp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if(mOnChoosePropListener != null) {
+            holder.checkboxTradeProp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     mOnChoosePropListener.onChoosePropClick(requester, props.get(position), isChecked);
-            }
-        });
+                }
+            });
+        }
     }
 
     @Override
@@ -130,13 +137,10 @@ public class PropertyListTradeAdapter extends RecyclerView.Adapter<PropertyListT
         TextView utilityMortgageValueTestView;
 
         CheckBox checkboxTradeProp;
-        onChoosePropListener onChoosePropListener;
 
         public viewHolder(@NonNull View itemView) {
 
             super(itemView);
-            this.onChoosePropListener = onChoosePropListener;
-
                 buildingCardGroup = itemView.findViewById(R.id.buildingCardGroup);
                 transportationCardGroup = itemView.findViewById(R.id.transportCardGroup);
                 utilityCardGroup = itemView.findViewById(R.id.utilityCardGroup);
@@ -164,7 +168,9 @@ public class PropertyListTradeAdapter extends RecyclerView.Adapter<PropertyListT
 
                 checkboxTradeProp =(CheckBox) itemView.findViewById(R.id.checkboxTradeProp);
 
-                itemView.setOnClickListener(this);
+                if(mOnChoosePropListener != null) {
+                    itemView.setOnClickListener(this);
+                }
             }
 
         @Override

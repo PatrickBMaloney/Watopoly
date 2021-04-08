@@ -1,9 +1,13 @@
 package com.example.watopoly.fragment;
 
 import android.app.Dialog;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +15,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,11 +59,21 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
 
     int playerPos = 0;
 
+    ConstraintLayout parentLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_trade_resources_start, container, false);
+        parentLayout = (ConstraintLayout) root.findViewById(R.id.trade_sell_start);
         current = root;
+        ImageView requesterImage = (ImageView) root.findViewById(R.id.playerIconImageView);
+        requesterImage.setImageResource(gameState.getCurrentPlayer().getIcon());
+        ImageViewCompat.setImageTintMode(requesterImage, PorterDuff.Mode.SRC_ATOP);
+        ImageViewCompat.setImageTintList(requesterImage, ColorStateList.valueOf(Color.parseColor(gameState.getCurrentPlayer().getColour())));
+
+        TextView requesterName = (TextView) root.findViewById(R.id.requesterName);
+        requesterName.setText(gameState.getCurrentPlayer().getName());
         int size = gameState.getPlayers().size();
         if(size > 1) {
             int addPlayer = 0;
@@ -125,13 +142,13 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.offerPropRecyclerView);
         PropertyListTradeAdapter adapter = new PropertyListTradeAdapter(getContext(), gameState.getCurrentPlayer().getProperties(), 0, this);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
         if(size > 1) {
             RecyclerView recyclerViewRHS = (RecyclerView) root.findViewById(R.id.takePropRecyclerView);
             PropertyListTradeAdapter adapterRHS = new PropertyListTradeAdapter(getContext(), playerOrder[0].getProperties(), 1, this);
             recyclerViewRHS.setAdapter(adapterRHS);
-            recyclerViewRHS.setLayoutManager(new GridLayoutManager(getContext(), 4));
+            recyclerViewRHS.setLayoutManager(new GridLayoutManager(getContext(), 3));
         }
 
         Button requestTrade = (Button) root.findViewById(R.id.playerRequestTrade);
@@ -164,6 +181,10 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
                         }
                     });
                     dialog.show();
+                   TradeSellRequestSentFragment showFinalTrade = new TradeSellRequestSentFragment(playerOrder[playerPos],
+                           moneyGive, moneyTake);
+                   parentLayout.removeAllViews();
+                   getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.startTradeSellFragment, showFinalTrade).commitNow();
                 }
             }
         });
@@ -194,7 +215,7 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
             RecyclerView recyclerViewRHS = (RecyclerView) current.findViewById(R.id.takePropRecyclerView);
             PropertyListTradeAdapter adapterRHS = new PropertyListTradeAdapter(getContext(), playerOrder[position].getProperties(), 1, this);
             recyclerViewRHS.setAdapter(adapterRHS);
-            recyclerViewRHS.setLayoutManager(new GridLayoutManager(getContext(), 4));
+            recyclerViewRHS.setLayoutManager(new GridLayoutManager(getContext(), 3));
             playerPos = position;
         }
 

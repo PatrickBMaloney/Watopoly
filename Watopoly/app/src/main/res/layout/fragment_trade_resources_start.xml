@@ -4,37 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/trade_sell_start">
 
-    <Button
-        android:id="@+id/playerRequestTrade"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginStart="92dp"
-        android:text="Propose Trade"
-        android:textSize="20dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/vertical_line"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@android:color/darker_gray" />
+
+
+        <Button
+            android:id="@+id/playerRequestTrade"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Propose Trade"
+            android:textSize="20dp"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="250dp"
-        app:layout_constraintEnd_toEndOf="@id/guideline"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_height="270dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/playerRequestTrade">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/inputMoneyP0">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/offerPropRecyclerView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            app:layout_constraintBottom_toTopOf="@id/inputMoneyP0"
-            app:layout_constraintEnd_toStartOf="@id/guideline"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/playerRequestTrade"
-            app:layout_constraintVertical_bias="0.0" />
+            android:layout_marginTop="58dp" />
     </ScrollView>
 
     <TextView
@@ -63,14 +70,27 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
-    <View
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@android:color/darker_gray"
+    <RelativeLayout
+        android:id="@+id/traderWrapper"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guideline"
-        app:layout_constraintBottom_toTopOf="@id/inputMoneyP0"/>
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline">
+        <ImageView
+            android:id="@+id/playerIconImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@drawable/android" />
+        <TextView
+            android:id="@+id/requesterName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_toRightOf="@id/playerIconImageView"/>
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/spinnerWrapper"
         android:layout_width="150dp"
@@ -88,21 +108,18 @@
 
     <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="250dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@id/guideline"
-        app:layout_constraintTop_toBottomOf="@id/spinnerWrapper">
+        android:layout_height="270dp"
+        android:layout_marginStart="100dp"
+        app:layout_constraintStart_toEndOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/inputMoneyP1">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/takePropRecyclerView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.003"
-            app:layout_constraintStart_toEndOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/spinnerWrapper" />
+            android:layout_marginTop="58dp"
+            app:layout_constraintHorizontal_bias="0.003"/>
 
     </ScrollView>
 
