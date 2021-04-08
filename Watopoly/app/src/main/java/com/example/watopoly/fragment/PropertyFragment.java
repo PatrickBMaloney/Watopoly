@@ -25,7 +25,7 @@ import com.example.watopoly.model.Utility;
  *
  */
 public class PropertyFragment extends Fragment {
-    private View current;
+    public View current;
     private View buildingCardGroup;
     private View transportationCardGroup;
     private View utilityCardGroup;
