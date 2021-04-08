@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,11 +43,11 @@ public class PropertyListTradeAdapter extends RecyclerView.Adapter<PropertyListT
     public PropertyListTradeAdapter.viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.recyclerview_trade_properties, parent, false);
-        return new viewHolder(view, mOnChoosePropListener);
+        return new viewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PropertyListTradeAdapter.viewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PropertyListTradeAdapter.viewHolder holder, final int position) {
 
         Property property = props.get(position);
         if (property instanceof Building) {
@@ -90,6 +92,13 @@ public class PropertyListTradeAdapter extends RecyclerView.Adapter<PropertyListT
             holder.utilityNameTextView.setText(utility.getName());
             holder.utilityMortgageValueTestView.setText(String.format("$%.0f", (utility.getPurchasePrice() / 2)));
         }
+
+        holder.checkboxTradeProp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    mOnChoosePropListener.onChoosePropClick(requester, props.get(position), isChecked);
+            }
+        });
     }
 
     @Override
@@ -121,9 +130,12 @@ public class PropertyListTradeAdapter extends RecyclerView.Adapter<PropertyListT
         TextView utilityMortgageValueTestView;
 
         CheckBox checkboxTradeProp;
+        onChoosePropListener onChoosePropListener;
 
-        public viewHolder(@NonNull View itemView, onChoosePropListener onChoosePropListener) {
+        public viewHolder(@NonNull View itemView) {
+
             super(itemView);
+            this.onChoosePropListener = onChoosePropListener;
 
                 buildingCardGroup = itemView.findViewById(R.id.buildingCardGroup);
                 transportationCardGroup = itemView.findViewById(R.id.transportCardGroup);
@@ -157,15 +169,11 @@ public class PropertyListTradeAdapter extends RecyclerView.Adapter<PropertyListT
 
         @Override
         public void onClick(View v) {
-            boolean addProp;
             if(this.checkboxTradeProp.isChecked()) {
                 this.checkboxTradeProp.setChecked(false);
-                addProp = false;
             } else {
                 this.checkboxTradeProp.setChecked(true);
-                addProp = true;
             }
-            mOnChoosePropListener.onChoosePropClick(requester, props.get(getAdapterPosition()), addProp);
         }
     }
 

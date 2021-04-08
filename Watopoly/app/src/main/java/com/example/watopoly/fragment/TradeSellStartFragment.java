@@ -1,5 +1,6 @@
 package com.example.watopoly.fragment;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -20,9 +22,12 @@ import com.example.watopoly.R;
 import com.example.watopoly.adapter.PropertyListTradeAdapter;
 import com.example.watopoly.fragment.Dialog.InsufficientFundsRHS;
 import com.example.watopoly.fragment.Dialog.InsufficientFundsYou;
+import com.example.watopoly.fragment.Dialog.NoResourcesSelected;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Player;
 import com.example.watopoly.model.Property;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -140,6 +145,25 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
                 else if(Integer.parseInt(moneyTake) > playerOrder[playerPos].getMoney()) {
                     InsufficientFundsRHS Ifo = new InsufficientFundsRHS(playerNames[playerPos]);
                     Ifo.show(getChildFragmentManager(), "InsufficientFundsOther");
+                } else if (Integer.parseInt(moneyGive) == 0 && Integer.parseInt(moneyTake) == 0
+                        && propGive.size() == 0 && propTake.size() == 0) {
+                    NoResourcesSelected noResource = new NoResourcesSelected();
+                    noResource.show(getChildFragmentManager(), "no Resources");
+                }
+                else {
+                    //okay to move on
+                    final Dialog dialog = new Dialog(getContext(),R.style.Theme_Dialog);
+                    dialog.setContentView(R.layout.dialog_pass_to_requested_player);
+                    TextView passToPlayer = (TextView) dialog.findViewById(R.id.passToPlayer);
+                    passToPlayer.setText("Pass Phone to " + playerNames[playerPos]);
+                    Button continuePlayerButton = dialog.findViewById(R.id.continuePlayerButton);
+                    continuePlayerButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
                 }
             }
         });
