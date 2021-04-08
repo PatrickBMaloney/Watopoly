@@ -21,6 +21,7 @@ import com.example.watopoly.adapter.PropertyListAdapter;
 import com.example.watopoly.model.Building;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Property;
+import com.example.watopoly.util.BoardTiles;
 
 public class MyAssetsFragment extends Fragment implements PropertyListAdapter.onPropClickListener{
 
@@ -28,6 +29,7 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
     View largeProp;
     PropertyFragment propertyFragment;
     View buttons;
+    View buy_houses;
     private Property prev;
     private int [] ids = new int[26];
 
@@ -36,9 +38,10 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_my_assets, container, false);
+        View buy_houses = inflater.inflate(R.layout.dialog_buy_house_hotel, container, false);
 
         final FragmentManager fm = getChildFragmentManager();
-        propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardBuyHouseHotels);
+//        propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardBuyHouseHotels);
         largeProp = (View) root.findViewById(R.id.propertyCardBuyFragmentAssets);
         buttons = (View) root.findViewById(R.id.actionsLinearLayoutAssets);
         largeProp.setVisibility(View.GONE);
@@ -87,7 +90,7 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
                 dialog.setContentView(R.layout.dialog_buy_house_hotel);
 
                 final FragmentManager fm = getChildFragmentManager();
-//                final PropertyFragment buyHousePropertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardBuyHouseHotels);
+                final PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardBuyHouseHotels);
                 final Building currentTile = (Building) property;
                 propertyFragment.setProperty(currentTile);
                 final Button plusHouseButton = dialog.findViewById(R.id.plusBuyHouseButton);
