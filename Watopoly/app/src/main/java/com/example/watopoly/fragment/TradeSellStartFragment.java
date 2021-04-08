@@ -88,12 +88,19 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
             }
         });
 
-        int size = gameState.getPlayers().size();
-        if(size > 1) {
+        //if player in jail they shouldn't be allowed to change
+        int tradablePlayers = 0;
+        for(int i = 0; i < gameState.getPlayers().size(); i++) {
+            if(gameState.getPlayers().get(i) != gameState.getCurrentPlayer() &&
+            !gameState.getPlayers().get(i).getJailed()) {
+                tradablePlayers++;
+            }
+        }
+        if(tradablePlayers >= 1) {
             int addPlayer = 0;
-            playerNames = new String[size - 1];
-            playerOrder = new Player[size - 1];
-            for (int i = 0; i < size; i++) {
+            playerNames = new String[tradablePlayers];
+            playerOrder = new Player[tradablePlayers];
+            for (int i = 0; i < gameState.getPlayers().size(); i++) {
                 if (gameState.getPlayers().get(i) != gameState.getCurrentPlayer()) {
                     playerNames[addPlayer] = gameState.getPlayers().get(i).getName();
                     playerOrder[addPlayer] = gameState.getPlayers().get(i);
@@ -158,7 +165,7 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-        if(size > 1) {
+        if(tradablePlayers >= 1) {
             RecyclerView recyclerViewRHS = (RecyclerView) root.findViewById(R.id.takePropRecyclerView);
             PropertyListTradeAdapter adapterRHS = new PropertyListTradeAdapter(getContext(), playerOrder[0].getProperties(), 1, this);
             recyclerViewRHS.setAdapter(adapterRHS);
@@ -168,6 +175,9 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
         }
 
         Button requestTrade = (Button) root.findViewById(R.id.playerRequestTrade);
+        if(tradablePlayers == 0) {
+            requestTrade.setEnabled(false);
+        }
         requestTrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

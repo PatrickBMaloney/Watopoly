@@ -65,6 +65,8 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
     private static int CHANCE_REQUEST_CODE = 1;
     private static int JAIL_OPTION_REQUEST_CODE = 2;
+    private static int TRADE_REQUEST_CODE = 3;
+    private static int VIEW_ASSETS_REQUEST_CODE = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +123,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainGameViewActivity.this, ViewAssetsActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, VIEW_ASSETS_REQUEST_CODE);
             }
         });
         tradeButton = findViewById(R.id.tradeButton);
@@ -129,7 +131,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainGameViewActivity.this, TradeSellPropertiesActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, TRADE_REQUEST_CODE);
             }
         });
         mortgageButton = findViewById(R.id.mortgageButton);
@@ -258,8 +260,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             Boolean isJailed = game.getCurrentPlayer().getJailed();
             mortgageButton.setVisibility(isJailed ? View.GONE : View.VISIBLE);
             tradeButton.setVisibility(isJailed ? View.GONE : View.VISIBLE);
-        }
-        else if (requestCode == JAIL_OPTION_REQUEST_CODE) {
+        } else if (requestCode == JAIL_OPTION_REQUEST_CODE) {
             Boolean isJailed = game.getCurrentPlayer().getJailed();
             if (isJailed) {
                 diceRollFragment.getView().setVisibility(View.GONE);
@@ -267,6 +268,14 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                 tradeButton.setVisibility(View.GONE);
                 actionLinearLayout.setVisibility(View.VISIBLE);
             }
+        } else if(requestCode == VIEW_ASSETS_REQUEST_CODE) {
+            FragmentManager fm = getSupportFragmentManager();
+            playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
+            playerInfoHeaderFragment.refresh();
+        }  else if(requestCode == TRADE_REQUEST_CODE) {
+            FragmentManager fm = getSupportFragmentManager();
+            playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
+            playerInfoHeaderFragment.refresh();
         }
     }
 

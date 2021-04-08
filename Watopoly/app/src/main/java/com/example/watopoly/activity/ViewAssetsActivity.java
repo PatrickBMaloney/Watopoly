@@ -1,8 +1,11 @@
  package com.example.watopoly.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -72,5 +75,17 @@ public class ViewAssetsActivity extends AppCompatActivity {
                 allAssets.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        final FragmentManager fm = getSupportFragmentManager();
+        playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragmentAssets);
+        Player myPlayer = gameState.getCurrentPlayer();
+        playerInfoHeaderFragment.setPlayer(myPlayer);
+
+        MyAssetsFragment myAssetsFragment = (MyAssetsFragment) fm.findFragmentById(R.id.myAssetsFragment);
+        myAssetsFragment.setRefresh(true);
     }
 }

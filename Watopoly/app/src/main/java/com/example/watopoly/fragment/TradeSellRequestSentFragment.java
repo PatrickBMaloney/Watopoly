@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -78,6 +79,56 @@ public class TradeSellRequestSentFragment extends Fragment {
                     }
                 });
                 dialog.show();
+            }
+        });
+
+        Button acceptTrade = (Button) root.findViewById(R.id.playerAcceptTrade);
+        acceptTrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(getContext(),R.style.Theme_Dialog);
+                dialog.setContentView(R.layout.dialog_trade_accepted);
+                TextView tradeRejected = (TextView) dialog.findViewById(R.id.tradeAcceptedText);
+                tradeRejected.setText("Trade Accepted!");
+                TextView returnToPlayer = (TextView) dialog.findViewById(R.id.returnToPlayerText);
+                returnToPlayer.setText("Please return the phone to " + gameState.getCurrentPlayer().getName());
+                Button continuePlayerButton = dialog.findViewById(R.id.continuePlayerButton);
+                continuePlayerButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //remove properties from requester first
+                        for(int i = 0; i < propGive.size(); i++) {
+                            gameState.getCurrentPlayer().removeProperty(propGive.get(i));
+                        }
+                        //remove properties from selected
+                        for(int j = 0; j < propTake.size(); j++) {
+                            selected.removeProperty(propTake.get(j));
+                        }
+
+                        for(int k = 0; k < propTake.size(); k++) {
+                            gameState.getCurrentPlayer().addProperty(propTake.get(k));
+                            propTake.get(k).setOwner(gameState.getCurrentPlayer());
+                        }
+
+                        for(int l = 0; l < propGive.size(); l++) {
+                            selected.addProperty(propGive.get(l));
+                            propGive.get(l).setOwner(selected);
+                        }
+
+                        //remove money  from requester
+                        gameState.getCurrentPlayer().payAmount(Double.parseDouble(moneyGive));
+                        selected.receiveAmount(Double.parseDouble(moneyGive));
+
+                        //remove money from selected
+                        selected.payAmount(Double.parseDouble(moneyTake));
+                        gameState.getCurrentPlayer().receiveAmount(Double.parseDouble(moneyTake));
+
+                        dialog.dismiss();
+                        getActivity().finish();
+                    }
+                });
+                dialog.show();
+
             }
         });
 

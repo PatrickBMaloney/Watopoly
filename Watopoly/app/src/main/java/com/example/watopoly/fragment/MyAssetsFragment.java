@@ -3,8 +3,10 @@ package com.example.watopoly.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,23 +37,43 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
     View largeProp;
     View buttons;
     private Property prev;
+    View current;
+    boolean refresh = false;
+
+    public void setRefresh(boolean refresh) {
+        this.refresh = refresh;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(refresh) {
+            setView(gameState.getCurrentPlayer());
+            refresh = false;
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_my_assets, container, false);
-
-        largeProp = (View) root.findViewById(R.id.propertyCardBuyFragmentAssets);
-        buttons = (View) root.findViewById(R.id.actionsLinearLayoutAssets);
+        current = root;
+        setButtons(root);
+        setView(gameState.getCurrentPlayer());
+        return root;
+    }
+    private void setView(Player player) {
+        largeProp = (View) current.findViewById(R.id.propertyCardBuyFragmentAssets);
+        buttons = (View) current.findViewById(R.id.actionsLinearLayoutAssets);
         largeProp.setVisibility(View.GONE);
         buttons.setVisibility(View.GONE);
-        setButtons(root);
-        RecyclerView rv = (RecyclerView) root.findViewById(R.id.propRecycleView);
-        PropertyListAdapter adapter = new PropertyListAdapter(getContext(),gameState.getCurrentPlayer().getProperties(), this);
+
+        RecyclerView rv = (RecyclerView) current.findViewById(R.id.propRecycleView);
+        rv.removeAllViews();
+        PropertyListAdapter adapter = new PropertyListAdapter(getContext(),player.getProperties(), this);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new GridLayoutManager(getContext(), 6));
-        return root;
     }
 
     private void setButtons(final View root) {
@@ -72,10 +94,11 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(requireActivity(), TradeSellPropertiesActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 5);
             }
         });
     }
+
 
     @Override
     public void onPropClick(int propNum) {
