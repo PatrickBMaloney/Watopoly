@@ -5,6 +5,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 import com.example.watopoly.enums.TileDirection;
+import com.example.watopoly.util.BoardTiles;
+
+import java.util.List;
 
 public class Building extends Property {
     private int numberOfHouses = 0;
@@ -106,6 +109,17 @@ public class Building extends Property {
         Game game = Game.getInstance();
         game.getCurrentPlayer().payAmount(housePrice);
         hasHotel = true;
+    }
+
+    public void setFullColorSet(){
+        List<Building> colorSet = BoardTiles.getTilesByColor(hexCode);
+        for(Building property: colorSet){
+            property.setFullSetOwned(true);
+        }
+    }
+
+    private void setFullSetOwned(boolean fullSetOwned){
+        this.fullSetOwned = fullSetOwned;
     }
 
     public Building(String name, TileDirection direction, double baseRentPrice, double purchasePrice, double housePrice, String hexCode) {

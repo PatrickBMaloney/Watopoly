@@ -74,10 +74,13 @@ public final class BoardTiles {
         return null;
     }
 
-    public static ArrayList<Tile> getTilesByColor(String color){
-        List<Tile> result = new ArrayList<>();
+    public static List<Building> getTilesByColor(String color){
+        List<Building> result = new ArrayList<>();
         for (Tile currentTile: boardTiles) {
-            if()
+            if((currentTile instanceof Building) && ((Building) currentTile).getPropertyHex().equals(color)){
+                result.add((Building) currentTile);
+            }
         }
+        return result;
     }
 }

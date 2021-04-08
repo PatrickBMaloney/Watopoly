@@ -4,9 +4,11 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 
 import com.example.watopoly.util.BitmapDataObject;
+import com.example.watopoly.util.BoardTiles;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Player implements Serializable {
     private static final int goAmount = 200;
@@ -118,7 +120,11 @@ public class Player implements Serializable {
             numUtilities += 1;
         }
         else if (property instanceof Building) {
-
+            // check if player owns full set
+            List<Building> colorSet = BoardTiles.getTilesByColor(((Building) property).getPropertyHex());
+            if (properties.containsAll(colorSet)){
+                ((Building) property).setFullColorSet();
+            }
         }
     }
 
