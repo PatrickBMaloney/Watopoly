@@ -53,6 +53,8 @@ public class Building extends Property {
         return hexCode;
     }
 
+    public boolean isFullSetOwned() { return fullSetOwned; }
+
     @Override
     public void drawOn(Canvas canvas) {
         Paint insideFill = new Paint();

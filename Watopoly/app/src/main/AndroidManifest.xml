@@ -10,7 +10,6 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.PayRentActivity"></activity>
         <activity
             android:name=".activity.DisplayPlayerOrderActivity"
             android:screenOrientation="landscape" />
@@ -43,6 +42,8 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.JailOptionsActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".activity.BuyHouseHotelActivity"
             android:screenOrientation="landscape" />
     </application>
 

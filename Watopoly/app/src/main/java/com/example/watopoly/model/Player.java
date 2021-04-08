@@ -117,6 +117,9 @@ public class Player implements Serializable {
         } else if (property instanceof Utility) {
             numUtilities += 1;
         }
+        else if (property instanceof Building) {
+
+        }
     }
 
     public void addJailFreeCard(){ jailFreeCards += 1; }

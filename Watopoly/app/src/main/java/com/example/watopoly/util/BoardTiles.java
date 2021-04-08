@@ -16,6 +16,7 @@ import com.example.watopoly.model.Utility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public final class BoardTiles {
@@ -71,5 +72,12 @@ public final class BoardTiles {
             }
         }
         return null;
+    }
+
+    public static ArrayList<Tile> getTilesByColor(String color){
+        List<Tile> result = new ArrayList<>();
+        for (Tile currentTile: boardTiles) {
+            if()
+        }
     }
 }
