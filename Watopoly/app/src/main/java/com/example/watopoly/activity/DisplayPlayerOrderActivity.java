@@ -15,7 +15,6 @@ import com.example.watopoly.R;
 import com.example.watopoly.adapter.RollToGoFirstAdaptor;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 

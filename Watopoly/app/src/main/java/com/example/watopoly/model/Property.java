@@ -37,5 +37,14 @@ public abstract class Property extends Tile {
     public Player getOwner() {
         return owner;
     }
+
+    public boolean getMortgaged() { return isMortgaged;}
+
+    public void mortgage() {
+        isMortgaged = true;
+    }
+    public void unMortgage() {
+        isMortgaged = false;
+    }
 }
 
