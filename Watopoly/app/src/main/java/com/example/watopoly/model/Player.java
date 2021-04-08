@@ -54,6 +54,10 @@ public class Player implements Serializable {
         bitmapDataObject = new BitmapDataObject(bmOut);
     }
 
+    public ArrayList<Property> getProperties() {
+        return properties;
+    }
+
     public String getName() {
         return name;
     }
@@ -61,8 +65,6 @@ public class Player implements Serializable {
     public Double getMoney() {
         return money;
     }
-
-    public ArrayList<Property> getProperties(){ return properties;}
 
     public String getColour() {
         return colour;
