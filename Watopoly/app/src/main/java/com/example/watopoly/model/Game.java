@@ -76,4 +76,13 @@ public class Game implements Serializable {
         players.clear();
         //TODO: clear other object as we add them
     }
+
+    public void removePlayer(Player player) {
+        if (players.size() == 2) {
+            //TODO end game
+        } else {
+            player.bankruptcy();
+            players.remove(player);
+        }
+    }
 }

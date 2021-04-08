@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -30,16 +29,13 @@ import com.example.watopoly.fragment.DiceRollFragment;
 import com.example.watopoly.fragment.FragmentCallbackListener;
 import com.example.watopoly.fragment.PlayerInfoHeaderFragment;
 import com.example.watopoly.fragment.PropertyFragment;
-import com.example.watopoly.model.Building;
 import com.example.watopoly.model.CardTile;
-import com.example.watopoly.model.ChanceCard;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Jail;
 import com.example.watopoly.model.Player;
 import com.example.watopoly.model.Property;
 import com.example.watopoly.model.TaxTile;
 import com.example.watopoly.model.Tile;
-import com.example.watopoly.model.Utility;
 import com.example.watopoly.util.GameSaveManager;
 import com.example.watopoly.view.BoardView;
 
@@ -109,8 +105,28 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
     private void mortgage(int requestCode){
         Intent mortgageIntent = new Intent(getApplicationContext(), MortgageActivity.class);
-//        startActivity(mortgageIntent);
         startActivityForResult(mortgageIntent,requestCode);
+    }
+
+    private void bankrupt(){
+        Game game = Game.getInstance();
+        game.removePlayer(game.getCurrentPlayer());
+        final Dialog dialog = new Dialog(MainGameViewActivity.this, R.style.Theme_Dialog);
+        dialog.setContentView(R.layout.dialog_bankruptcy);
+        Button continueButton = dialog.findViewById(R.id.bankruptContinueButton);
+        TextView headerTextView = dialog.findViewById(R.id.playerBankruptTextView);
+        TextView messageTextView = dialog.findViewById(R.id.bankruptMessageTextView);
+        String header = String.format("%s is Bankrupt!", game.getCurrentPlayer().getName());
+        String message = String.format("%s cannot afford to pay and is out of the game.  All assets owned by %s have been returned to the bank.", game.getCurrentPlayer().getName());
+        messageTextView.setText(message);
+        headerTextView.setText(header);
+        continueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                startTurn();
+            }
+        });
     }
 
     private void linkView() {
@@ -360,7 +376,10 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                 });
                 dialog.show();
             } else if (property.getOwner() != game.getCurrentPlayer()) {
-                dialog.setContentView(R.layout.dialog_pay_rent);
+                if (property.getRentPrice() > game.getCurrentPlayer().getAvailableFunds()) {
+                    bankrupt();
+                } else {
+                    dialog.setContentView(R.layout.dialog_pay_rent);
                 Button continueButton = dialog.findViewById(R.id.payRentContinue);
                 Button mortgageRentButton = dialog.findViewById(R.id.mortgageRentButton);
                 TextView desTextView = dialog.findViewById(R.id.payRentDescriptionTextView);
@@ -372,6 +391,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                 final FragmentManager fm = getSupportFragmentManager();
                 PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardFragment);
                 propertyFragment.setProperty(property);
+
                 if (property.getRentPrice() > game.getCurrentPlayer().getMoney()) {
                     continueButton.setVisibility(View.GONE);
                     mortgageRentButton.setVisibility(View.VISIBLE);
@@ -409,6 +429,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                 });
                 dialog.show();
             }
+            }
         } else if (tile instanceof TaxTile) {
             dialog.setContentView(R.layout.dialog_tax);
             Button continueButton = dialog.findViewById(R.id.taxContinueButton);
@@ -423,7 +444,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
         } else if (tile instanceof Jail && game.getCurrentPlayer().getJailed()) {
             dialog.setContentView(R.layout.dialog_jailed);
-            Button continueButton = dialog.findViewById(R.id.jailContinueButton);
+            Button continueButton = dialog.findViewById(R.id.bankruptContinueButton);
             continueButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,12 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.watopoly.R;
 import com.example.watopoly.fragment.DiceRollFragment;
 import com.example.watopoly.fragment.FragmentCallbackListener;
-import com.example.watopoly.fragment.PlayerInfoHeaderFragment;
-import com.example.watopoly.model.ChanceCard;
-import com.example.watopoly.model.ChanceCardStrategy.ChanceStrategy;
 import com.example.watopoly.model.Game;
-import com.example.watopoly.model.Player;
-import com.example.watopoly.util.ChanceCards;
 
 public class JailOptionsActivity extends AppCompatActivity implements FragmentCallbackListener {
     private static final Double jailFine = 100.0;
@@ -54,7 +48,7 @@ public class JailOptionsActivity extends AppCompatActivity implements FragmentCa
         rollDoubleButton = findViewById(R.id.jailRollButton);
         Button payFineButton = findViewById(R.id.jailFineButton);
         Button jailFreeCardButton = findViewById(R.id.jailFreeCardButton);
-        Button continueButton = findViewById(R.id.jailContinueButton);
+        Button continueButton = findViewById(R.id.bankruptContinueButton);
 
         jailFreeCardButton.setVisibility(game.getCurrentPlayer().getNumberOfJailFreeCards() > 0 ? View.VISIBLE : View.GONE);
         payFineButton.setVisibility(game.getCurrentPlayer().getMoney() >= jailFine ? View.VISIBLE : View.GONE);
