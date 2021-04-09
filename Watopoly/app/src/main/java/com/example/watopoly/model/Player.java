@@ -142,7 +142,7 @@ public class Player implements Serializable {
         double funds = getMoney();
         for (int i = 0; i<properties.size(); i++){
             Property property = properties.get(i);
-            if (property.getMortgaged()){
+            if (!property.getMortgaged()){
                 funds = funds + property.getPurchasePrice()/2;
             }
             //TODO add available funds from selling houses/hotels

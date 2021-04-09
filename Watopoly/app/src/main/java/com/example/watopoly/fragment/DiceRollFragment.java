@@ -83,6 +83,7 @@ public class DiceRollFragment extends Fragment {
         return diceRollResult;
     }
 
+
     public Boolean getIsDouble() {
         return isDouble;
     }
