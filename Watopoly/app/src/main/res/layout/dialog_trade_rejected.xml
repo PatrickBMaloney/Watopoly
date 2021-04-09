@@ -39,5 +39,7 @@
         app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/returnToPlayerText"
-        app:layout_constraintVertical_bias="0.979" />
+        app:layout_constraintVertical_bias="0.979"
+        android:backgroundTint="#308AEA"
+        android:textColor="#FFFFFF" />
 </androidx.constraintlayout.widget.ConstraintLayout>

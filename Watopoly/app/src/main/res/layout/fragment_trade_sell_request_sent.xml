@@ -27,7 +27,9 @@
             android:layout_marginStart="290dp"
             android:layout_marginTop="90dp"
             android:text="Accept Trade"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:backgroundTint="#3C8A0C"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/playerRejectTrade"
@@ -36,7 +38,9 @@
             android:layout_marginStart="290dp"
             android:layout_marginTop="190dp"
             android:text="Reject Trade"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:backgroundTint="#D62E2E"
+            android:textColor="#FFFFFF" />
     </RelativeLayout>
 
     <ScrollView
