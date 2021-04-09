@@ -195,7 +195,7 @@ public class TradeSellStartFragment extends Fragment implements  AdapterView.OnI
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(parent.getId() == R.id.playerNamesSpinner) {
             LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-
+            
             RecyclerView recyclerViewRHS = current.findViewById(R.id.takePropRecyclerView);
             otherPlayerProperties = playerOrder[position].getProperties();
             otherPlayerAdapter = new CellPropertyListAdapter(otherPlayerProperties, false, null);

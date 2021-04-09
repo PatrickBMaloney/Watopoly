@@ -37,9 +37,11 @@ public class CellPropertyListAdapter extends RecyclerView.Adapter<CellPropertyLi
         TextView unSelectTextView;
         TextView selectedTextView;
         TextView amountTextView;
+        View container;
 
         PropertyInfoHolder (final View itemView, final CellPropertyListAdapter.OnPropClickListener onPropClickListener) {
             super(itemView);
+            container = itemView;
             propertyImageView = itemView.findViewById(R.id.cellPropertyImageView);
             buildingNameTextView = itemView.findViewById(R.id.cellBuildNameTextView);
             propertyNameTextView = itemView.findViewById(R.id.cellPropertyNameTextView);
@@ -84,6 +86,11 @@ public class CellPropertyListAdapter extends RecyclerView.Adapter<CellPropertyLi
     @Override
     public void onBindViewHolder(@NonNull CellPropertyListAdapter.PropertyInfoHolder holder, int position) {
         Property property = properties.get(position);
+        if (property.getMortgaged()) {
+            holder.container.setBackgroundColor(Color.GRAY);
+        } else {
+            holder.container.setBackgroundColor(Color.WHITE);
+        }
 
         if (property instanceof Building) {
             Building building = (Building)property;
