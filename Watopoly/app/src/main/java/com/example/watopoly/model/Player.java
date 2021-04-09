@@ -24,7 +24,6 @@ public class Player implements Serializable {
     private Boolean isJailed = false;
     private int numRailways = 0;
     private int numUtilities = 0;
-    private List<String> fullsets = new ArrayList<>();
 
     public Player(String name, Double money, String colour, int icon, Bitmap bitmapIcon) {
         this.name = name;
@@ -114,11 +113,8 @@ public class Player implements Serializable {
     }
 
     public Boolean ownsFullSet(String hexcode){
-        return fullsets.contains(hexcode);
-    }
-
-    public void addFullSet(String hexcode){
-        fullsets.add(hexcode);
+        List<Building> colorSet = BoardTiles.getTilesByColor(hexcode);
+        return properties.containsAll(colorSet);
     }
 
     public void addProperty(Property property) {
@@ -127,13 +123,6 @@ public class Player implements Serializable {
             numRailways += 1;
         } else if (property instanceof Utility) {
             numUtilities += 1;
-        }
-        else if (property instanceof Building) {
-            // check if player owns full set
-            List<Building> colorSet = BoardTiles.getTilesByColor(((Building) property).getPropertyHex());
-            if (properties.containsAll(colorSet)){
-                fullsets.add(((Building) property).getPropertyHex());
-            }
         }
     }
 
