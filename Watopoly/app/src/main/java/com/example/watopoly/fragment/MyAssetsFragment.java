@@ -7,18 +7,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.watopoly.R;
 import com.example.watopoly.activity.BuyHouseHotelActivity;
+import com.example.watopoly.adapter.CellPropertyListAdapter;
 import com.example.watopoly.adapter.PropertyListAdapter;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Property;
 
-public class MyAssetsFragment extends Fragment implements PropertyListAdapter.onPropClickListener{
+public class MyAssetsFragment extends Fragment implements CellPropertyListAdapter.OnPropClickListener{
 
     private Game gameState = Game.getInstance();
     View largeProp;
@@ -38,11 +42,19 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
         buttons = (View) root.findViewById(R.id.actionsLinearLayoutAssets);
         largeProp.setVisibility(View.GONE);
         buttons.setVisibility(View.GONE);
+
         setButtons(root);
-        RecyclerView rv = (RecyclerView) root.findViewById(R.id.propRecycleView);
-        PropertyListAdapter adapter = new PropertyListAdapter(getContext(),gameState.getCurrentPlayer().getProperties(), this);
-        rv.setAdapter(adapter);
-        rv.setLayoutManager(new GridLayoutManager(getContext(), 6));
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.propRecycleView);
+        CellPropertyListAdapter adapter = new CellPropertyListAdapter(gameState.getCurrentPlayer().getProperties(), true, this);
+        adapter.setShowSelected(false);
+        recyclerView.setAdapter(adapter);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration2 = new DividerItemDecoration(recyclerView.getContext(),  layoutManager.getOrientation());
+        dividerItemDecoration2.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.empty_divider));
+        recyclerView.addItemDecoration(dividerItemDecoration2);
+
         return root;
     }
 
@@ -69,8 +81,7 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
     }
 
 
-    public void onPropClick(int propNum, int position) {
-        final Property property = gameState.getCurrentPlayer().getProperties().get(propNum);
+    public void onPropClick(final Property property) {
         if(prev == null) {
             prev = property; //set prev to current if null
         }

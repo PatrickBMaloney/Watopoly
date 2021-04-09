@@ -28,16 +28,16 @@ public class PropertyListAdapter extends RecyclerView.Adapter<PropertyListAdapte
 
     private ArrayList<Property> props;
     private Context context;
-    private onPropClickListener mOnPropClickListener;
+    private OnPropClickListener mOnPropClickListener;
     private int position = -1;
 
-    public PropertyListAdapter(Context c, ArrayList<Property> props, onPropClickListener onPropClickListener) {
+    public PropertyListAdapter(Context c, ArrayList<Property> props, OnPropClickListener onPropClickListener) {
         context = c;
         this.props = props;
         this.mOnPropClickListener = onPropClickListener;
     }
 
-    public PropertyListAdapter(Context c, ArrayList<Property> props, onPropClickListener onPropClickListener, int position) {
+    public PropertyListAdapter(Context c, ArrayList<Property> props, OnPropClickListener onPropClickListener, int position) {
         context = c;
         this.props = props;
         this.mOnPropClickListener = onPropClickListener;
@@ -126,8 +126,8 @@ public class PropertyListAdapter extends RecyclerView.Adapter<PropertyListAdapte
         TextView transportMortgageValueTestView;
         TextView utilityNameTextView;
         TextView utilityMortgageValueTestView;
-        onPropClickListener onPropClickListener;
-        public viewHolder(@NonNull View itemView, onPropClickListener onPropClickListener) {
+        OnPropClickListener onPropClickListener;
+        public viewHolder(@NonNull View itemView, OnPropClickListener onPropClickListener) {
             super(itemView);
             this.onPropClickListener = onPropClickListener;
             buildingCardGroup = itemView.findViewById(R.id.buildingCardGroup);
@@ -163,7 +163,7 @@ public class PropertyListAdapter extends RecyclerView.Adapter<PropertyListAdapte
             onPropClickListener.onPropClick(getAdapterPosition(), position);
         }
     }
-    public interface onPropClickListener{
+    public interface OnPropClickListener{
         void onPropClick(int propNum, int position);
     }
 }

@@ -27,6 +27,8 @@ public class CellPropertyListAdapter extends RecyclerView.Adapter<CellPropertyLi
     private ArrayList<Property> properties;
     private List<Boolean> selected;
     private Boolean singleSelect = false;
+    private Boolean showSelected = true;
+    private CellPropertyListAdapter.OnPropClickListener listener;
 
     public class PropertyInfoHolder extends RecyclerView.ViewHolder {
         ImageView propertyImageView;
@@ -35,7 +37,8 @@ public class CellPropertyListAdapter extends RecyclerView.Adapter<CellPropertyLi
         TextView unSelectTextView;
         TextView selectedTextView;
         TextView amountTextView;
-        PropertyInfoHolder (final View itemView) {
+
+        PropertyInfoHolder (final View itemView, final CellPropertyListAdapter.OnPropClickListener onPropClickListener) {
             super(itemView);
             propertyImageView = itemView.findViewById(R.id.cellPropertyImageView);
             buildingNameTextView = itemView.findViewById(R.id.cellBuildNameTextView);
@@ -47,25 +50,35 @@ public class CellPropertyListAdapter extends RecyclerView.Adapter<CellPropertyLi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO: single select
                     int pos = getAdapterPosition();
+                    if (singleSelect) {
+                        for (int x = 0; x < properties.size(); x++) {
+                            if (x != getAdapterPosition()) selected.set(x, false);
+                        }
+                    }
+
                     selected.set(pos, selected.get(pos) ? false : true);
                     notifyDataSetChanged();
+                    if (onPropClickListener != null) {
+                        onPropClickListener.onPropClick(properties.get(pos));
+                    }
                 }
             });
         }
     }
 
-    public CellPropertyListAdapter(ArrayList<Property> properties) {
+    public CellPropertyListAdapter(ArrayList<Property> properties, Boolean singleSelect, CellPropertyListAdapter.OnPropClickListener listener) {
         this.properties = properties;
         this.selected = new ArrayList<>(Collections.nCopies(properties.size(), false));
+        this.singleSelect = singleSelect;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public CellPropertyListAdapter.PropertyInfoHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return new CellPropertyListAdapter.PropertyInfoHolder(view);
+        return new CellPropertyListAdapter.PropertyInfoHolder(view, listener);
     }
 
     @Override
@@ -96,8 +109,18 @@ public class CellPropertyListAdapter extends RecyclerView.Adapter<CellPropertyLi
         }
 
         boolean isSelected = selected.get(position);
-        holder.selectedTextView.setVisibility(isSelected ? View.VISIBLE : View.GONE);
-        holder.unSelectTextView.setVisibility(isSelected ? View.GONE : View.VISIBLE);
+        if (showSelected) {
+            holder.selectedTextView.setVisibility(isSelected ? View.VISIBLE : View.GONE);
+            holder.unSelectTextView.setVisibility(isSelected ? View.GONE : View.VISIBLE);
+        } else {
+            holder.selectedTextView.setVisibility(View.GONE);
+            holder.unSelectTextView.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    public void setShowSelected(Boolean showSelected) {
+        this.showSelected = showSelected;
     }
 
     @Override
@@ -112,6 +135,10 @@ public class CellPropertyListAdapter extends RecyclerView.Adapter<CellPropertyLi
 
     public List<Boolean> getSelected() {
         return selected;
+    }
+
+    public interface OnPropClickListener{
+        void onPropClick(Property property);
     }
 }
 

@@ -110,7 +110,7 @@ public class ViewPropertyAdapter extends RecyclerView.Adapter<ViewPropertyAdapte
         TextView transportMortgageValueTestView;
         TextView utilityNameTextView;
         TextView utilityMortgageValueTestView;
-        PropertyListAdapter.onPropClickListener onPropClickListener;
+        PropertyListAdapter.OnPropClickListener onPropClickListener;
         public viewHolder(@NonNull View itemView) {
             super(itemView);
 

@@ -101,11 +101,11 @@ public class MortgageActivity extends AppCompatActivity {
             }
         }
 
-        mortgageAdapter = new CellPropertyListAdapter(mortProperties);
+        mortgageAdapter = new CellPropertyListAdapter(mortProperties, false, null);
         mortgageRecyclerView.setAdapter(mortgageAdapter);
         mortgageAdapter.notifyDataSetChanged();
 
-        unmortgageAdapter = new CellPropertyListAdapter(unmortProperties);
+        unmortgageAdapter = new CellPropertyListAdapter(unmortProperties, false, null);
         unmortgageRecyclerView.setAdapter(unmortgageAdapter);
         unmortgageAdapter.notifyDataSetChanged();
     }
