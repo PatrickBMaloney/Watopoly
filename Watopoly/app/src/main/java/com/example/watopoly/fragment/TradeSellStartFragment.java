@@ -21,14 +21,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.watopoly.R;
-import com.example.watopoly.activity.TradeSellPropertiesActivity;
-import com.example.watopoly.adapter.PropertyListTradeAdapter;
+import com.example.watopoly.adapter.CellPropertyListAdapter;
 import com.example.watopoly.fragment.Dialog.InsufficientFundsRHS;
 import com.example.watopoly.fragment.Dialog.InsufficientFundsYou;
 import com.example.watopoly.fragment.Dialog.NoResourcesSelected;
@@ -39,16 +40,13 @@ import com.example.watopoly.model.Property;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class TradeSellStartFragment extends Fragment implements PropertyListTradeAdapter.onChoosePropListener, AdapterView.OnItemSelectedListener {
+public class TradeSellStartFragment extends Fragment implements  AdapterView.OnItemSelectedListener {
+    CellPropertyListAdapter currentPlayerAdapter;
+    CellPropertyListAdapter otherPlayerAdapter;
 
-    //requester 0 = asking for request
-    //requester 1 = person whom we are requesting trade
-    ArrayList<Property> propGive = new ArrayList<>();
-    ArrayList<Property> propTake = new ArrayList<>();
-
-    String moneyGive = "0";
-    String moneyTake = "0";
+    ArrayList<Property> otherPlayerProperties = new ArrayList<>();
 
     Spinner spinnerNames;
 
@@ -117,54 +115,19 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
         spinnerNames.setAdapter(arrayAdapter);
         spinnerNames.setOnItemSelectedListener(this);
 
+        final EditText moneyOfferEditText = (EditText) root.findViewById(R.id.inputMoneyP0);
+        final EditText moneyWantEditText = (EditText) root.findViewById(R.id.inputMoneyP1);
 
-        final EditText moneyOffer = (EditText) root.findViewById(R.id.inputMoneyP0);
-        final EditText moneyWant = (EditText) root.findViewById(R.id.inputMoneyP1);
-        moneyOffer.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                moneyGive = s.toString();
-                if(moneyGive.isEmpty()) {
-                    moneyGive = "0";
-                }
-            }
-        });
-        moneyWant.addTextChangedListener((new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                moneyTake = s.toString();
-                if(moneyTake.isEmpty()) {
-                    moneyTake = "0";
-                }
-            }
-        }));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.offerPropRecyclerView);
-        PropertyListTradeAdapter adapter = new PropertyListTradeAdapter(getContext(), gameState.getCurrentPlayer().getProperties(), 0, this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        currentPlayerAdapter= new CellPropertyListAdapter(gameState.getCurrentPlayer().getProperties(), false, null);
+        recyclerView.setAdapter(currentPlayerAdapter);
+        recyclerView.setLayoutManager(layoutManager);
 
-        if(tradablePlayers >= 1) {
-            RecyclerView recyclerViewRHS = (RecyclerView) root.findViewById(R.id.takePropRecyclerView);
-            PropertyListTradeAdapter adapterRHS = new PropertyListTradeAdapter(getContext(), playerOrder[0].getProperties(), 1, this);
-            recyclerViewRHS.setAdapter(adapterRHS);
-            recyclerViewRHS.setLayoutManager(new GridLayoutManager(getContext(), 3));
-            TextView traderBalance = (TextView) root.findViewById(R.id.traderBalance);
-            traderBalance.setText("Balance: $" + playerOrder[0].getMoney().toString());
-        }
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),  layoutManager.getOrientation());
+        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.empty_divider));
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
         Button requestTrade = (Button) root.findViewById(R.id.playerRequestTrade);
         if(tradablePlayers == 0) {
@@ -173,14 +136,33 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
         requestTrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Integer.parseInt(moneyGive) > gameState.getCurrentPlayer().getMoney()) {
+                //TODO: try catch?
+                int moneyGive = 0;
+                int moneyTake = 0;
+
+                if (!moneyOfferEditText.getText().toString().equals("")) moneyGive = Integer.parseInt(moneyOfferEditText.getText().toString());
+                if (!moneyWantEditText.getText().toString().equals("")) moneyTake = Integer.parseInt(moneyWantEditText.getText().toString());
+
+                ArrayList<Property> propGive = new ArrayList<>();
+                ArrayList<Property> propTake = new ArrayList<>();
+
+                ArrayList<Property> currentPlayerProperties = Game.getInstance().getCurrentPlayer().getProperties();
+
+                for (int x = 0; x < currentPlayerProperties.size(); x++) {
+                    if (currentPlayerAdapter.getSelected().get(x)) propGive.add(currentPlayerProperties.get(x));
+                }
+                for (int x = 0; x < otherPlayerProperties.size(); x++) {
+                    if (otherPlayerAdapter.getSelected().get(x)) propTake.add(otherPlayerProperties.get(x));
+                }
+
+                if(moneyGive > gameState.getCurrentPlayer().getMoney()) {
                     InsufficientFundsYou Ify = new InsufficientFundsYou();
                     Ify.show(getChildFragmentManager(), "InsufficientFundsYou");
                 }
-                else if(Integer.parseInt(moneyTake) > playerOrder[playerPos].getMoney()) {
+                else if(moneyTake > playerOrder[playerPos].getMoney()) {
                     InsufficientFundsRHS Ifo = new InsufficientFundsRHS(playerNames[playerPos]);
                     Ifo.show(getChildFragmentManager(), "InsufficientFundsOther");
-                } else if (Integer.parseInt(moneyGive) == 0 && Integer.parseInt(moneyTake) == 0
+                } else if (moneyGive == 0 && moneyTake == 0
                         && propGive.size() == 0 && propTake.size() == 0) {
                     NoResourcesSelected noResource = new NoResourcesSelected();
                     noResource.show(getChildFragmentManager(), "no Resources");
@@ -210,37 +192,26 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
     }
 
     @Override
-    public void onChoosePropClick(int player, Property property, boolean addProp) {
-        //player giving their property
-        if(player == 0) {
-            if(addProp) {
-                propGive.add(property);
-            } else {
-                propGive.remove(property);
-            }
-        } else {
-            if(addProp) {
-                propTake.add(property);
-            } else {
-                propTake.remove(property);
-            }
-        }
-    }
-
-    @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(parent.getId() == R.id.playerNamesSpinner) {
-            RecyclerView recyclerViewRHS = (RecyclerView) current.findViewById(R.id.takePropRecyclerView);
-            PropertyListTradeAdapter adapterRHS = new PropertyListTradeAdapter(getContext(), playerOrder[position].getProperties(), 1, this);
-            recyclerViewRHS.setAdapter(adapterRHS);
-            recyclerViewRHS.setLayoutManager(new GridLayoutManager(getContext(), 3));
+            LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+
+            RecyclerView recyclerViewRHS = current.findViewById(R.id.takePropRecyclerView);
+            otherPlayerProperties = playerOrder[0].getProperties();
+            otherPlayerAdapter = new CellPropertyListAdapter(otherPlayerProperties, false, null);
+            recyclerViewRHS.setAdapter(otherPlayerAdapter);
+            recyclerViewRHS.setLayoutManager(layoutManager2);
+
+            DividerItemDecoration dividerItemDecoration2 = new DividerItemDecoration(recyclerViewRHS.getContext(),  layoutManager2.getOrientation());
+            dividerItemDecoration2.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.empty_divider));
+            recyclerViewRHS.addItemDecoration(dividerItemDecoration2);
+
+
             TextView traderBalance = (TextView) current.findViewById(R.id.traderBalance);
             traderBalance.setText("Balance: $" + playerOrder[position].getMoney().toString());
             EditText moneyWant = (EditText) current.findViewById(R.id.inputMoneyP1);
             moneyWant.setText("");
-            moneyTake = "0";
 
-            propTake.clear();
             playerPos = position;
         }
 

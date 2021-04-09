@@ -8,10 +8,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.watopoly.R;
@@ -19,13 +22,13 @@ import com.example.watopoly.activity.MainGameViewActivity;
 import com.example.watopoly.activity.TradeSellPropertiesActivity;
 import com.example.watopoly.activity.ViewAssetsActivity;
 import com.example.watopoly.activity.BuyHouseHotelActivity;
-import com.example.watopoly.adapter.PropertyListAdapter;
+import com.example.watopoly.adapter.CellPropertyListAdapter;
 import com.example.watopoly.model.Building;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Player;
 import com.example.watopoly.model.Property;
 
-public class MyAssetsFragment extends Fragment implements PropertyListAdapter.onPropClickListener{
+public class MyAssetsFragment extends Fragment implements CellPropertyListAdapter.OnPropClickListener{
 
     private Game gameState = Game.getInstance();
     View largeProp;
@@ -69,21 +72,29 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
 
         RecyclerView rv = (RecyclerView) current.findViewById(R.id.propRecycleView);
         rv.removeAllViews();
-        PropertyListAdapter adapter = new PropertyListAdapter(getContext(),player.getProperties(), this);
+        CellPropertyListAdapter adapter = new CellPropertyListAdapter(player.getProperties(), true, this);
         rv.setAdapter(adapter);
-        rv.setLayoutManager(new GridLayoutManager(getContext(), 6));
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rv.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration2 = new DividerItemDecoration(rv.getContext(),  layoutManager.getOrientation());
+        dividerItemDecoration2.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.empty_divider));
+        rv.addItemDecoration(dividerItemDecoration2);
     }
 
     private void setButtons(final View root) {
         Button return_to_board = (Button) root.findViewById(R.id.back_to_board);
         Button trade_sell = (Button) root.findViewById(R.id.tradeSellButton);
         Button mortgage = (Button) root.findViewById(R.id.mortgageButtonAssets);
+        Button buyHouseHotelBtn = (Button) root.findViewById(R.id.buyHouseButtonAssets);
         if(gameState.getCurrentPlayer().getJailed()) {
             trade_sell.setEnabled(false);
             mortgage.setEnabled(false);
+            buyHouseHotelBtn.setEnabled(false);
         } else {
             trade_sell.setEnabled(true);
             mortgage.setEnabled(true);
+            buyHouseHotelBtn.setEnabled(true);
         }
         return_to_board.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,8 +125,7 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
     }
 
 
-    public void onPropClick(int propNum, int position) {
-        final Property property = gameState.getCurrentPlayer().getProperties().get(propNum);
+    public void onPropClick(final Property property) {
         final Player player = gameState.getCurrentPlayer();
         if(prev == null) {
             prev = property; //set prev to current if null
@@ -138,11 +148,6 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
         }
 
         Button buyHouseHotelBtn = buttons.findViewById(R.id.buyHouseButtonAssets);
-        if(gameState.getCurrentPlayer().getJailed()) {
-            buyHouseHotelBtn.setEnabled(false);
-        } else {
-            buyHouseHotelBtn.setEnabled(true);
-        }
         buyHouseHotelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -108,7 +108,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
     private void mortgage(int requestCode){
         Intent mortgageIntent = new Intent(getApplicationContext(), MortgageActivity.class);
-        startActivityForResult(mortgageIntent,requestCode);
+        startActivityForResult(mortgageIntent, requestCode);
     }
 
     private void bankrupt(){

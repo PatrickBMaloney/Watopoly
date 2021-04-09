@@ -19,14 +19,17 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.watopoly.R;
-import com.example.watopoly.adapter.PropertyListTradeAdapter;
+import com.example.watopoly.adapter.CellPropertyListAdapter;
 import com.example.watopoly.fragment.Dialog.InsufficientFundsRHS;
 import com.example.watopoly.fragment.Dialog.InsufficientFundsYou;
 import com.example.watopoly.fragment.Dialog.NoResourcesSelected;
@@ -40,15 +43,16 @@ import java.util.ArrayList;
 
 public class TradeSellRequestSentFragment extends Fragment {
     private Game gameState = Game.getInstance();
-    private Player selected;
-    private String moneyGive;
-    private String moneyTake;
+    private Player otherPlayer;
+    private double moneyGive;
+    private double moneyTake;
+
     private ArrayList<Property> propGive;
     private ArrayList<Property> propTake;
 
-    public TradeSellRequestSentFragment(Player selected, String moneyGive, String moneyTake,
+    public TradeSellRequestSentFragment(Player otherPlayer, double moneyGive, double moneyTake,
                                         ArrayList<Property> propGive, ArrayList<Property> propTake) {
-        this.selected = selected;
+        this.otherPlayer = otherPlayer;
         this.moneyGive = moneyGive;
         this.moneyTake = moneyTake;
         this.propGive = propGive;
@@ -96,32 +100,27 @@ public class TradeSellRequestSentFragment extends Fragment {
                 continuePlayerButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //remove properties from requester first
-                        for(int i = 0; i < propGive.size(); i++) {
-                            gameState.getCurrentPlayer().removeProperty(propGive.get(i));
-                        }
-                        //remove properties from selected
-                        for(int j = 0; j < propTake.size(); j++) {
-                            selected.removeProperty(propTake.get(j));
-                        }
-
-                        for(int k = 0; k < propTake.size(); k++) {
-                            gameState.getCurrentPlayer().addProperty(propTake.get(k));
-                            propTake.get(k).setOwner(gameState.getCurrentPlayer());
+                        //handle prop
+                        for (int x = 0; x < propGive.size(); x++) {
+                            Property property = propGive.get(x);
+                            gameState.getCurrentPlayer().removeProperty(property);
+                            otherPlayer.addProperty(property);
+                            property.setOwner(otherPlayer);
                         }
 
-                        for(int l = 0; l < propGive.size(); l++) {
-                            selected.addProperty(propGive.get(l));
-                            propGive.get(l).setOwner(selected);
+                        for (int x = 0; x < propTake.size(); x++) {
+                            Property property = propTake.get(x);
+                            gameState.getCurrentPlayer().addProperty(property);
+                            otherPlayer.removeProperty(property);
+                            property.setOwner(gameState.getCurrentPlayer());
                         }
 
-                        //remove money  from requester
-                        gameState.getCurrentPlayer().payAmount(Double.parseDouble(moneyGive));
-                        selected.receiveAmount(Double.parseDouble(moneyGive));
+                        //Handle money
+                        gameState.getCurrentPlayer().payAmount(moneyGive);
+                        otherPlayer.receiveAmount(moneyGive);
 
-                        //remove money from selected
-                        selected.payAmount(Double.parseDouble(moneyTake));
-                        gameState.getCurrentPlayer().receiveAmount(Double.parseDouble(moneyTake));
+                        otherPlayer.payAmount(moneyTake);
+                        gameState.getCurrentPlayer().receiveAmount(moneyTake);
 
                         dialog.dismiss();
                         getActivity().finish();
@@ -146,15 +145,15 @@ public class TradeSellRequestSentFragment extends Fragment {
 
 
         ImageView traderImage = (ImageView) root.findViewById(R.id.playerIconImageViewTrader);
-        traderImage.setImageResource(selected.getIcon());
+        traderImage.setImageResource(otherPlayer.getIcon());
         ImageViewCompat.setImageTintMode(traderImage, PorterDuff.Mode.SRC_ATOP);
-        ImageViewCompat.setImageTintList(traderImage, ColorStateList.valueOf(Color.parseColor(selected.getColour())));
+        ImageViewCompat.setImageTintList(traderImage, ColorStateList.valueOf(Color.parseColor(otherPlayer.getColour())));
 
         TextView traderName = (TextView) root.findViewById(R.id.traderName);
-        traderName.setText(selected.getName());
+        traderName.setText(otherPlayer.getName());
 
         TextView traderBalance = (TextView) root.findViewById(R.id.traderBalance);
-        traderBalance.setText("Balance: $" + selected.getMoney().toString());
+        traderBalance.setText("Balance: $" + otherPlayer.getMoney().toString());
 
         final TextView moneyOffer = (TextView) root.findViewById(R.id.dollarSign0);
         final TextView moneyWant = (TextView) root.findViewById(R.id.dollarSign1);
@@ -162,15 +161,29 @@ public class TradeSellRequestSentFragment extends Fragment {
         moneyOffer.setText("$" + moneyGive);
         moneyWant.setText("$" + moneyTake);
 
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.offerPropRecyclerView);
-        PropertyListTradeAdapter adapter = new PropertyListTradeAdapter(getContext(), gameState.getCurrentPlayer().getProperties(), propGive);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
-        RecyclerView recyclerViewRHS = (RecyclerView) root.findViewById(R.id.takePropRecyclerView);
-        PropertyListTradeAdapter adapterRHS = new PropertyListTradeAdapter(getContext(), selected.getProperties(), propTake);
+        RecyclerView recyclerView = root.findViewById(R.id.offerPropRecyclerView);
+        CellPropertyListAdapter adapter = new CellPropertyListAdapter(propGive, false, null);
+        adapter.setShowSelected(false);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
+
+        RecyclerView recyclerViewRHS = root.findViewById(R.id.takePropRecyclerView);
+        CellPropertyListAdapter adapterRHS = new CellPropertyListAdapter(propTake, false, null);
+        adapterRHS.setShowSelected(false);
         recyclerViewRHS.setAdapter(adapterRHS);
-        recyclerViewRHS.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        recyclerViewRHS.setLayoutManager(layoutManager2);
+
+        //Divider
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),  layoutManager.getOrientation());
+        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.empty_divider));
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
+        DividerItemDecoration dividerItemDecoration2 = new DividerItemDecoration(recyclerViewRHS.getContext(),  layoutManager2.getOrientation());
+        dividerItemDecoration2.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.empty_divider));
+        recyclerView.addItemDecoration(dividerItemDecoration2);
 
         return root;
     }

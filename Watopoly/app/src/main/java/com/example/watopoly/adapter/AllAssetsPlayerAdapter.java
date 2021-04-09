@@ -13,9 +13,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.watopoly.R;
@@ -28,11 +31,10 @@ import com.example.watopoly.model.Property;
 
 import java.util.ArrayList;
 
-public class AllAssetsPlayerAdapter extends RecyclerView.Adapter<AllAssetsPlayerAdapter.viewHolder> implements PropertyListAdapter.onPropClickListener {
+public class AllAssetsPlayerAdapter extends RecyclerView.Adapter<AllAssetsPlayerAdapter.viewHolder> implements CellPropertyListAdapter.OnPropClickListener {
 
     private Context context;
     private ArrayList<Player> players;
-    private Game gameState = Game.getInstance();
 
     public AllAssetsPlayerAdapter(Context c, ArrayList<Player> players) {
         context = c;
@@ -56,9 +58,14 @@ public class AllAssetsPlayerAdapter extends RecyclerView.Adapter<AllAssetsPlayer
         //set up money
         holder.player_money.setText("$"+players.get(position).getMoney().toString());
 
-        PropertyListAdapter adapter = new PropertyListAdapter(context,players.get(position).getProperties(), this, position);
+        CellPropertyListAdapter adapter = new CellPropertyListAdapter(players.get(position).getProperties(), false, this);
+        adapter.setShowSelected(false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        holder.propsRecyclerView.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration2 = new DividerItemDecoration(holder.propsRecyclerView.getContext(),  layoutManager.getOrientation());
+        dividerItemDecoration2.setDrawable(ContextCompat.getDrawable(context, R.drawable.empty_divider));
+        holder.propsRecyclerView.addItemDecoration(dividerItemDecoration2);
         holder.propsRecyclerView.setAdapter(adapter);
-        holder.propsRecyclerView.setLayoutManager(new GridLayoutManager(context, 13));
     }
 
     @Override
@@ -67,8 +74,8 @@ public class AllAssetsPlayerAdapter extends RecyclerView.Adapter<AllAssetsPlayer
     }
 
     @Override
-    public void onPropClick(int propNum, int position) {
-        DialogViewProperty dialog = new DialogViewProperty(players.get(position).getProperties().get(propNum));
+    public void onPropClick(Property property) {
+        DialogViewProperty dialog = new DialogViewProperty(property);
         dialog.show(((AppCompatActivity)context).getSupportFragmentManager(),"tag" );
     }
 

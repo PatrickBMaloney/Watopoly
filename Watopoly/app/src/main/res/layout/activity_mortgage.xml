@@ -47,7 +47,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mortgageRecyclerView"
             android:layout_width="296dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.346"
@@ -98,7 +98,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/unmortgageRecyclerView"
             android:layout_width="296dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.346"
