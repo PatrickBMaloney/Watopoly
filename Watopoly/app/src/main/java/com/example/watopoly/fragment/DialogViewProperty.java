@@ -4,8 +4,11 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -23,6 +26,8 @@ import java.util.ArrayList;
 public class DialogViewProperty extends DialogFragment {
 
     private Property property;
+    private int width;
+    private int height;
     public DialogViewProperty(Property property) {
         this.property = property;
     }
@@ -37,8 +42,20 @@ public class DialogViewProperty extends DialogFragment {
         PropertyFragment fragment = (PropertyFragment) fm.findFragmentById(R.id.previewPropertyFragment); //get large prop
         fragment.setProperty(property);
 
+        View view = root.findViewById(R.id.previewPropertyFragment);
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        width = layoutParams.width;
+        height = layoutParams.height;
         builder.setView(root);
         return builder.create();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Window window = getDialog().getWindow();
+        window.setLayout(width, height);
+        window.setGravity(Gravity.CENTER);
     }
 
     @Override

@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/previewPropertyFragment"
         android:name="com.example.watopoly.fragment.PropertyFragment"
-        android:layout_width="230dp"
-        android:layout_height="280dp"
+        android:layout_width="280dp"
+        android:layout_height="340dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
