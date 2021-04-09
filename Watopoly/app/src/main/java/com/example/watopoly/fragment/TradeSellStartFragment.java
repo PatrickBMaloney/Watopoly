@@ -135,10 +135,6 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
                 if(moneyGive.isEmpty()) {
                     moneyGive = "0";
                 }
-                if(Integer.parseInt(moneyGive) > gameState.getCurrentPlayer().getMoney()) {
-                    InsufficientFundsYou Ify = new InsufficientFundsYou();
-                    Ify.show(getChildFragmentManager(), "InsufficientFundsYou");
-                }
             }
         });
         moneyWant.addTextChangedListener((new TextWatcher() {
@@ -152,10 +148,6 @@ public class TradeSellStartFragment extends Fragment implements PropertyListTrad
                 moneyTake = s.toString();
                 if(moneyTake.isEmpty()) {
                     moneyTake = "0";
-                }
-                if(Integer.parseInt(moneyTake) > playerOrder[playerPos].getMoney()) {
-                    InsufficientFundsRHS Ifo = new InsufficientFundsRHS(playerNames[playerPos]);
-                    Ifo.show(getChildFragmentManager(), "InsufficientFundsOther");
                 }
             }
         }));
