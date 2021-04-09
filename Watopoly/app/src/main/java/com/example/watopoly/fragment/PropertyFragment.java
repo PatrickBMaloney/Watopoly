@@ -54,6 +54,7 @@ public class PropertyFragment extends Fragment {
             TextView oneHotelTextView = current.findViewById(R.id.oneHotelTextView);
             TextView houseCostTextView = current.findViewById(R.id.houseCostTextView);
             TextView hotelCostTextView = current.findViewById(R.id.houseCostTextView2);
+            TextView mortgageValueTextView = current.findViewById(R.id.mortgageValueTextView);
 
             buildingCardGroup.setVisibility(View.VISIBLE);
             transportationCardGroup.setVisibility(View.GONE);
@@ -70,6 +71,7 @@ public class PropertyFragment extends Fragment {
             oneHotelTextView.setText(String.format("$%.0f", building.getRentPriceWithHotel()));
             houseCostTextView.setText(String.format("Houses cost $%.0f each", building.getHousePrice()));
             hotelCostTextView.setText(String.format("Hotels, $%.0f plus 4 houses", building.getHousePrice()));
+            mortgageValueTextView.setText(String.format("Mortgage Value $%.0f", building.getPurchasePrice()/2));
         } else if (property instanceof Railway) {
             Railway railway = (Railway) property;
             TextView transportNameTextView = current.findViewById(R.id.transportNameTextView);

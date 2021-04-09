@@ -31,6 +31,9 @@
         android:text="Roll Dice"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dice1ImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/dice1ImageView"
+        android:padding="16dp"
+        android:backgroundTint="#3C8A0C"
+        android:textColor="#FFFFFF"  />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

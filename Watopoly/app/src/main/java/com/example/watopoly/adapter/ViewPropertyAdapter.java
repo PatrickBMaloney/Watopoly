@@ -2,7 +2,6 @@ package com.example.watopoly.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,45 +9,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.watopoly.R;
-import com.example.watopoly.fragment.PropertyFragment;
 import com.example.watopoly.model.Building;
-import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Property;
 import com.example.watopoly.model.Railway;
 import com.example.watopoly.model.Utility;
 
 import java.util.ArrayList;
 
-public class PropertyListAdapter extends RecyclerView.Adapter<PropertyListAdapter.viewHolder> {
+public class ViewPropertyAdapter extends RecyclerView.Adapter<ViewPropertyAdapter.viewHolder> {
 
     private ArrayList<Property> props;
     private Context context;
-    private onPropClickListener mOnPropClickListener;
-    private int position = -1;
-
-    public PropertyListAdapter(Context c, ArrayList<Property> props, onPropClickListener onPropClickListener) {
+    public ViewPropertyAdapter(Context c, ArrayList<Property> props) {
         context = c;
         this.props = props;
-        this.mOnPropClickListener = onPropClickListener;
     }
 
-    public PropertyListAdapter(Context c, ArrayList<Property> props, onPropClickListener onPropClickListener, int position) {
-        context = c;
-        this.props = props;
-        this.mOnPropClickListener = onPropClickListener;
-        this.position = position;
-    }
     @NonNull
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.recyclerview_small_property, parent, false);
-        return new viewHolder(view, mOnPropClickListener);
+        View view = inflater.inflate(R.layout.fragment_property, parent, false);
+        return new viewHolder(view);
     }
 
     @Override
@@ -103,8 +88,7 @@ public class PropertyListAdapter extends RecyclerView.Adapter<PropertyListAdapte
         return props.size();
     }
 
-    public class viewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
+    public class viewHolder extends RecyclerView.ViewHolder {
         View buildingCardGroup;
         View transportationCardGroup;
         View utilityCardGroup;
@@ -126,10 +110,10 @@ public class PropertyListAdapter extends RecyclerView.Adapter<PropertyListAdapte
         TextView transportMortgageValueTestView;
         TextView utilityNameTextView;
         TextView utilityMortgageValueTestView;
-        onPropClickListener onPropClickListener;
-        public viewHolder(@NonNull View itemView, onPropClickListener onPropClickListener) {
+        PropertyListAdapter.onPropClickListener onPropClickListener;
+        public viewHolder(@NonNull View itemView) {
             super(itemView);
-            this.onPropClickListener = onPropClickListener;
+
             buildingCardGroup = itemView.findViewById(R.id.buildingCardGroup);
             transportationCardGroup = itemView.findViewById(R.id.transportCardGroup);
             utilityCardGroup = itemView.findViewById(R.id.utilityCardGroup);
@@ -146,24 +130,14 @@ public class PropertyListAdapter extends RecyclerView.Adapter<PropertyListAdapte
 
             transportNameTextView = itemView.findViewById(R.id.transportNameTextView);
             transportImageView = itemView.findViewById(R.id.transportImageView);
-             transportRentValueTextView = itemView.findViewById(R.id.transportRentValueTextView);
-             twoTransportRentValueTextView = itemView.findViewById(R.id.twoTransportRentValueTextView);
-             threeTransportRentValueTextView = itemView.findViewById(R.id.threeTransportRentValueTextView);
-             fourTransportRentValueTextView = itemView.findViewById(R.id.fourTransportRentValueTextView);
-             transportMortgageValueTestView = itemView.findViewById(R.id.transportMortgageValueTestView);
+            transportRentValueTextView = itemView.findViewById(R.id.transportRentValueTextView);
+            twoTransportRentValueTextView = itemView.findViewById(R.id.twoTransportRentValueTextView);
+            threeTransportRentValueTextView = itemView.findViewById(R.id.threeTransportRentValueTextView);
+            fourTransportRentValueTextView = itemView.findViewById(R.id.fourTransportRentValueTextView);
+            transportMortgageValueTestView = itemView.findViewById(R.id.transportMortgageValueTestView);
 
-             utilityNameTextView = itemView.findViewById(R.id.utilityNameTextView);
-             utilityMortgageValueTestView = itemView.findViewById(R.id.utilityMortgageValueTestView);
-
-            itemView.setOnClickListener(this);
+            utilityNameTextView = itemView.findViewById(R.id.utilityNameTextView);
+            utilityMortgageValueTestView = itemView.findViewById(R.id.utilityMortgageValueTestView);
         }
-
-        @Override
-        public void onClick(View v) {
-            onPropClickListener.onPropClick(getAdapterPosition(), position);
-        }
-    }
-    public interface onPropClickListener{
-        void onPropClick(int propNum, int position);
     }
 }

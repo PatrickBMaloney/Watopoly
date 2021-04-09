@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent">
+
+    <fragment
+        android:id="@+id/playerInfoHeaderFragmentAssets"
+        android:name="com.example.watopoly.fragment.PlayerInfoHeaderFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/buyPropertyDescriptionTextView"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:lines="2"
+        android:text="How many houses/hotels would you like to purchase?"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.899"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/currrentHousesAndHotels"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:lines="1"
+        android:text="You currently have: 2 houses"
+        android:textAlignment="center"
+        android:textSize="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.894"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buyPropertyDescriptionTextView" />
+
+    <LinearLayout
+        android:id="@+id/buyHouseIncrementer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.894"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currrentHousesAndHotels">
+
+        <TextView
+            android:id="@+id/housesLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="40dp"
+            android:text="Houses:" />
+
+        <Button
+            android:id="@+id/minusBuyHouseButton"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:enabled="false"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/numHouseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:text="0" />
+
+        <Button
+            android:id="@+id/plusBuyHouseButton"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:textAlignment="center"
+            android:background="#4ac1f0"
+            android:textColor='#ffffff'
+            android:text="+" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buyHotelIncrementer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.894"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buyHouseIncrementer">
+
+        <TextView
+            android:id="@+id/hotelLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="40dp"
+            android:text="Hotels:" />
+
+        <Button
+            android:id="@+id/minusBuyHotelButton"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="-"
+            android:enabled="false"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/numHotelsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:text="0" />
+
+        <Button
+            android:id="@+id/plusBuyHotelButton"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:textAlignment="center"
+            android:enabled="false"
+            android:text="+" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/confirmNumHouses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Confirm"
+        app:layout_constraintEnd_toEndOf="@+id/buyHotelIncrementer"
+        app:layout_constraintStart_toStartOf="@+id/buyHotelIncrementer"
+        app:layout_constraintTop_toBottomOf="@+id/buyHotelIncrementer"
+        android:backgroundTint="#3C8A0C"
+        android:textColor="#FFFFFF" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHouseHotel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <fragment
+        android:id="@+id/propertyCardBuyHouseHotels"
+        class="com.example.watopoly.fragment.PropertyFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineHouseHotel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_property" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

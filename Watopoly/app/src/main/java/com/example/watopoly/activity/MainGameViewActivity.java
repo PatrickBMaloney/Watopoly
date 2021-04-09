@@ -46,7 +46,7 @@ import java.util.Map;
 
 public class MainGameViewActivity extends AppCompatActivity implements FragmentCallbackListener {
     //TODO: move this somewhere else?
-    private static final double startingMoney = 500;
+    private static final double startingMoney = 1500;
 
     private PlayerInfoHeaderFragment playerInfoHeaderFragment;
     private DiceRollFragment diceRollFragment;
@@ -64,6 +64,8 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
     private static int JAIL_OPTION_REQUEST_CODE = 2;
     private static int MORTGAGE_REQUEST_CODE = 3;
     private static int MORTGAGE_TILE_REQUEST_CODE = 4;
+    private static int TRADE_REQUEST_CODE = 5;
+    private static int VIEW_ASSETS_REQUEST_CODE = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,10 +182,17 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainGameViewActivity.this, ViewAssetsActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, VIEW_ASSETS_REQUEST_CODE);
             }
         });
         tradeButton = findViewById(R.id.tradeButton);
+        tradeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainGameViewActivity.this, TradeSellPropertiesActivity.class);
+                startActivityForResult(intent, TRADE_REQUEST_CODE);
+            }
+        });
         mortgageButton = findViewById(R.id.mortgageButton);
         endTurnButton = findViewById(R.id.endTurnButton);
         forfeitButton = findViewById(R.id.forfeitButton);
@@ -326,8 +335,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             Boolean isJailed = game.getCurrentPlayer().getJailed();
             mortgageButton.setVisibility(isJailed ? View.GONE : View.VISIBLE);
             tradeButton.setVisibility(isJailed ? View.GONE : View.VISIBLE);
-        }
-        else if (requestCode == JAIL_OPTION_REQUEST_CODE) {
+        } else if (requestCode == JAIL_OPTION_REQUEST_CODE) {
             Boolean isJailed = game.getCurrentPlayer().getJailed();
             if (isJailed) {
                 diceRollFragment.getView().setVisibility(View.GONE);
@@ -335,6 +343,14 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                 tradeButton.setVisibility(View.GONE);
                 actionLinearLayout.setVisibility(View.VISIBLE);
             }
+        } else if(requestCode == VIEW_ASSETS_REQUEST_CODE) {
+            FragmentManager fm = getSupportFragmentManager();
+            playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
+            playerInfoHeaderFragment.refresh();
+        }  else if(requestCode == TRADE_REQUEST_CODE) {
+            FragmentManager fm = getSupportFragmentManager();
+            playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
+            playerInfoHeaderFragment.refresh();
         }
         else if (requestCode == MORTGAGE_REQUEST_CODE) {
             FragmentManager fm = getSupportFragmentManager();
@@ -345,6 +361,11 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             Tile tile = game.moveCurrentPlayer(0);
             showDialogByLandingTile(tile);
             }
+        else if (requestCode == VIEW_ASSETS_REQUEST_CODE) {
+            FragmentManager fm = getSupportFragmentManager();
+            playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
+            playerInfoHeaderFragment.refresh();
+        }
     }
 
     //FragmentCallbackListener diceRolled
@@ -357,7 +378,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         animateMove(diceRollResult);
     }
 
-    public void destroyPropertyFragment(int id) {
+    public void destroyFragment(int id) {
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(id);
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
@@ -365,7 +386,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         fragmentTransaction.commit();
     }
 
-    public void showDialogByLandingTile(Tile tile){
+    public void showDialogByLandingTile(final Tile tile){
         final Dialog dialog = new Dialog(MainGameViewActivity.this, R.style.Theme_Dialog);
         final Game game = Game.getInstance();
         if (tile instanceof Property) {
@@ -393,6 +414,8 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
                 final FragmentManager fm = getSupportFragmentManager();
                 PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardBuyFragment);
+                PlayerInfoHeaderFragment playerInfoHeaderFragmentBuy = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragmentBuyPropertyDialogue);
+                playerInfoHeaderFragmentBuy.setPlayer(game.getCurrentPlayer());
                 propertyFragment.setProperty(property);
 
                 buyButton.setOnClickListener(new View.OnClickListener() {
@@ -400,7 +423,8 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                     public void onClick(View v) {
                         property.purchase(game.getCurrentPlayer());
                         dialog.dismiss();
-                        destroyPropertyFragment(R.id.propertyCardBuyFragment);
+                        destroyFragment(R.id.propertyCardBuyFragment);
+                        destroyFragment(R.id.playerInfoHeaderFragmentBuyPropertyDialogue);
                         playerInfoHeaderFragment.refresh();
                     }
                 });
@@ -408,14 +432,16 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        destroyPropertyFragment(R.id.propertyCardBuyFragment);
+                        destroyFragment(R.id.propertyCardBuyFragment);
+                        destroyFragment(R.id.playerInfoHeaderFragmentBuyPropertyDialogue);
                     }
                 });
                 mortgageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        destroyPropertyFragment(R.id.propertyCardBuyFragment);
+                        destroyFragment(R.id.propertyCardBuyFragment);
+                        destroyFragment(R.id.playerInfoHeaderFragmentBuyPropertyDialogue);
                         mortgage(MORTGAGE_TILE_REQUEST_CODE);
                     }
                 });
@@ -452,7 +478,8 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        destroyPropertyFragment(R.id.propertyCardFragment);
+                        destroyFragment(R.id.propertyCardFragment);
+                        destroyFragment(R.id.playerInfoHeaderFragmentRentDialogue);
                         playerInfoHeaderFragment.refresh();
                     }
                 });

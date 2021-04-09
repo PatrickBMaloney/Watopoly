@@ -7,27 +7,39 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tradeAcceptedText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="136dp"
-        android:text="Pass phone to the next player"
+        android:layout_marginTop="90dp"
         android:textSize="35dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/nextPlayerButton"
+    <TextView
+        android:id="@+id/returnToPlayerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:backgroundTint="#308AEA"
-        android:text="Next"
-        android:textColor="#FFFFFF"
+        android:layout_marginTop="80dp"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tradeAcceptedText" />
+
+
+    <Button
+        android:id="@+id/continuePlayerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="89dp"
+        android:text="Continue"
         android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@id/returnToPlayerText"
+        app:layout_constraintVertical_bias="0.979"
+        android:backgroundTint="#308AEA"
+        android:textColor="#FFFFFF" />
 </androidx.constraintlayout.widget.ConstraintLayout>
