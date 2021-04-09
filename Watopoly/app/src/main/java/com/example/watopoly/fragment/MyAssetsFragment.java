@@ -57,16 +57,7 @@ public class MyAssetsFragment extends Fragment implements CellPropertyListAdapte
         View root = inflater.inflate(R.layout.fragment_my_assets, container, false);
         current = root;
         setButtons(root);
-        setView(gameState.getCurrentPlayer());
-        return root;
-    }
-    private void setView(Player player) {
-        largeProp = (View) current.findViewById(R.id.propertyCardBuyFragmentAssets);
-        buttons = (View) current.findViewById(R.id.actionsLinearLayoutAssets);
-        largeProp.setVisibility(View.GONE);
-        buttons.setVisibility(View.GONE);
 
-        setButtons(root);
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.propRecycleView);
         CellPropertyListAdapter adapter = new CellPropertyListAdapter(gameState.getCurrentPlayer().getProperties(), true, this);
         adapter.setShowSelected(false);
@@ -77,8 +68,15 @@ public class MyAssetsFragment extends Fragment implements CellPropertyListAdapte
         DividerItemDecoration dividerItemDecoration2 = new DividerItemDecoration(recyclerView.getContext(),  layoutManager.getOrientation());
         dividerItemDecoration2.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.empty_divider));
         recyclerView.addItemDecoration(dividerItemDecoration2);
-
+        setView(gameState.getCurrentPlayer());
         return root;
+    }
+
+    private void setView(Player player) {
+        largeProp = (View) current.findViewById(R.id.propertyCardBuyFragmentAssets);
+        buttons = (View) current.findViewById(R.id.actionsLinearLayoutAssets);
+        largeProp.setVisibility(View.GONE);
+        buttons.setVisibility(View.GONE);
     }
 
     private void setButtons(final View root) {
