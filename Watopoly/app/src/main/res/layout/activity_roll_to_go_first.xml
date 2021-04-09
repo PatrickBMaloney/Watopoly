@@ -38,7 +38,7 @@
         android:padding="16dp"
         android:text="Next Player"
         android:textColor="#FFFFFF"
-        android:textSize="10sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.619"

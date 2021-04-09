@@ -13,7 +13,7 @@
         android:visibility="visible"
         app:constraint_referenced_ids="utilityMortgageTestView,utilityImageView,utilityNameTextView,utilityOneOwnedTextView,
                                        utilityTwoOwnedTextView,utilityMortgageValueTestView"
-        tools:visibility="gone" />
+        tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/transportCardGroup"
@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text='If 3         "           "        "'
+        android:text='If 3   "        " '
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/twoTransportRentTextView"
@@ -63,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="If 2 transports are owned"
+        android:text="If 2 are owned"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/transportRentTextView"
@@ -84,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text='If 4         "           "        "'
+        android:text='If 4   "        " '
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/threeTransportRentTextView"
@@ -110,7 +110,7 @@
                                        oneHouseValueTextView,propertyNameTextView,propertyNameBorderTextView,
                                        baseRentTextView,oneHouseTextView,twoHouseTextView,threeHouseTextView,
                                        fourHouseTextView,oneHotelTextView,textView16"
-        tools:visibility="visible" />
+        tools:visibility="gone" />
 
     <TextView
         android:id="@+id/cardBorderTextView"
@@ -130,7 +130,7 @@
         android:layout_height="wrap_content"
         android:text="Mortgage Value"
         android:textColor="#000000"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/utilityTwoOwnedTextView"
         app:layout_constraintTop_toBottomOf="@+id/utilityTwoOwnedTextView"
@@ -345,13 +345,10 @@
         android:id="@+id/transportImageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="110dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="110dp"
         android:src="@drawable/ion"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -359,9 +356,7 @@
         android:id="@+id/utilityImageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="110dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="110dp"
         android:src="@drawable/coffee_and_donut"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -410,11 +405,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:text='If one "C&amp;D" is owned rent is 4 times amount shown on dice.'
         android:textColor="#000000"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/utilityNameTextView" />
@@ -428,7 +423,7 @@
         android:layout_marginEnd="32dp"
         android:text='If both "C&amp;Ds" are owned rent is 10 times amount shown on dice.'
         android:textColor="#000000"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/utilityOneOwnedTextView" />
@@ -461,7 +456,7 @@
         android:layout_height="wrap_content"
         android:text="$100"
         android:textColor="#000000"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/utilityMortgageTestView"
         app:layout_constraintEnd_toEndOf="@+id/utilityTwoOwnedTextView" />
 
