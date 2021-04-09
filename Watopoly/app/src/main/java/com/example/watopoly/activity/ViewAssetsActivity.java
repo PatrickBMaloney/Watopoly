@@ -8,27 +8,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.CompoundButton;
-import android.widget.ToggleButton;
+ import android.view.View;
+ import android.view.WindowManager;
+ import android.widget.ToggleButton;
 
-import com.example.watopoly.R;
-import com.example.watopoly.fragment.AllAssetsFragment;
-import com.example.watopoly.fragment.PlayerInfoHeaderFragment;
-import com.example.watopoly.fragment.MyAssetsFragment;
-import com.example.watopoly.fragment.PropertyFragment;
-import com.example.watopoly.model.Game;
-import com.example.watopoly.model.Player;
-import com.example.watopoly.model.Property;
+ import com.example.watopoly.R;
+ import com.example.watopoly.fragment.FragmentCallbackListener;
+ import com.example.watopoly.fragment.MyAssetsFragment;
+ import com.example.watopoly.fragment.PlayerInfoHeaderFragment;
+ import com.example.watopoly.model.Game;
+ import com.example.watopoly.model.Player;
 
-public class ViewAssetsActivity extends AppCompatActivity {
+public class ViewAssetsActivity extends AppCompatActivity implements FragmentCallbackListener {
 
     private Game gameState = Game.getInstance();
     private PlayerInfoHeaderFragment playerInfoHeaderFragment;
+    private MyAssetsFragment myAssetsFragment;
     View myAssets;
     View allAssets;
     @Override
@@ -43,6 +39,17 @@ public class ViewAssetsActivity extends AppCompatActivity {
         myAssets.setVisibility(View.VISIBLE);
         allAssets.setVisibility(View.GONE);
         setButtons();
+        final FragmentManager fm = getSupportFragmentManager();
+        playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragmentAssets);
+        Player myPlayer = gameState.getCurrentPlayer();
+        playerInfoHeaderFragment.setPlayer(myPlayer);
+        myAssetsFragment = (MyAssetsFragment) fm.findFragmentById(R.id.myAssetsFragment);
+        myAssetsFragment.setCallbackListener(this);
+    }
+
+    //Refresh header
+    @Override
+    public void onCallback() {
         final FragmentManager fm = getSupportFragmentManager();
         playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragmentAssets);
         Player myPlayer = gameState.getCurrentPlayer();
