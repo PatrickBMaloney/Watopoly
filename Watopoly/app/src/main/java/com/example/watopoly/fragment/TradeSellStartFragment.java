@@ -197,7 +197,7 @@ public class TradeSellStartFragment extends Fragment implements  AdapterView.OnI
             LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
             RecyclerView recyclerViewRHS = current.findViewById(R.id.takePropRecyclerView);
-            otherPlayerProperties = playerOrder[0].getProperties();
+            otherPlayerProperties = playerOrder[position].getProperties();
             otherPlayerAdapter = new CellPropertyListAdapter(otherPlayerProperties, false, null);
             recyclerViewRHS.setAdapter(otherPlayerAdapter);
             recyclerViewRHS.setLayoutManager(layoutManager2);
@@ -205,7 +205,6 @@ public class TradeSellStartFragment extends Fragment implements  AdapterView.OnI
             DividerItemDecoration dividerItemDecoration2 = new DividerItemDecoration(recyclerViewRHS.getContext(),  layoutManager2.getOrientation());
             dividerItemDecoration2.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.empty_divider));
             recyclerViewRHS.addItemDecoration(dividerItemDecoration2);
-
 
             TextView traderBalance = (TextView) current.findViewById(R.id.traderBalance);
             traderBalance.setText("Balance: $" + playerOrder[position].getMoney().toString());
