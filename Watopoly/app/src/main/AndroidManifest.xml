@@ -55,6 +55,8 @@
         <activity
             android:name=".activity.JailOptionsActivity"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.TradeSellPropertiesActivity"/>
         <activity android:name=".activity.BuyHouseHotelActivity"
             android:screenOrientation="landscape" />
     </application>
