@@ -49,5 +49,10 @@ public abstract class Property extends Tile {
     public void unMortgage() {
         isMortgaged = false;
     }
+
+    public void reset() {
+        owner = null;
+        isMortgaged = false;
+    }
 }
 

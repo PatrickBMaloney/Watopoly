@@ -21,21 +21,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="104dp"
-        android:layout_marginEnd="176dp"
         android:text="You are in Jail!"
         android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/jailOptionLinearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/jailOptionLinearLayout"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="210dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/jailOptionTitleTextView">
 
         <TextView
@@ -50,25 +50,34 @@
             android:id="@+id/jailRollButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Roll a double" />
+            android:text="Roll a double"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#8B64CF" />
 
         <Button
             android:id="@+id/jailFineButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pay a fine" />
+            android:text="Pay a fine"
+            android:backgroundTint="#FF7144"
+            android:padding="16dp"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/jailFreeCardButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Jail free card" />
+            android:text="Jail free card"
+            android:backgroundTint="#3C8A0C"
+            android:textColor="#FFFFFF" />
 
         <Button
-            android:id="@+id/jailContinueButton"
+            android:id="@+id/bankruptButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Continue" />
+            android:text="Continue"
+            android:backgroundTint="#308AEA"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <fragment

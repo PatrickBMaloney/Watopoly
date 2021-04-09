@@ -55,19 +55,25 @@
             android:id="@+id/buyHouseButtonAssets"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Buy Houses" />
+            android:backgroundTint="#8B64CF"
+            android:text="Buy Houses"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/tradeSellButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Trade/Sell" />
+            android:text="Trade/Sell"
+            android:backgroundTint="#276CF8"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/mortgageButtonAssets"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mortgage" />
+            android:text="Mortgage"
+            android:backgroundTint="#FF7144"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 

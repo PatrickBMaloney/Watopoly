@@ -5,6 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <fragment
+        android:id="@+id/playerInfoHeaderFragmentBuyPropertyDialogue"
+        android:name="com.example.watopoly.fragment.PlayerInfoHeaderFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_player_info_header" />
+
     <TextView
         android:id="@+id/buyHouseTextView"
         android:layout_width="wrap_content"
@@ -46,23 +57,34 @@
 
         <Button
             android:id="@+id/buyHouseButton"
-            android:layout_width="wrap_content"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
-            android:text="Yes" />
+            android:backgroundTint="#3C8A0C"
+            android:padding="16dp"
+            android:paddingTop="12dp"
+            android:text="YES"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/skipHouseButton"
-            android:layout_width="wrap_content"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="No" />
+            android:backgroundTint="#D62E2E"
+            android:padding="16dp"
+            android:paddingTop="12dp"
+            android:text="NO"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/mortgageBuyPropertyButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mortgage"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:backgroundTint="#FF7144"
+            android:padding="16dp"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline

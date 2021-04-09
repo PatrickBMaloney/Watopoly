@@ -27,7 +27,9 @@
             android:layout_height="50dp"
             android:text="Propose Trade"
             android:textSize="20dp"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:backgroundTint="#308AEA"
+            android:textColor="#FFFFFF" />
     </RelativeLayout>
 
     <ScrollView

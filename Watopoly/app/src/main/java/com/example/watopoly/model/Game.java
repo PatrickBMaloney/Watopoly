@@ -76,4 +76,9 @@ public class Game implements Serializable {
         players.clear();
         //TODO: clear other object as we add them
     }
+
+    public void removePlayer(Player player) {
+            player.bankruptcy();
+            players.remove(player);
+    }
 }

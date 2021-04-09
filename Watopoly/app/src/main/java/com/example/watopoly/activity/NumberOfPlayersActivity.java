@@ -3,7 +3,6 @@ package com.example.watopoly.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
@@ -21,14 +20,14 @@ public class NumberOfPlayersActivity extends AppCompatActivity implements View.O
         getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        Button btnOnePlayer = (Button) findViewById(R.id.numPlayersButton1);
-        Button btnTwoPlayers = (Button) findViewById(R.id.numPlayersButton2);
+        Button btnTwoPlayer = (Button) findViewById(R.id.numPlayersButton2);
         Button btnThreePlayers = (Button) findViewById(R.id.numPlayersButton3);
         Button btnFourPlayers = (Button) findViewById(R.id.numPlayersButton4);
-        btnOnePlayer.setOnClickListener(this);
-        btnTwoPlayers.setOnClickListener(this);
+        Button btnFivePlayers = (Button) findViewById(R.id.numPlayersButton5);
+        btnTwoPlayer.setOnClickListener(this);
         btnThreePlayers.setOnClickListener(this);
         btnFourPlayers.setOnClickListener(this);
+        btnFivePlayers.setOnClickListener(this);
     }
 
     @Override
@@ -36,9 +35,6 @@ public class NumberOfPlayersActivity extends AppCompatActivity implements View.O
         Intent intent = new Intent(this, EnterPlayerInfoActivity.class);
 
         switch(view.getId()) {
-            case R.id.numPlayersButton1:
-                intent.putExtra("numberOfPlayers", 1);
-                break;
             case R.id.numPlayersButton2:
                 intent.putExtra("numberOfPlayers", 2);
                 break;
@@ -47,6 +43,9 @@ public class NumberOfPlayersActivity extends AppCompatActivity implements View.O
                 break;
             case R.id.numPlayersButton4:
                 intent.putExtra("numberOfPlayers", 4);
+                break;
+            case R.id.numPlayersButton5:
+                intent.putExtra("numberOfPlayers", 5);
                 break;
             default:
         }

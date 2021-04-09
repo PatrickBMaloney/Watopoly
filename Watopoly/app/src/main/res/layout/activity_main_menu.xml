@@ -25,10 +25,11 @@
         android:layout_width="133dp"
         android:layout_height="73dp"
         android:layout_marginStart="128dp"
+        android:layout_marginBottom="128dp"
         android:backgroundTint="#51B4FF"
         android:text="NEW GAME"
         android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/continueGameButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -36,11 +37,10 @@
         android:layout_width="133dp"
         android:layout_height="73dp"
         android:layout_marginEnd="128dp"
-        android:layout_marginBottom="128dp"
         android:backgroundTint="#A9FF2F2F"
         android:text="CONTINUE"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/newGameButton"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
