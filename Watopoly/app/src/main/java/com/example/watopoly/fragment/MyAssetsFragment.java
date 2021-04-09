@@ -7,15 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.watopoly.R;
+import com.example.watopoly.activity.MainGameViewActivity;
+import com.example.watopoly.activity.TradeSellPropertiesActivity;
+import com.example.watopoly.activity.ViewAssetsActivity;
 import com.example.watopoly.activity.BuyHouseHotelActivity;
 import com.example.watopoly.adapter.PropertyListAdapter;
 import com.example.watopoly.model.Game;
+import com.example.watopoly.model.Player;
 import com.example.watopoly.model.Property;
 
 public class MyAssetsFragment extends Fragment implements PropertyListAdapter.onPropClickListener{
@@ -24,6 +30,21 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
     View largeProp;
     View buttons;
     private Property prev;
+    View current;
+    boolean refresh = false;
+
+    public void setRefresh(boolean refresh) {
+        this.refresh = refresh;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(refresh) {
+            setView(gameState.getCurrentPlayer());
+            refresh = false;
+        }
+    }
     private int [] ids = new int[26];
     private FragmentCallbackListener callbackListener;
 
@@ -32,26 +53,43 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_my_assets, container, false);
-
-        final FragmentManager fm = getChildFragmentManager();
-        largeProp = (View) root.findViewById(R.id.propertyCardBuyFragmentAssets);
-        buttons = (View) root.findViewById(R.id.actionsLinearLayoutAssets);
+        current = root;
+        setButtons(root);
+        setView(gameState.getCurrentPlayer());
+        return root;
+    }
+    private void setView(Player player) {
+        largeProp = (View) current.findViewById(R.id.propertyCardBuyFragmentAssets);
+        buttons = (View) current.findViewById(R.id.actionsLinearLayoutAssets);
         largeProp.setVisibility(View.GONE);
         buttons.setVisibility(View.GONE);
-        setButtons(root);
-        RecyclerView rv = (RecyclerView) root.findViewById(R.id.propRecycleView);
-        PropertyListAdapter adapter = new PropertyListAdapter(getContext(),gameState.getCurrentPlayer().getProperties(), this);
+
+        RecyclerView rv = (RecyclerView) current.findViewById(R.id.propRecycleView);
+        rv.removeAllViews();
+        PropertyListAdapter adapter = new PropertyListAdapter(getContext(),player.getProperties(), this);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new GridLayoutManager(getContext(), 6));
-        return root;
     }
 
     private void setButtons(final View root) {
         Button return_to_board = (Button) root.findViewById(R.id.back_to_board);
+        Button trade_sell = (Button) root.findViewById(R.id.tradeSellButton);
+        if(gameState.getCurrentPlayer().getJailed()) {
+            trade_sell.setEnabled(false);
+        } else {
+            trade_sell.setEnabled(true);
+        }
         return_to_board.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
+            }
+        });
+        trade_sell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireActivity(), TradeSellPropertiesActivity.class);
+                startActivityForResult(intent, 999);
             }
         });
     }

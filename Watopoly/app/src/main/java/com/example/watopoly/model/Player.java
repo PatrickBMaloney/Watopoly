@@ -126,6 +126,15 @@ public class Player implements Serializable {
         }
     }
 
+    public void removeProperty(Property property) {
+        properties.remove(property);
+        if(property instanceof  Railway) {
+            numRailways -= 1;
+        } else if(property instanceof Utility) {
+            numUtilities -= 1;
+        }
+    }
+
     public void addJailFreeCard(){ jailFreeCards += 1; }
 
     public int getNumberOfJailFreeCards() {
