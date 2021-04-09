@@ -75,16 +75,16 @@ public class BuyHouseHotelActivity extends AppCompatActivity {
         }
 
         // if they don't have a full set don't show the incrementers
-        if (!gameState.getCurrentPlayer().ownsFullSet(currentTile.getPropertyHex())){
-            findViewById(R.id.buyHouseIncrementer).setVisibility(View.GONE);
-            findViewById(R.id.buyHotelIncrementer).setVisibility(View.INVISIBLE);
-            findViewById(R.id.currrentHousesAndHotels).setVisibility(View.GONE);
-            TextView title = findViewById(R.id.buyPropertyDescriptionTextView);
-            title.setPadding(0, 100, 0, 0);
-            title.setTextSize(20);
-            title.setLines(3);
-            title.setText("You do not possess a full set. You are unable to purchase any properties.");
-        }
+//        if (!gameState.getCurrentPlayer().ownsFullSet(currentTile.getPropertyHex())){
+//            findViewById(R.id.buyHouseIncrementer).setVisibility(View.GONE);
+//            findViewById(R.id.buyHotelIncrementer).setVisibility(View.INVISIBLE);
+//            findViewById(R.id.currrentHousesAndHotels).setVisibility(View.GONE);
+//            TextView title = findViewById(R.id.buyPropertyDescriptionTextView);
+//            title.setPadding(0, 100, 0, 0);
+//            title.setTextSize(20);
+//            title.setLines(3);
+//            title.setText("You do not possess a full set. You are unable to purchase any properties.");
+//        }
 
         // if they can't afford a hotel, don't show the hotel incrementer
         if (currentNumHouses + gameState.getCurrentPlayer().getMoney()/housePrice < 5){

@@ -10,6 +10,7 @@
 
  import com.example.watopoly.R;
  import com.example.watopoly.fragment.FragmentCallbackListener;
+ import com.example.watopoly.fragment.MyAssetsFragment;
  import com.example.watopoly.fragment.PlayerInfoHeaderFragment;
  import com.example.watopoly.model.Game;
  import com.example.watopoly.model.Player;
@@ -18,6 +19,7 @@ public class ViewAssetsActivity extends AppCompatActivity implements FragmentCal
 
     private Game gameState = Game.getInstance();
     private PlayerInfoHeaderFragment playerInfoHeaderFragment;
+    private MyAssetsFragment myAssetsFragment;
     View myAssets;
     View allAssets;
     @Override
@@ -36,6 +38,8 @@ public class ViewAssetsActivity extends AppCompatActivity implements FragmentCal
         playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragmentAssets);
         Player myPlayer = gameState.getCurrentPlayer();
         playerInfoHeaderFragment.setPlayer(myPlayer);
+        myAssetsFragment = (MyAssetsFragment) fm.findFragmentById(R.id.myAssetsFragment);
+        myAssetsFragment.setCallbackListener(this);
     }
 
     //Refresh header

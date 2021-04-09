@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player implements Serializable {
-    private static final int goAmount = 10000;
+    private static final int goAmount = 200;
     private String name;
     private Double money;
     private String colour;
