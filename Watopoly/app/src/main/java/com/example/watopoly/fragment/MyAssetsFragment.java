@@ -7,12 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import androidx.core.content.ContextCompat;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.watopoly.R;
@@ -20,16 +19,18 @@ import com.example.watopoly.activity.MainGameViewActivity;
 import com.example.watopoly.activity.TradeSellPropertiesActivity;
 import com.example.watopoly.activity.ViewAssetsActivity;
 import com.example.watopoly.activity.BuyHouseHotelActivity;
-import com.example.watopoly.adapter.CellPropertyListAdapter;
+import com.example.watopoly.adapter.PropertyListAdapter;
+import com.example.watopoly.model.Building;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Player;
 import com.example.watopoly.model.Property;
 
-public class MyAssetsFragment extends Fragment implements CellPropertyListAdapter.OnPropClickListener{
+public class MyAssetsFragment extends Fragment implements PropertyListAdapter.onPropClickListener{
 
     private Game gameState = Game.getInstance();
     View largeProp;
     View buttons;
+    View buyHouseBtn;
     private Property prev;
     View current;
     boolean refresh = false;
@@ -56,35 +57,36 @@ public class MyAssetsFragment extends Fragment implements CellPropertyListAdapte
         View root = inflater.inflate(R.layout.fragment_my_assets, container, false);
         current = root;
         setButtons(root);
-
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.propRecycleView);
-        CellPropertyListAdapter adapter = new CellPropertyListAdapter(gameState.getCurrentPlayer().getProperties(), true, this);
-        adapter.setShowSelected(false);
-        recyclerView.setAdapter(adapter);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-        DividerItemDecoration dividerItemDecoration2 = new DividerItemDecoration(recyclerView.getContext(),  layoutManager.getOrientation());
-        dividerItemDecoration2.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.empty_divider));
-        recyclerView.addItemDecoration(dividerItemDecoration2);
         setView(gameState.getCurrentPlayer());
         return root;
     }
-
     private void setView(Player player) {
         largeProp = (View) current.findViewById(R.id.propertyCardBuyFragmentAssets);
         buttons = (View) current.findViewById(R.id.actionsLinearLayoutAssets);
+        buyHouseBtn = (View) current.findViewById(R.id.buyHouseButtonAssets);
         largeProp.setVisibility(View.GONE);
         buttons.setVisibility(View.GONE);
+
+        RecyclerView rv = (RecyclerView) current.findViewById(R.id.propRecycleView);
+        rv.removeAllViews();
+        PropertyListAdapter adapter = new PropertyListAdapter(getContext(),player.getProperties(), this);
+        rv.setAdapter(adapter);
+        rv.setLayoutManager(new GridLayoutManager(getContext(), 6));
     }
 
     private void setButtons(final View root) {
         Button return_to_board = (Button) root.findViewById(R.id.back_to_board);
         Button trade_sell = (Button) root.findViewById(R.id.tradeSellButton);
+        Button mortgage = (Button) root.findViewById(R.id.mortgageButtonAssets);
+        Button buyHouseHotelBtn = (Button) root.findViewById(R.id.buyHouseButtonAssets);
         if(gameState.getCurrentPlayer().getJailed()) {
             trade_sell.setEnabled(false);
+            mortgage.setEnabled(false);
+            buyHouseHotelBtn.setEnabled(false);
         } else {
             trade_sell.setEnabled(true);
+            mortgage.setEnabled(true);
+            buyHouseHotelBtn.setEnabled(true);
         }
         return_to_board.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +101,7 @@ public class MyAssetsFragment extends Fragment implements CellPropertyListAdapte
                 startActivityForResult(intent, 999);
             }
         });
+
     }
 
     public void setCallbackListener(FragmentCallbackListener callbackListener) {
@@ -114,7 +117,9 @@ public class MyAssetsFragment extends Fragment implements CellPropertyListAdapte
     }
 
 
-    public void onPropClick(final Property property) {
+    public void onPropClick(int propNum, int position) {
+        final Property property = gameState.getCurrentPlayer().getProperties().get(propNum);
+        final Player player = gameState.getCurrentPlayer();
         if(prev == null) {
             prev = property; //set prev to current if null
         }
@@ -127,7 +132,12 @@ public class MyAssetsFragment extends Fragment implements CellPropertyListAdapte
             propLarge.setProperty(property);
             largeProp.setVisibility(View.VISIBLE);
             buttons.setVisibility(View.VISIBLE);
+            buyHouseBtn.setVisibility(View.VISIBLE);
             prev = property;
+        }
+
+        if (! (property instanceof Building)) {
+            buyHouseBtn.setVisibility(View.GONE);
         }
 
         Button buyHouseHotelBtn = buttons.findViewById(R.id.buyHouseButtonAssets);
@@ -137,6 +147,28 @@ public class MyAssetsFragment extends Fragment implements CellPropertyListAdapte
                 Intent intent = new Intent(MyAssetsFragment.this.getActivity(), BuyHouseHotelActivity.class);
                 intent.putExtra("property", property.getName());
                 startActivityForResult(intent, 0);
+            }
+        });
+
+        final Button mortgage = buttons.findViewById(R.id.mortgageButtonAssets);
+        if (property.getMortgaged()){
+            mortgage.setText("Pay Off");
+        } else {
+            mortgage.setText("Mortgage");
+        }
+
+        mortgage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (property.getMortgaged()) {
+                    property.unMortgage();
+                    player.payAmount(property.getPurchasePrice() / 2);
+                    mortgage.setText("Mortgage");
+                } else {
+                    property.mortgage();
+                    player.receiveAmount(property.getPurchasePrice() / 2);
+                    mortgage.setText("Pay Off");
+                }
             }
         });
     }
