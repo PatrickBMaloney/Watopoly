@@ -84,6 +84,7 @@ public class CellPropertyListAdapter extends RecyclerView.Adapter<CellPropertyLi
     @Override
     public void onBindViewHolder(@NonNull CellPropertyListAdapter.PropertyInfoHolder holder, int position) {
         Property property = properties.get(position);
+        holder.amountTextView.setText("$" + property.getPurchasePrice());
 
         if (property instanceof Building) {
             Building building = (Building)property;

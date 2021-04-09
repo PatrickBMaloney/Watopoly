@@ -6,10 +6,13 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -37,11 +40,16 @@ public class AllAssetsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_all_assets, container, false);
 
-        RecyclerView rv = (RecyclerView) root.findViewById(R.id.playerRecycleView);
+        RecyclerView recyclerView = root.findViewById(R.id.playerRecycleView);
         setButtons(root);
         AllAssetsPlayerAdapter adapter = new AllAssetsPlayerAdapter(getContext(), gameState.getPlayers());
-        rv.setAdapter(adapter);
-        rv.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        recyclerView.setAdapter(adapter);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration2 = new DividerItemDecoration(recyclerView.getContext(),  layoutManager.getOrientation());
+        dividerItemDecoration2.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.empty_divider));
+        recyclerView.addItemDecoration(dividerItemDecoration2);
         return root;
     }
     private void setButtons(final View root) {
