@@ -482,6 +482,9 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                 ImageViewCompat.setImageTintMode(ownerImageView, PorterDuff.Mode.SRC_ATOP);
                 ImageViewCompat.setImageTintList(ownerImageView, ColorStateList.valueOf(Color.parseColor(property.getOwner().getColour())));
 
+                PlayerInfoHeaderFragment playerInfoHeaderFragmentRent = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragmentRentDialogue);
+                playerInfoHeaderFragmentRent.setPlayer(game.getCurrentPlayer());
+
                 continueButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
