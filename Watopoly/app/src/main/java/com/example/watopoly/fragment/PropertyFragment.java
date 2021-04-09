@@ -68,7 +68,7 @@ public class PropertyFragment extends Fragment {
             twoHouseValueTextView.setText(String.format("%.0f", building.getRentPrice(2, true)));
             threeHouseValueTextView.setText(String.format("%.0f", building.getRentPrice(3, true)));
             fourHouseValueTextView.setText(String.format("%.0f", building.getRentPrice(4, true)));
-            oneHotelTextView.setText(String.format("$%.0f", building.getRentPriceWithHotel()));
+            oneHotelTextView.setText(String.format("With Hotel $%.0f", building.getRentPriceWithHotel()));
             houseCostTextView.setText(String.format("Houses cost $%.0f each", building.getHousePrice()));
             hotelCostTextView.setText(String.format("Hotels, $%.0f plus 4 houses", building.getHousePrice()));
             mortgageValueTextView.setText(String.format("Mortgage Value $%.0f", building.getPurchasePrice()/2));
