@@ -59,21 +59,30 @@
             android:id="@+id/buyHouseButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Yes" />
+            android:text="Yes"
+            android:padding="16dp"
+            android:backgroundTint="#3C8A0C"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/skipHouseButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="No" />
+            android:text="No"
+            android:padding="16dp"
+            android:backgroundTint="#D62E2E"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/mortgageBuyPropertyButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mortgage"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:backgroundTint="#FF7144"
+            android:padding="16dp"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline

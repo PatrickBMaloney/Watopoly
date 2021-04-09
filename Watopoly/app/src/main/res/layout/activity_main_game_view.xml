@@ -44,25 +44,41 @@
             android:id="@+id/viewAssetButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="View Assets" />
+            android:drawableLeft="@drawable/house"
+            android:text=" View Assets"
+            android:padding="16dp"
+            android:backgroundTint="#3C8A0C"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/tradeButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Trade" />
+            android:drawableLeft="@drawable/handshake"
+            android:text=" Trade"
+            android:padding="16dp"
+            android:backgroundTint="#276CF8"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/mortgageButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mortgage" />
+            android:drawableLeft="@drawable/mortgage"
+            android:text=" Mortgage"
+            android:backgroundTint="#FF7144"
+            android:padding="16dp"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/endTurnButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="End Turn" />
+            android:drawableLeft="@drawable/end_turn"
+            android:text=" End Turn"
+            android:padding="16dp"
+            android:backgroundTint="#D62E2E"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 
