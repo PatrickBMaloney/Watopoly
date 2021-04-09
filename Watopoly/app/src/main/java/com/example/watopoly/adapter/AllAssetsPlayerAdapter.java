@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.watopoly.R;
 import com.example.watopoly.activity.MainGameViewActivity;
+import com.example.watopoly.fragment.DialogViewProperty;
 import com.example.watopoly.fragment.PropertyFragment;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Player;
@@ -54,9 +56,7 @@ public class AllAssetsPlayerAdapter extends RecyclerView.Adapter<AllAssetsPlayer
         //set up money
         holder.player_money.setText("$"+players.get(position).getMoney().toString());
 
-        //call adapter for this recycler view with this current players properties
-            //set grid to be 13 columns over here as well
-        PropertyListAdapter adapter = new PropertyListAdapter(context,players.get(position).getProperties(), this);
+        PropertyListAdapter adapter = new PropertyListAdapter(context,players.get(position).getProperties(), this, position);
         holder.propsRecyclerView.setAdapter(adapter);
         holder.propsRecyclerView.setLayoutManager(new GridLayoutManager(context, 13));
     }
@@ -67,7 +67,9 @@ public class AllAssetsPlayerAdapter extends RecyclerView.Adapter<AllAssetsPlayer
     }
 
     @Override
-    public void onPropClick(int propNum) {
+    public void onPropClick(int propNum, int position) {
+        DialogViewProperty dialog = new DialogViewProperty(players.get(position).getProperties().get(propNum));
+        dialog.show(((AppCompatActivity)context).getSupportFragmentManager(),"tag" );
     }
 
     public class viewHolder extends RecyclerView.ViewHolder {

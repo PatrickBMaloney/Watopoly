@@ -68,10 +68,10 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
         }
     }
 
-    @Override
-    public void onPropClick(int propNum) {
+
+    public void onPropClick(int propNum, int position) {
         final Property property = gameState.getCurrentPlayer().getProperties().get(propNum);
-        if (prev == null) {
+        if(prev == null) {
             prev = property; //set prev to current if null
         }
         if (largeProp.getVisibility() == View.VISIBLE && prev == property) {
