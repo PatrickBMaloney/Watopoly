@@ -78,15 +78,12 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
         Button return_to_board = (Button) root.findViewById(R.id.back_to_board);
         Button trade_sell = (Button) root.findViewById(R.id.tradeSellButton);
         Button mortgage = (Button) root.findViewById(R.id.mortgageButtonAssets);
-        Button buyHouseHotelBtn = (Button) root.findViewById(R.id.buyHouseButtonAssets);
         if(gameState.getCurrentPlayer().getJailed()) {
             trade_sell.setEnabled(false);
             mortgage.setEnabled(false);
-            buyHouseHotelBtn.setEnabled(false);
         } else {
             trade_sell.setEnabled(true);
             mortgage.setEnabled(true);
-            buyHouseHotelBtn.setEnabled(true);
         }
         return_to_board.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +138,11 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
         }
 
         Button buyHouseHotelBtn = buttons.findViewById(R.id.buyHouseButtonAssets);
+        if(gameState.getCurrentPlayer().getJailed()) {
+            buyHouseHotelBtn.setEnabled(false);
+        } else {
+            buyHouseHotelBtn.setEnabled(true);
+        }
         buyHouseHotelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
