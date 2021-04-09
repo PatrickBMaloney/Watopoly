@@ -56,8 +56,6 @@ public class AllAssetsPlayerAdapter extends RecyclerView.Adapter<AllAssetsPlayer
         //set up money
         holder.player_money.setText("$"+players.get(position).getMoney().toString());
 
-        //call adapter for this recycler view with this current players properties
-            //set grid to be 13 columns over here as well
         PropertyListAdapter adapter = new PropertyListAdapter(context,players.get(position).getProperties(), this, position);
         holder.propsRecyclerView.setAdapter(adapter);
         holder.propsRecyclerView.setLayoutManager(new GridLayoutManager(context, 13));
