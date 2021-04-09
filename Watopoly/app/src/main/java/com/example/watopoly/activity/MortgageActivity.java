@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.watopoly.R;
+import com.example.watopoly.adapter.CellPropertyListAdapter;
 import com.example.watopoly.adapter.MortgagePropertyListAdapter;
 import com.example.watopoly.adapter.PlayerInfoListAdapter;
 import com.example.watopoly.fragment.PlayerInfoHeaderFragment;
@@ -28,7 +29,7 @@ public class MortgageActivity extends AppCompatActivity {
     private Game gameState = Game.getInstance();
     private PlayerInfoHeaderFragment playerInfoHeaderFragment;
     private RecyclerView mortgageRecyclerView;
-    private MortgagePropertyListAdapter mortgageAdapter;
+    private CellPropertyListAdapter mortgageAdapter;
     private RecyclerView unmortgageRecyclerView;
     private MortgagePropertyListAdapter unmortgageAdapter;
     Player myPlayer;
@@ -92,7 +93,7 @@ public class MortgageActivity extends AppCompatActivity {
             }
         }
 
-        mortgageAdapter = new MortgagePropertyListAdapter(mortProperties);
+        mortgageAdapter = new CellPropertyListAdapter(mortProperties);
         mortgageRecyclerView.setAdapter(mortgageAdapter);
 
         unmortgageAdapter = new MortgagePropertyListAdapter(unmortProperties);
@@ -100,22 +101,22 @@ public class MortgageActivity extends AppCompatActivity {
     }
 
     private void mortgageProperties(){
-        mortgageAdapter.clearSelected();
+        //mortgageAdapter.clearSelected();
         mortgageAdapter.notifyDataSetChanged();
         unmortgageAdapter.clearSelected();
         unmortgageAdapter.notifyDataSetChanged();
     }
 
     private void finishMortgaging(){
-        ArrayList<Integer> mortgageList = mortgageAdapter.getSelected();
+        //ArrayList<Integer> mortgageList = mortgageAdapter.getSelected();
         ArrayList<Integer> unmortageList = unmortgageAdapter.getSelected();
-        if (mortgageList.size() == 0 && unmortageList.size() == 0) { return; }
+        //if (mortgageList.size() == 0 && unmortageList.size() == 0) { return; }
 
-        for (int i =0; i<mortgageList.size(); i++){
-            Property selectedProperty = mortProperties.get(mortgageList.get(i));
-            selectedProperty.mortgage();
-            myPlayer.receiveAmount(selectedProperty.getPurchasePrice()/2);
-        }
+//        for (int i =0; i<mortgageList.size(); i++){
+//            Property selectedProperty = mortProperties.get(mortgageList.get(i));
+//            selectedProperty.mortgage();
+//            myPlayer.receiveAmount(selectedProperty.getPurchasePrice()/2);
+//        }
 
         for (int i =0; i<unmortageList.size(); i++){
             Property selectedProperty = unmortProperties.get(unmortageList.get(i));
