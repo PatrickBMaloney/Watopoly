@@ -125,7 +125,15 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                game.removePlayer(game.getCurrentPlayer());
+                Player player = game.getCurrentPlayer();
+                game.removePlayer(player);
+
+                //removes player
+                for (Tile t: drawingState.keySet()) {
+                    drawingState.get(t).remove(player);
+                }
+                boardView.drawDrawingState(drawingState);
+
                 dialog.dismiss();
                 if (game.getPlayers().size() == 1){
                     endgame();
