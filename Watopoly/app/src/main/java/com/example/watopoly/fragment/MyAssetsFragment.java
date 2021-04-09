@@ -1,29 +1,22 @@
 package com.example.watopoly.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ToggleButton;
-
 import com.example.watopoly.R;
+import com.example.watopoly.activity.BuyHouseHotelActivity;
 import com.example.watopoly.adapter.PropertyListAdapter;
 import com.example.watopoly.model.Game;
-import com.example.watopoly.model.Player;
 import com.example.watopoly.model.Property;
-
-import java.lang.reflect.Field;
 
 public class MyAssetsFragment extends Fragment implements PropertyListAdapter.onPropClickListener{
 
@@ -32,6 +25,7 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
     View buttons;
     private Property prev;
     private int [] ids = new int[26];
+    private FragmentCallbackListener callbackListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,6 +33,7 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_my_assets, container, false);
 
+        final FragmentManager fm = getChildFragmentManager();
         largeProp = (View) root.findViewById(R.id.propertyCardBuyFragmentAssets);
         buttons = (View) root.findViewById(R.id.actionsLinearLayoutAssets);
         largeProp.setVisibility(View.GONE);
@@ -61,13 +56,25 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
         });
     }
 
+    public void setCallbackListener(FragmentCallbackListener callbackListener) {
+        this.callbackListener = callbackListener;
+    }
+
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (callbackListener != null) {
+            callbackListener.onCallback();
+        }
+    }
+
+
     public void onPropClick(int propNum, int position) {
-        Property property = gameState.getCurrentPlayer().getProperties().get(propNum);
+        final Property property = gameState.getCurrentPlayer().getProperties().get(propNum);
         if(prev == null) {
             prev = property; //set prev to current if null
         }
-        if (largeProp.getVisibility() == View.VISIBLE && prev==property) {
+        if (largeProp.getVisibility() == View.VISIBLE && prev == property) {
             largeProp.setVisibility(View.GONE);
             buttons.setVisibility(View.GONE);
         } else {
@@ -78,5 +85,15 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
             buttons.setVisibility(View.VISIBLE);
             prev = property;
         }
+
+        Button buyHouseHotelBtn = buttons.findViewById(R.id.buyHouseButtonAssets);
+        buyHouseHotelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyAssetsFragment.this.getActivity(), BuyHouseHotelActivity.class);
+                intent.putExtra("property", property.getName());
+                startActivityForResult(intent, 0);
+            }
+        });
     }
 }
