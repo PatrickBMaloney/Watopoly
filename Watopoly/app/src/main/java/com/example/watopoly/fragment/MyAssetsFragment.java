@@ -77,10 +77,16 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
     private void setButtons(final View root) {
         Button return_to_board = (Button) root.findViewById(R.id.back_to_board);
         Button trade_sell = (Button) root.findViewById(R.id.tradeSellButton);
+        Button mortgage = (Button) root.findViewById(R.id.mortgageButtonAssets);
+        Button buyHouseHotelBtn = (Button) root.findViewById(R.id.buyHouseButtonAssets);
         if(gameState.getCurrentPlayer().getJailed()) {
             trade_sell.setEnabled(false);
+            mortgage.setEnabled(false);
+            buyHouseHotelBtn.setEnabled(false);
         } else {
             trade_sell.setEnabled(true);
+            mortgage.setEnabled(true);
+            buyHouseHotelBtn.setEnabled(true);
         }
         return_to_board.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +101,7 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
                 startActivityForResult(intent, 999);
             }
         });
+
     }
 
     public void setCallbackListener(FragmentCallbackListener callbackListener) {
@@ -112,6 +119,7 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
 
     public void onPropClick(int propNum, int position) {
         final Property property = gameState.getCurrentPlayer().getProperties().get(propNum);
+        final Player player = gameState.getCurrentPlayer();
         if(prev == null) {
             prev = property; //set prev to current if null
         }
@@ -139,6 +147,28 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
                 Intent intent = new Intent(MyAssetsFragment.this.getActivity(), BuyHouseHotelActivity.class);
                 intent.putExtra("property", property.getName());
                 startActivityForResult(intent, 0);
+            }
+        });
+
+        final Button mortgage = buttons.findViewById(R.id.mortgageButtonAssets);
+        if (property.getMortgaged()){
+            mortgage.setText("Pay Off");
+        } else {
+            mortgage.setText("Mortgage");
+        }
+
+        mortgage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (property.getMortgaged()) {
+                    property.unMortgage();
+                    player.payAmount(property.getPurchasePrice() / 2);
+                    mortgage.setText("Mortgage");
+                } else {
+                    property.mortgage();
+                    player.receiveAmount(property.getPurchasePrice() / 2);
+                    mortgage.setText("Pay Off");
+                }
             }
         });
     }
