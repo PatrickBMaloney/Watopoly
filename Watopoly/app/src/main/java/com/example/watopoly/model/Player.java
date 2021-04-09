@@ -4,9 +4,11 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 
 import com.example.watopoly.util.BitmapDataObject;
+import com.example.watopoly.util.BoardTiles;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Player implements Serializable {
     private static final int goAmount = 200;
@@ -108,6 +110,11 @@ public class Player implements Serializable {
 
     public void setJailed(Boolean jailed) {
         isJailed = jailed;
+    }
+
+    public Boolean ownsFullSet(String hexcode){
+        List<Building> colorSet = BoardTiles.getTilesByColor(hexcode);
+        return properties.containsAll(colorSet);
     }
 
     public void addProperty(Property property) {

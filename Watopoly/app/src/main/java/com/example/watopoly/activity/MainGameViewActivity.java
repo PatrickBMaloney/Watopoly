@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -30,16 +29,13 @@ import com.example.watopoly.fragment.DiceRollFragment;
 import com.example.watopoly.fragment.FragmentCallbackListener;
 import com.example.watopoly.fragment.PlayerInfoHeaderFragment;
 import com.example.watopoly.fragment.PropertyFragment;
-import com.example.watopoly.model.Building;
 import com.example.watopoly.model.CardTile;
-import com.example.watopoly.model.ChanceCard;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Jail;
 import com.example.watopoly.model.Player;
 import com.example.watopoly.model.Property;
 import com.example.watopoly.model.TaxTile;
 import com.example.watopoly.model.Tile;
-import com.example.watopoly.model.Utility;
 import com.example.watopoly.util.GameSaveManager;
 import com.example.watopoly.view.BoardView;
 
@@ -67,6 +63,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
     private static int JAIL_OPTION_REQUEST_CODE = 2;
     private static int MORTGAGE_REQUEST_CODE = 3;
     private static int MORTGAGE_TILE_REQUEST_CODE = 4;
+    private static int VIEW_ASSETS_REQUEST_CODE = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +126,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainGameViewActivity.this, ViewAssetsActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, VIEW_ASSETS_REQUEST_CODE);
             }
         });
         tradeButton = findViewById(R.id.tradeButton);
@@ -284,6 +281,11 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             Tile tile = game.moveCurrentPlayer(0);
             showDialogByLandingTile(tile);
             }
+        else if (requestCode == VIEW_ASSETS_REQUEST_CODE) {
+            FragmentManager fm = getSupportFragmentManager();
+            playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
+            playerInfoHeaderFragment.refresh();
+        }
     }
 
     //FragmentCallbackListener diceRolled
@@ -304,7 +306,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         fragmentTransaction.commit();
     }
 
-    public void showDialogByLandingTile(Tile tile){
+    public void showDialogByLandingTile(final Tile tile){
         final Dialog dialog = new Dialog(MainGameViewActivity.this, R.style.Theme_Dialog);
         final Game game = Game.getInstance();
         if (tile instanceof Property) {

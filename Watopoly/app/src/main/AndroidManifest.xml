@@ -12,7 +12,6 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
@@ -55,6 +54,8 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.JailOptionsActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".activity.BuyHouseHotelActivity"
             android:screenOrientation="landscape" />
     </application>
 
