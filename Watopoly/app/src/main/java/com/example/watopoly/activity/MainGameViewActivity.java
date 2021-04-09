@@ -46,7 +46,7 @@ import java.util.Map;
 
 public class MainGameViewActivity extends AppCompatActivity implements FragmentCallbackListener {
     //TODO: move this somewhere else?
-    private static final double startingMoney = 0;
+    private static final double startingMoney = 500;
 
     private PlayerInfoHeaderFragment playerInfoHeaderFragment;
     private DiceRollFragment diceRollFragment;
