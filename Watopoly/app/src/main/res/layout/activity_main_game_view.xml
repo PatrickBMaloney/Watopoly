@@ -80,6 +80,13 @@
             android:backgroundTint="#D62E2E"
             android:textColor="#FFFFFF" />
 
+        <Button
+            android:id="@+id/forfeitButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Forfeit "
+            android:visibility="gone" />
+
     </LinearLayout>
 
     <fragment

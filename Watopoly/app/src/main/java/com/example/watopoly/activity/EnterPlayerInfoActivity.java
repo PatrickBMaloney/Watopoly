@@ -85,8 +85,10 @@ public class EnterPlayerInfoActivity extends AppCompatActivity {
         shapePath.add(R.drawable.android);
         shapePath.add(R.drawable.film);
         shapePath.add(R.drawable.pet);
+        shapePath.add(R.drawable.baseball);
 
         ArrayList<String> shapeColour = new ArrayList<>();
+        shapeColour.add("#000000");
         shapeColour.add("#000000");
         shapeColour.add("#000000");
         shapeColour.add("#000000");

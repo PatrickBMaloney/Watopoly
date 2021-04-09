@@ -145,4 +145,24 @@ public class Player implements Serializable {
         jailFreeCards -= 1;
         isJailed = false;
     }
+
+    public void bankruptcy(){
+        for (int i = 0; i<properties.size(); i++){
+            Property property = properties.get(i);
+            property.reset();
+            money = 0.0;
+        }
+    }
+
+    public double getAvailableFunds(){
+        double funds = getMoney();
+        for (int i = 0; i<properties.size(); i++){
+            Property property = properties.get(i);
+            if (!property.getMortgaged()){
+                funds = funds + property.getPurchasePrice()/2;
+            }
+            //TODO add available funds from selling houses/hotels
+        }
+        return funds;
+    }
 }
