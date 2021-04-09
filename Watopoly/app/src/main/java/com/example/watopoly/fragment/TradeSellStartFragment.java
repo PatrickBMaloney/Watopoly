@@ -25,14 +25,11 @@ import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.watopoly.R;
-import com.example.watopoly.activity.TradeSellPropertiesActivity;
 import com.example.watopoly.adapter.CellPropertyListAdapter;
-import com.example.watopoly.adapter.PropertyListTradeAdapter;
 import com.example.watopoly.fragment.Dialog.InsufficientFundsRHS;
 import com.example.watopoly.fragment.Dialog.InsufficientFundsYou;
 import com.example.watopoly.fragment.Dialog.NoResourcesSelected;

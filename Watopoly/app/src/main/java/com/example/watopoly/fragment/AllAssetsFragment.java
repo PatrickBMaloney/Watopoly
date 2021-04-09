@@ -26,7 +26,6 @@ import android.widget.TextView;
 
 import com.example.watopoly.R;
 import com.example.watopoly.adapter.AllAssetsPlayerAdapter;
-import com.example.watopoly.adapter.PropertyListAdapter;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Property;
 

@@ -30,7 +30,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.watopoly.R;
 import com.example.watopoly.adapter.CellPropertyListAdapter;
-import com.example.watopoly.adapter.PropertyListTradeAdapter;
 import com.example.watopoly.fragment.Dialog.InsufficientFundsRHS;
 import com.example.watopoly.fragment.Dialog.InsufficientFundsYou;
 import com.example.watopoly.fragment.Dialog.NoResourcesSelected;

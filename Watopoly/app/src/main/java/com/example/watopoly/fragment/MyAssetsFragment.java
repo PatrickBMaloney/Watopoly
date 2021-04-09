@@ -21,7 +21,6 @@ import com.example.watopoly.activity.TradeSellPropertiesActivity;
 import com.example.watopoly.activity.ViewAssetsActivity;
 import com.example.watopoly.activity.BuyHouseHotelActivity;
 import com.example.watopoly.adapter.CellPropertyListAdapter;
-import com.example.watopoly.adapter.PropertyListAdapter;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Player;
 import com.example.watopoly.model.Property;

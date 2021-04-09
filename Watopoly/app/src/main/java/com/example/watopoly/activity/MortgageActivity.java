@@ -17,8 +17,6 @@ import android.widget.LinearLayout;
 
 import com.example.watopoly.R;
 import com.example.watopoly.adapter.CellPropertyListAdapter;
-import com.example.watopoly.adapter.MortgagePropertyListAdapter;
-import com.example.watopoly.adapter.PlayerInfoListAdapter;
 import com.example.watopoly.fragment.PlayerInfoHeaderFragment;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Player;
