@@ -84,7 +84,6 @@ public class CellPropertyListAdapter extends RecyclerView.Adapter<CellPropertyLi
     @Override
     public void onBindViewHolder(@NonNull CellPropertyListAdapter.PropertyInfoHolder holder, int position) {
         Property property = properties.get(position);
-        holder.amountTextView.setText("$" + property.getPurchasePrice());
 
         if (property instanceof Building) {
             Building building = (Building)property;
@@ -95,6 +94,7 @@ public class CellPropertyListAdapter extends RecyclerView.Adapter<CellPropertyLi
             holder.buildingNameTextView.setVisibility(View.VISIBLE);
             holder.propertyImageView.setVisibility(View.GONE);
             holder.propertyNameTextView.setVisibility(View.GONE);
+            holder.amountTextView.setText("$" + building.getRentPrice(0, false));
         }else {
             holder.buildingNameTextView.setVisibility(View.GONE);
             holder.propertyImageView.setVisibility(View.VISIBLE);
@@ -103,9 +103,11 @@ public class CellPropertyListAdapter extends RecyclerView.Adapter<CellPropertyLi
             holder.propertyNameTextView.setText(property.getName());
             if (property instanceof Utility) {
                 holder.propertyImageView.setImageResource(R.drawable.coffee_and_donut);
+                holder.amountTextView.setText(String.format("$%.0f", (property.getPurchasePrice() / 2)));
             }else {
                 Railway railway = (Railway) property;
                 holder.propertyImageView.setImageResource(railway.getIcon());
+                holder.amountTextView.setText("$" + railway.getRentPrice(1));
             }
         }
 
