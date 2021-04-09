@@ -2,11 +2,16 @@ package com.example.watopoly.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,10 +24,9 @@ import java.util.ArrayList;
 
 public class DialogViewProperty extends DialogFragment {
 
-    private ArrayList<Property> props = new ArrayList<>();
-    public DialogViewProperty(Property prop) {
-        props.clear();
-        props.add(prop);
+    private Property property;
+    public DialogViewProperty(Property property) {
+        this.property = property;
     }
 
     @Override
@@ -31,12 +35,22 @@ public class DialogViewProperty extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View root = inflater.inflate(R.layout.dialog_preview_property, null);
 
-        RecyclerView rv = (RecyclerView) root.findViewById(R.id.trialDialog);
-        ViewPropertyAdapter adapter = new ViewPropertyAdapter(getContext(), props);
-        rv.setAdapter(adapter);
-        rv.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        FragmentManager fm = getFragmentManager();
+        PropertyFragment fragment = (PropertyFragment) fm.findFragmentById(R.id.previewPropertyFragment); //get large prop
+        fragment.setProperty(property);
 
         builder.setView(root);
         return builder.create();
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+
+        FragmentManager fm = getFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.previewPropertyFragment);
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.remove(fragment);
+        fragmentTransaction.commit();
     }
 }
