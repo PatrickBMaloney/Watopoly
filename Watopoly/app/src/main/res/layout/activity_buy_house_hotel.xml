@@ -143,7 +143,9 @@
         android:text="Confirm"
         app:layout_constraintEnd_toEndOf="@+id/buyHotelIncrementer"
         app:layout_constraintStart_toStartOf="@+id/buyHotelIncrementer"
-        app:layout_constraintTop_toBottomOf="@+id/buyHotelIncrementer" />
+        app:layout_constraintTop_toBottomOf="@+id/buyHotelIncrementer"
+        android:backgroundTint="#3C8A0C"
+        android:textColor="#FFFFFF" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHouseHotel"

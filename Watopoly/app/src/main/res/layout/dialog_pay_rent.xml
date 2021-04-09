@@ -5,6 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <fragment
+        android:id="@+id/playerInfoHeaderFragmentRentDialogue"
+        android:name="com.example.watopoly.fragment.PlayerInfoHeaderFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_player_info_header" />
+
     <TextView
         android:id="@+id/payRentTitleTextView"
         android:layout_width="wrap_content"
@@ -38,7 +49,10 @@
         android:text="Continue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:backgroundTint="#308AEA"
+        android:padding="16dp"
+        android:textColor="#FFFFFF" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -124,6 +138,9 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:backgroundTint="#FF7144"
+        android:padding="16dp"
+        android:textColor="#FFFFFF" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

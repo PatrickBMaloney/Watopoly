@@ -168,7 +168,7 @@
         android:id="@+id/MortgageValueTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Martgage Value $100"
+        android:text="Mortgage Value $100"
         android:textAlignment="textEnd"
         android:textColor="#171717"
         android:textSize="14sp"

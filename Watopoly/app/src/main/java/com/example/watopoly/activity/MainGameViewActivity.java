@@ -46,7 +46,7 @@ import java.util.Map;
 
 public class MainGameViewActivity extends AppCompatActivity implements FragmentCallbackListener {
     //TODO: move this somewhere else?
-    private static final double startingMoney = 500;
+    private static final double startingMoney = 1500;
 
     private PlayerInfoHeaderFragment playerInfoHeaderFragment;
     private DiceRollFragment diceRollFragment;
@@ -313,7 +313,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         animateMove(diceRollResult);
     }
 
-    public void destroyPropertyFragment(int id) {
+    public void destroyFragment(int id) {
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(id);
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
@@ -349,6 +349,8 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
                 final FragmentManager fm = getSupportFragmentManager();
                 PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardBuyFragment);
+                PlayerInfoHeaderFragment playerInfoHeaderFragmentBuy = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragmentBuyPropertyDialogue);
+                playerInfoHeaderFragmentBuy.setPlayer(game.getCurrentPlayer());
                 propertyFragment.setProperty(property);
 
                 buyButton.setOnClickListener(new View.OnClickListener() {
@@ -356,7 +358,8 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                     public void onClick(View v) {
                         property.purchase(game.getCurrentPlayer());
                         dialog.dismiss();
-                        destroyPropertyFragment(R.id.propertyCardBuyFragment);
+                        destroyFragment(R.id.propertyCardBuyFragment);
+                        destroyFragment(R.id.playerInfoHeaderFragmentBuyPropertyDialogue);
                         playerInfoHeaderFragment.refresh();
                     }
                 });
@@ -364,14 +367,16 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        destroyPropertyFragment(R.id.propertyCardBuyFragment);
+                        destroyFragment(R.id.propertyCardBuyFragment);
+                        destroyFragment(R.id.playerInfoHeaderFragmentBuyPropertyDialogue);
                     }
                 });
                 mortgageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        destroyPropertyFragment(R.id.propertyCardBuyFragment);
+                        destroyFragment(R.id.propertyCardBuyFragment);
+                        destroyFragment(R.id.playerInfoHeaderFragmentBuyPropertyDialogue);
                         mortgage(MORTGAGE_TILE_REQUEST_CODE);
                     }
                 });
@@ -389,6 +394,8 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                 final FragmentManager fm = getSupportFragmentManager();
                 PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardFragment);
                 propertyFragment.setProperty(property);
+                PlayerInfoHeaderFragment playerInfoHeaderFragmentBuy = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragmentRentDialogue);
+                playerInfoHeaderFragmentBuy.setPlayer(game.getCurrentPlayer());
                 if (property.getRentPrice() > game.getCurrentPlayer().getMoney()) {
                     continueButton.setVisibility(View.GONE);
                     mortgageRentButton.setVisibility(View.VISIBLE);
@@ -411,7 +418,8 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        destroyPropertyFragment(R.id.propertyCardFragment);
+                        destroyFragment(R.id.propertyCardFragment);
+                        destroyFragment(R.id.playerInfoHeaderFragmentRentDialogue);
                         playerInfoHeaderFragment.refresh();
                     }
                 });
@@ -420,7 +428,8 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        destroyPropertyFragment(R.id.propertyCardFragment);
+                        destroyFragment(R.id.propertyCardFragment);
+                        destroyFragment(R.id.playerInfoHeaderFragmentRentDialogue);
                         mortgage(MORTGAGE_TILE_REQUEST_CODE);
                     }
                 });

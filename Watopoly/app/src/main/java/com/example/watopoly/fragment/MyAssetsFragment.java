@@ -20,6 +20,7 @@ import com.example.watopoly.activity.TradeSellPropertiesActivity;
 import com.example.watopoly.activity.ViewAssetsActivity;
 import com.example.watopoly.activity.BuyHouseHotelActivity;
 import com.example.watopoly.adapter.PropertyListAdapter;
+import com.example.watopoly.model.Building;
 import com.example.watopoly.model.Game;
 import com.example.watopoly.model.Player;
 import com.example.watopoly.model.Property;
@@ -29,6 +30,7 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
     private Game gameState = Game.getInstance();
     View largeProp;
     View buttons;
+    View buyHouseBtn;
     private Property prev;
     View current;
     boolean refresh = false;
@@ -61,6 +63,7 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
     private void setView(Player player) {
         largeProp = (View) current.findViewById(R.id.propertyCardBuyFragmentAssets);
         buttons = (View) current.findViewById(R.id.actionsLinearLayoutAssets);
+        buyHouseBtn = (View) current.findViewById(R.id.buyHouseButtonAssets);
         largeProp.setVisibility(View.GONE);
         buttons.setVisibility(View.GONE);
 
@@ -121,7 +124,12 @@ public class MyAssetsFragment extends Fragment implements PropertyListAdapter.on
             propLarge.setProperty(property);
             largeProp.setVisibility(View.VISIBLE);
             buttons.setVisibility(View.VISIBLE);
+            buyHouseBtn.setVisibility(View.VISIBLE);
             prev = property;
+        }
+
+        if (! (property instanceof Building)) {
+            buyHouseBtn.setVisibility(View.GONE);
         }
 
         Button buyHouseHotelBtn = buttons.findViewById(R.id.buyHouseButtonAssets);

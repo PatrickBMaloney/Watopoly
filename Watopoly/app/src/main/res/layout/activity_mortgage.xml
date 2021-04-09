@@ -58,13 +58,16 @@
 
     <Button
         android:id="@+id/finishMortgageButton"
-        android:layout_width="114dp"
-        android:layout_height="47dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:text="Confirm"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="16dp"
+        android:backgroundTint="#3C8A0C"
+        android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/backToMainButton"
@@ -74,7 +77,8 @@
         android:layout_marginBottom="16dp"
         android:text="Back"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="16dp" />
 
     <LinearLayout
         android:id="@+id/unmortgageLinearLayout"
