@@ -94,7 +94,7 @@ public class CellPropertyListAdapter extends RecyclerView.Adapter<CellPropertyLi
             holder.buildingNameTextView.setVisibility(View.VISIBLE);
             holder.propertyImageView.setVisibility(View.GONE);
             holder.propertyNameTextView.setVisibility(View.GONE);
-            holder.amountTextView.setText("$" + building.getRentPrice(0, false));
+            holder.amountTextView.setText("$" + building.getRentPrice());
         }else {
             holder.buildingNameTextView.setVisibility(View.GONE);
             holder.propertyImageView.setVisibility(View.VISIBLE);
@@ -107,7 +107,7 @@ public class CellPropertyListAdapter extends RecyclerView.Adapter<CellPropertyLi
             }else {
                 Railway railway = (Railway) property;
                 holder.propertyImageView.setImageResource(railway.getIcon());
-                holder.amountTextView.setText("$" + railway.getRentPrice(1));
+                holder.amountTextView.setText("$" + railway.getRentPrice());
             }
         }
 
