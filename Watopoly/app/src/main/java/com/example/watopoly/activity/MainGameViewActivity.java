@@ -355,20 +355,41 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             FragmentManager fm = getSupportFragmentManager();
             playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
             playerInfoHeaderFragment.refresh();
+            if (game.getCurrentPlayer().getMoney() < 0) {
+                endTurnButton.setVisibility(View.GONE);
+                forfeitButton.setVisibility(View.VISIBLE);
+            } else {
+                endTurnButton.setVisibility(View.VISIBLE);
+                forfeitButton.setVisibility(View.GONE);
+            }
         }  else if(requestCode == TRADE_REQUEST_CODE) {
             FragmentManager fm = getSupportFragmentManager();
             playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
             playerInfoHeaderFragment.refresh();
+            if (game.getCurrentPlayer().getMoney() < 0) {
+                endTurnButton.setVisibility(View.GONE);
+                forfeitButton.setVisibility(View.VISIBLE);
+            } else {
+                endTurnButton.setVisibility(View.VISIBLE);
+                forfeitButton.setVisibility(View.GONE);
+            }
         }
         else if (requestCode == MORTGAGE_REQUEST_CODE) {
             FragmentManager fm = getSupportFragmentManager();
             playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
             playerInfoHeaderFragment.refresh();
+            if (game.getCurrentPlayer().getMoney() < 0) {
+                endTurnButton.setVisibility(View.GONE);
+                forfeitButton.setVisibility(View.VISIBLE);
+            } else {
+                endTurnButton.setVisibility(View.VISIBLE);
+                forfeitButton.setVisibility(View.GONE);
+            }
         }
         else if (requestCode == MORTGAGE_TILE_REQUEST_CODE) {
             Tile tile = game.moveCurrentPlayer(0);
             showDialogByLandingTile(tile);
-            }
+        }
         else if (requestCode == VIEW_ASSETS_REQUEST_CODE) {
             FragmentManager fm = getSupportFragmentManager();
             playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
