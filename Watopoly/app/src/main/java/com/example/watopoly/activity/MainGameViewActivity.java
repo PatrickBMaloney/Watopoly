@@ -523,7 +523,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         } else {
             playerInfoHeaderFragment.refresh();
         }
-        if (game.getCurrentPlayer().getAvailableFunds() < 0) {
+        if (game.getCurrentPlayer().getMoney() < 0) {
             endTurnButton.setVisibility(View.GONE);
             forfeitButton.setVisibility(View.VISIBLE);
         }

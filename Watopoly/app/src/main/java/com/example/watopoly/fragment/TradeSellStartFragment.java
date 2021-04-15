@@ -155,7 +155,7 @@ public class TradeSellStartFragment extends Fragment implements  AdapterView.OnI
                     if (otherPlayerAdapter.getSelected().get(x)) propTake.add(otherPlayerProperties.get(x));
                 }
 
-                if(moneyGive > gameState.getCurrentPlayer().getMoney()) {
+                if(moneyGive > 0 && moneyGive > gameState.getCurrentPlayer().getMoney()) {
                     InsufficientFundsYou Ify = new InsufficientFundsYou();
                     Ify.show(getChildFragmentManager(), "InsufficientFundsYou");
                 }

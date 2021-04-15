@@ -22,10 +22,5 @@ public class TradeSellPropertiesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_trade_sell_properties);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
-
-        final FragmentManager fm = getSupportFragmentManager();
-        playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragmentTradeSell);
-        Player myPlayer = gameState.getCurrentPlayer();
-        playerInfoHeaderFragment.setPlayer(myPlayer);
     }
 }

@@ -103,10 +103,22 @@ public class Building extends Property {
         numberOfHouses += numHouses;
     }
 
+    public void sellHouses(int numHouses){
+        Game game = Game.getInstance();
+        game.getCurrentPlayer().receiveAmount(numHouses * housePrice);
+        numberOfHouses -= numHouses;
+    }
+
     public void buyHotel(){
         Game game = Game.getInstance();
         game.getCurrentPlayer().payAmount(housePrice);
         hasHotel = true;
+    }
+
+    public void sellHotel(){
+        Game game = Game.getInstance();
+        game.getCurrentPlayer().receiveAmount(housePrice);
+        hasHotel = false;
     }
 
     public Building(String name, TileDirection direction, double baseRentPrice, double purchasePrice, double housePrice, String hexCode) {
