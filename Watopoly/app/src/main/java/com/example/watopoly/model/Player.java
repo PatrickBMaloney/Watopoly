@@ -160,6 +160,15 @@ public class Player implements Serializable {
         }
     }
 
+    public Building getPropertyByName(String buildingName){
+        for(Tile currentTile:properties){
+            if(currentTile instanceof Building && currentTile.getName().equals(buildingName)){
+                return (Building) currentTile;
+            }
+        }
+        return null;
+    }
+
     public double getAvailableFunds(){
         double funds = getMoney();
         for (int i = 0; i<properties.size(); i++){

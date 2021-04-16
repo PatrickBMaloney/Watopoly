@@ -491,8 +491,8 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
                 String description = String.format("You landed on %s owned by %s", property.getName(), property.getOwner().getName());
 
-                renterTextView.setText(String.format("- $%.2f", property.getRentPrice()));
-                ownerTextView.setText(String.format("+ $%.2f", property.getRentPrice()));
+                renterTextView.setText(String.format("- $%.2f", property.getMortgaged() ? 0 : property.getRentPrice()));
+                ownerTextView.setText(String.format("+ $%.2f", property.getMortgaged() ? 0 : property.getRentPrice()));
                 desTextView.setText(description);
 
                 renterImageView.setImageResource(game.getCurrentPlayer().getIcon());

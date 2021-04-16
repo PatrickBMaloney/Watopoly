@@ -24,7 +24,7 @@ import com.example.watopoly.util.BoardTiles;
 
 public class BuyHouseHotelActivity extends AppCompatActivity {
 
-    Property property;
+    Building building;
     Game gameState;
     PlayerInfoHeaderFragment playerInfoHeaderFragment;
 
@@ -34,45 +34,33 @@ public class BuyHouseHotelActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        Intent intent = getIntent();
-        property = (Property) BoardTiles.getBuildingTileByName(intent.getStringExtra("property"));
         gameState = Game.getInstance();
         FragmentManager fm = getSupportFragmentManager();
         playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragmentAssets);
         Player myPlayer = gameState.getCurrentPlayer();
         playerInfoHeaderFragment.setPlayer(myPlayer);
+        Intent intent = getIntent();
+        building = myPlayer.getPropertyByName(intent.getStringExtra("property"));
         linkView();
     }
 
     private void linkView(){
         final FragmentManager fm = getSupportFragmentManager();
         final PropertyFragment propertyFragment = (PropertyFragment) fm.findFragmentById(R.id.propertyCardBuyHouseHotels);
-        final Building currentTile = (Building) property;
-        propertyFragment.setProperty(currentTile);
+        propertyFragment.setProperty(building);
         final Button plusHouseButton = findViewById(R.id.plusBuyHouseButton);
         final Button minusHouseButton = findViewById(R.id.minusBuyHouseButton);
         final Button plusHotelButton = findViewById(R.id.plusBuyHotelButton);
         final Button minusHotelButton = findViewById(R.id.minusBuyHotelButton);
         final TextView currentHousesAndHotels = findViewById(R.id.currrentHousesAndHotels);
         Button confirmNumHouses = findViewById(R.id.confirmNumHouses);
-        final double housePrice = currentTile.getHousePrice();
-        final int currentNumHouses = currentTile.getNumberOfHouses();
-        final int currentNumHotels = currentTile.isHasHotel() ? 1 : 0;
+        final double housePrice = building.getHousePrice();
+        final int currentNumHouses = building.getNumberOfHouses();
+        final int currentNumHotels = building.isHasHotel() ? 1 : 0;
 
-//        // if they don't have enough money for anything don't show any incrementers
-//        if (gameState.getCurrentPlayer().getMoney() < housePrice){
-//            findViewById(R.id.buyHouseIncrementer).setVisibility(View.GONE);
-//            findViewById(R.id.buyHotelIncrementer).setVisibility(View.GONE);
-//            findViewById(R.id.currrentHousesAndHotels).setVisibility(View.GONE);
-//            TextView title = findViewById(R.id.buyPropertyDescriptionTextView);
-//            title.setPadding(0, 100, 0, 0);
-//            title.setTextSize(20);
-//            title.setLines(3);
-//            title.setText("Insufficient funds. You are unable to purchase any properties");
-//        }
 
         // if they don't have a full set don't show the incrementers
-        if (!gameState.getCurrentPlayer().ownsFullSet(currentTile.getPropertyHex())){
+        if (!gameState.getCurrentPlayer().ownsFullSet(building.getPropertyHex())){
             findViewById(R.id.buyHouseIncrementer).setVisibility(View.GONE);
             findViewById(R.id.buyHotelIncrementer).setVisibility(View.INVISIBLE);
             findViewById(R.id.currrentHousesAndHotels).setVisibility(View.GONE);
@@ -82,19 +70,6 @@ public class BuyHouseHotelActivity extends AppCompatActivity {
             title.setLines(3);
             title.setText("You do not possess a full set. You are unable to purchase any properties.");
         }
-
-//        // if they can't afford a hotel, don't show the hotel incrementer
-//        if (currentNumHouses + gameState.getCurrentPlayer().getMoney()/housePrice < 5){
-//            LinearLayout hotelIncrementer = findViewById(R.id.buyHotelIncrementer);
-//            hotelIncrementer.setVisibility(View.INVISIBLE);
-//        }
-
-//        // if they already have four houses, don't show the house incrementer
-//        if (currentNumHouses == 4){
-//            LinearLayout houseIncrementer = findViewById(R.id.buyHouseIncrementer);
-//            houseIncrementer.setVisibility(View.GONE);
-//            enableIncrementer(plusHotelButton);
-//        }
 
         currentHousesAndHotels.setText(String.format("You currently have: %s houses, %s hotels",
                 currentNumHouses,
@@ -204,15 +179,15 @@ public class BuyHouseHotelActivity extends AppCompatActivity {
                 int numHotels = Integer.parseInt(numHotelText.getText().toString()) - currentNumHotels;
 
                 if (numHouses > 0) {
-                    currentTile.buyHouses(numHouses);
+                    building.buyHouses(numHouses);
                 } else if (numHouses < 0) {
-                    currentTile.sellHouses(-1 * numHouses);
+                    building.sellHouses(-1 * numHouses);
                 }
 
                 if (numHotels == 1){
-                    currentTile.buyHotel();
+                    building.buyHotel();
                 } else if (numHotels == -1) {
-                    currentTile.sellHotel();
+                    building.sellHotel();
                 }
                 finish();
             }

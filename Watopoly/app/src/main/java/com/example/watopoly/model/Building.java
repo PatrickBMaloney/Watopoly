@@ -17,8 +17,10 @@ public class Building extends Property {
 
     @Override
     public double getRentPrice() {
-        Player currentPlayer = Game.getInstance().getCurrentPlayer();
-        return hasHotel ? getRentPriceWithHotel() : getRentPrice(numberOfHouses, currentPlayer.ownsFullSet(hexCode));
+        if(owner == null) {
+            return baseRentPrice;
+        }
+        return hasHotel ? getRentPriceWithHotel() : getRentPrice(numberOfHouses, owner.ownsFullSet(hexCode));
     }
 
     public double getHousePrice(){ return housePrice; }
@@ -99,25 +101,25 @@ public class Building extends Property {
 
     public void buyHouses(int numHouses){
         Game game = Game.getInstance();
-        game.getCurrentPlayer().payAmount(numHouses * housePrice);
+        owner.payAmount(numHouses * housePrice);
         numberOfHouses += numHouses;
     }
 
     public void sellHouses(int numHouses){
         Game game = Game.getInstance();
-        game.getCurrentPlayer().receiveAmount(numHouses * housePrice);
+        owner.receiveAmount(numHouses * housePrice);
         numberOfHouses -= numHouses;
     }
 
     public void buyHotel(){
         Game game = Game.getInstance();
-        game.getCurrentPlayer().payAmount(housePrice);
+        owner.payAmount(housePrice);
         hasHotel = true;
     }
 
     public void sellHotel(){
         Game game = Game.getInstance();
-        game.getCurrentPlayer().receiveAmount(housePrice);
+        owner.receiveAmount(housePrice);
         hasHotel = false;
     }
 

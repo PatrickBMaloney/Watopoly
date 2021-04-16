@@ -99,7 +99,8 @@ public class TradeSellStartFragment extends Fragment implements  AdapterView.OnI
             playerNames = new String[tradablePlayers];
             playerOrder = new Player[tradablePlayers];
             for (int i = 0; i < gameState.getPlayers().size(); i++) {
-                if (gameState.getPlayers().get(i) != gameState.getCurrentPlayer()) {
+                if (gameState.getPlayers().get(i) != gameState.getCurrentPlayer() &&
+                        !gameState.getPlayers().get(i).getJailed()) {
                     playerNames[addPlayer] = gameState.getPlayers().get(i).getName();
                     playerOrder[addPlayer] = gameState.getPlayers().get(i);
                     addPlayer++;
