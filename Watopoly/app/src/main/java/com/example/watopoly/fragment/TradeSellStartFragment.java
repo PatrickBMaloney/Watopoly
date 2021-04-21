@@ -99,7 +99,8 @@ public class TradeSellStartFragment extends Fragment implements  AdapterView.OnI
             playerNames = new String[tradablePlayers];
             playerOrder = new Player[tradablePlayers];
             for (int i = 0; i < gameState.getPlayers().size(); i++) {
-                if (gameState.getPlayers().get(i) != gameState.getCurrentPlayer()) {
+                if (gameState.getPlayers().get(i) != gameState.getCurrentPlayer() &&
+                        !gameState.getPlayers().get(i).getJailed()) {
                     playerNames[addPlayer] = gameState.getPlayers().get(i).getName();
                     playerOrder[addPlayer] = gameState.getPlayers().get(i);
                     addPlayer++;
@@ -155,7 +156,7 @@ public class TradeSellStartFragment extends Fragment implements  AdapterView.OnI
                     if (otherPlayerAdapter.getSelected().get(x)) propTake.add(otherPlayerProperties.get(x));
                 }
 
-                if(moneyGive > gameState.getCurrentPlayer().getMoney()) {
+                if(moneyGive > 0 && moneyGive > gameState.getCurrentPlayer().getMoney()) {
                     InsufficientFundsYou Ify = new InsufficientFundsYou();
                     Ify.show(getChildFragmentManager(), "InsufficientFundsYou");
                 }

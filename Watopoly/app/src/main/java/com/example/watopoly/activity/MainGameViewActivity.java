@@ -355,20 +355,41 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
             FragmentManager fm = getSupportFragmentManager();
             playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
             playerInfoHeaderFragment.refresh();
+            if (game.getCurrentPlayer().getMoney() < 0) {
+                endTurnButton.setVisibility(View.GONE);
+                forfeitButton.setVisibility(View.VISIBLE);
+            } else {
+                endTurnButton.setVisibility(View.VISIBLE);
+                forfeitButton.setVisibility(View.GONE);
+            }
         }  else if(requestCode == TRADE_REQUEST_CODE) {
             FragmentManager fm = getSupportFragmentManager();
             playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
             playerInfoHeaderFragment.refresh();
+            if (game.getCurrentPlayer().getMoney() < 0) {
+                endTurnButton.setVisibility(View.GONE);
+                forfeitButton.setVisibility(View.VISIBLE);
+            } else {
+                endTurnButton.setVisibility(View.VISIBLE);
+                forfeitButton.setVisibility(View.GONE);
+            }
         }
         else if (requestCode == MORTGAGE_REQUEST_CODE) {
             FragmentManager fm = getSupportFragmentManager();
             playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
             playerInfoHeaderFragment.refresh();
+            if (game.getCurrentPlayer().getMoney() < 0) {
+                endTurnButton.setVisibility(View.GONE);
+                forfeitButton.setVisibility(View.VISIBLE);
+            } else {
+                endTurnButton.setVisibility(View.VISIBLE);
+                forfeitButton.setVisibility(View.GONE);
+            }
         }
         else if (requestCode == MORTGAGE_TILE_REQUEST_CODE) {
             Tile tile = game.moveCurrentPlayer(0);
             showDialogByLandingTile(tile);
-            }
+        }
         else if (requestCode == VIEW_ASSETS_REQUEST_CODE) {
             FragmentManager fm = getSupportFragmentManager();
             playerInfoHeaderFragment = (PlayerInfoHeaderFragment) fm.findFragmentById(R.id.playerInfoHeaderFragment);
@@ -470,8 +491,8 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
 
                 String description = String.format("You landed on %s owned by %s", property.getName(), property.getOwner().getName());
 
-                renterTextView.setText(String.format("- $%.2f", property.getRentPrice()));
-                ownerTextView.setText(String.format("+ $%.2f", property.getRentPrice()));
+                renterTextView.setText(String.format("- $%.2f", property.getMortgaged() ? 0 : property.getRentPrice()));
+                ownerTextView.setText(String.format("+ $%.2f", property.getMortgaged() ? 0 : property.getRentPrice()));
                 desTextView.setText(description);
 
                 renterImageView.setImageResource(game.getCurrentPlayer().getIcon());
@@ -523,7 +544,7 @@ public class MainGameViewActivity extends AppCompatActivity implements FragmentC
         } else {
             playerInfoHeaderFragment.refresh();
         }
-        if (game.getCurrentPlayer().getAvailableFunds() < 0) {
+        if (game.getCurrentPlayer().getMoney() < 0) {
             endTurnButton.setVisibility(View.GONE);
             forfeitButton.setVisibility(View.VISIBLE);
         }

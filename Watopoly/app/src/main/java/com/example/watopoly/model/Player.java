@@ -114,7 +114,13 @@ public class Player implements Serializable {
 
     public Boolean ownsFullSet(String hexcode){
         List<Building> colorSet = BoardTiles.getTilesByColor(hexcode);
-        return properties.containsAll(colorSet);
+        int numberOwned = 0;
+        for (Tile currentTile: properties) {
+            if((currentTile instanceof Building) && ((Building) currentTile).getPropertyHex().equals(hexcode)){
+                numberOwned += 1;
+            }
+        }
+        return numberOwned == colorSet.size();
     }
 
     public void addProperty(Property property) {
@@ -152,6 +158,15 @@ public class Player implements Serializable {
             property.reset();
             money = 0.0;
         }
+    }
+
+    public Building getPropertyByName(String buildingName){
+        for(Tile currentTile:properties){
+            if(currentTile instanceof Building && currentTile.getName().equals(buildingName)){
+                return (Building) currentTile;
+            }
+        }
+        return null;
     }
 
     public double getAvailableFunds(){
