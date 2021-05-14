@@ -4,4 +4,4 @@ Watopoly is a two to five player, pass-and-play, board game. Players will take t
 
 <a href="https://play.google.com/store/apps/details?id=org.wikiedufoundation.wikiedudashboard.release"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height=60px /></a>
 
-![[animate output image]](https://im.ezgif.com/tmp/ezgif-1-013c4aa520a7.gif)
+![[animate output image]](https://im.ezgif.com/tmp/ezgif-1-02ba8d843f61.gif)
